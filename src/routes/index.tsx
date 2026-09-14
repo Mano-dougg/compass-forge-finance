@@ -7,6 +7,7 @@ import {
   formatarMoeda,
   preverPatrimonio,
   PEARSON_RECEITA_CUSTOS,
+  TETOS,
   type EmpresaDados,
 } from "@/lib/sad-model";
 
