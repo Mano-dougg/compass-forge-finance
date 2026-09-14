@@ -210,38 +210,67 @@ function Index() {
                 </span>
               </div>
 
-              {LINHAS.map((linha, i) => (
-                <div
-                  key={linha.chave}
-                  className={`flex items-center gap-4 px-5 py-4 ${
-                    i < LINHAS.length - 1 ? "border-b border-border/70" : ""
-                  }`}
-                >
-                  <div className="w-40 shrink-0">
-                    <div className="text-[13px] font-medium">{linha.label}</div>
-                    <div className="font-mono text-[10px] tracking-[0.1em] text-muted">
-                      {linha.codigo}
+              {LINHAS.map((linha, i) => {
+                const valor = dados[linha.chave];
+                const teto = TETOS[linha.chave];
+                const pct = Math.min(100, (valor / teto) * 100);
+                return (
+                  <div
+                    key={linha.chave}
+                    className={`px-5 py-5 ${
+                      i < LINHAS.length - 1 ? "border-b border-border/70" : ""
+                    }`}
+                  >
+                    <div className="mb-3 flex items-baseline justify-between gap-4">
+                      <div>
+                        <div className="text-[13px] font-medium">{linha.label}</div>
+                        <div className="font-mono text-[10px] tracking-[0.1em] text-muted">
+                          {linha.codigo}
+                        </div>
+                      </div>
+                      <div className="font-mono text-2xl font-semibold tracking-tight tabular-nums">
+                        {formatarMoeda(valor)}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => passo(linha.chave, -1)}
+                        aria-label={`Diminuir ${linha.label}`}
+                        className="grid size-8 shrink-0 place-items-center rounded-md border border-border text-muted transition-colors hover:bg-surface-2 hover:text-foreground"
+                      >
+                        −
+                      </button>
+                      <input
+                        type="range"
+                        min={0}
+                        max={teto}
+                        step={PASSO}
+                        value={valor}
+                        onChange={(e) =>
+                          passo(linha.chave, 0, Number(e.target.value))
+                        }
+                        aria-label={`Arrastar para ajustar ${linha.label}`}
+                        className="slider h-2 flex-1 cursor-ew-resize appearance-none rounded-full outline-none"
+                        style={{
+                          background: `linear-gradient(to right, var(--primary) ${pct}%, var(--surface-2) ${pct}%)`,
+                        }}
+                      />
+                      <button
+                        onClick={() => passo(linha.chave, 1)}
+                        aria-label={`Aumentar ${linha.label}`}
+                        className="grid size-8 shrink-0 place-items-center rounded-md border border-border text-muted transition-colors hover:bg-surface-2 hover:text-foreground"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <div className="mt-1.5 flex justify-between font-mono text-[10px] text-muted">
+                      <span>← arraste para diminuir</span>
+                      <span>teto Box Plot: {formatarMoeda(teto)}</span>
+                      <span>arraste para aumentar →</span>
                     </div>
                   </div>
-                  <button
-                    onClick={() => passo(linha.chave, -1)}
-                    aria-label={`Diminuir ${linha.label}`}
-                    className="grid size-9 shrink-0 place-items-center rounded-md border border-border text-lg text-muted transition-colors hover:bg-surface-2 hover:text-foreground"
-                  >
-                    −
-                  </button>
-                  <div className="flex-1 text-right font-mono text-2xl font-semibold tracking-tight tabular-nums">
-                    {formatarMoeda(dados[linha.chave])}
-                  </div>
-                  <button
-                    onClick={() => passo(linha.chave, 1)}
-                    aria-label={`Aumentar ${linha.label}`}
-                    className="grid size-9 shrink-0 place-items-center rounded-md border border-border text-lg text-muted transition-colors hover:bg-surface-2 hover:text-foreground"
-                  >
-                    +
-                  </button>
-                </div>
-              ))}
+                );
+              })}
             </section>
 
             {alerta && (
