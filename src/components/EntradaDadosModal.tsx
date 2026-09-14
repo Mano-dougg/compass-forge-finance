@@ -15,7 +15,7 @@ const CAMPOS: { chave: keyof EmpresaDados; label: string }[] = [
 
 type Props = {
   inicial: EmpresaDados;
-  onCancelar?: () => void;
+  onCancelar?: (() => void) | undefined;
   onConfirmar: (dados: EmpresaDados) => void;
 };
 

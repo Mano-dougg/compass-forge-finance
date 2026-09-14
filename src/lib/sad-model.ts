@@ -80,7 +80,7 @@ function indicadores(d: EmpresaDados) {
 export function diagnosticar(d: EmpresaDados): Diagnostico {
   const ind = indicadores(d);
 
-  let melhor = CENTROIDES[0];
+  let melhor: Centroide = CENTROIDES[0]!;
   let menor = Number.POSITIVE_INFINITY;
 
   for (const c of CENTROIDES) {
