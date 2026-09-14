@@ -1,24 +1,275 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
+import { EntradaDadosModal } from "@/components/EntradaDadosModal";
+import {
+  aplicarPasso,
+  diagnosticar,
+  formatarMoeda,
+  preverPatrimonio,
+  PEARSON_RECEITA_CUSTOS,
+  type EmpresaDados,
+} from "@/lib/sad-model";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "ATLAS.SAD — Diagnóstico e Simulação de Cenários" },
+      {
+        name: "description",
+        content:
+          "Informe os dados da sua empresa, receba a classificação de perfil operacional e simule cenários de Patrimônio Líquido em tempo real.",
+      },
+      { property: "og:title", content: "ATLAS.SAD — Diagnóstico e Simulação de Cenários" },
+      {
+        property: "og:description",
+        content:
+          "Diagnóstico por clusters da B3 e projeção preditiva de Patrimônio Líquido com simulador por passos.",
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+const PASSO = 5_000_000;
+
+const PADRAO: EmpresaDados = {
+  receita: 182_400_000,
+  custos: 94_150_000,
+  patrimonio: 168_240_000,
+  investimento: 12_300_000,
+};
+
+const LINHAS: { chave: keyof EmpresaDados; label: string; codigo: string }[] = [
+  { chave: "receita", label: "Receita Líquida", codigo: "ACR.01" },
+  { chave: "custos", label: "Custos e Despesas", codigo: "ACR.02" },
+  { chave: "investimento", label: "Fluxo de Investimento", codigo: "ACR.03" },
+  { chave: "patrimonio", label: "Patrimônio Líquido", codigo: "ACR.04" },
+];
+
 function Index() {
+  const [modalAberto, setModalAberto] = useState(true);
+  const [base, setBase] = useState<EmpresaDados | null>(null);
+  const [dados, setDados] = useState<EmpresaDados>(PADRAO);
+  const [alerta, setAlerta] = useState<string | null>(null);
+
+  const diagnostico = useMemo(() => diagnosticar(dados), [dados]);
+  const projecao = useMemo(() => preverPatrimonio(dados), [dados]);
+  const variacao = base ? ((projecao - base.patrimonio) / base.patrimonio) * 100 : 0;
+
+  function passo(campo: keyof EmpresaDados, direcao: 1 | -1) {
+    const r = aplicarPasso(dados, campo, PASSO * direcao);
+    setDados(r.dados);
+    setAlerta(r.alerta);
+  }
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background font-sans text-sm text-foreground">
+      <header className="sticky top-0 z-20 border-b border-border bg-background/95">
+        <div className="mx-auto flex h-14 max-w-[1400px] items-center gap-6 px-6">
+          <div className="flex items-center gap-3">
+            <div className="font-display grid size-8 place-items-center rounded-md bg-primary text-base font-bold text-primary-foreground">
+              A
+            </div>
+            <div className="leading-tight">
+              <div className="font-display font-semibold tracking-tight">ATLAS.SAD</div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted">
+                Plataforma de Decisão · v2.4
+              </div>
+            </div>
+          </div>
+          <nav className="ml-6 hidden items-center gap-5 text-[13px] text-muted md:flex">
+            <span className="text-foreground">Diagnóstico</span>
+            <span>Comparativo</span>
+            <span>Simulador</span>
+            <span>Relatórios</span>
+          </nav>
+          <div className="ml-auto flex items-center gap-4">
+            <div className="hidden items-center gap-2 font-mono text-[11px] text-muted sm:flex">
+              <span className="size-1.5 animate-pulse rounded-full bg-positive" /> B3 · ao vivo
+            </div>
+            <button
+              onClick={() => setModalAberto(true)}
+              className="rounded-md border border-border px-3 py-2 text-[13px] transition-colors hover:border-primary/50 hover:text-foreground"
+            >
+              Editar dados
+            </button>
+            <button className="rounded-md bg-primary px-3 py-2 text-[13px] font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+              Exportar Relatório
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main className="mx-auto max-w-[1400px] px-6 py-7">
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-primary">
+              Diagnóstico Financeiro
+            </div>
+            <h1 className="font-display mt-1 text-balance text-2xl font-semibold tracking-tight">
+              Simulador de Cenários · Perfil {diagnostico.perfil}
+            </h1>
+          </div>
+          <div className="flex items-center gap-3 rounded-md border border-primary/30 bg-primary/5 px-3 py-2">
+            <span className="size-2 rounded-full bg-primary" />
+            <span className="text-[12px] text-foreground/90">
+              Margem de erro do modelo:{" "}
+              <span className="font-mono font-semibold text-primary">48,7%</span> (100% − R² 51,3%)
+            </span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-12 gap-4">
+          <div className="col-span-12 flex flex-col gap-4 lg:col-span-4">
+            <section className="animate-rise rounded-lg border border-border bg-surface p-5">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
+                  Diagnóstico
+                </span>
+                <span className="font-mono text-[11px] text-muted">
+                  Cluster B3 · {diagnostico.empresasNoCluster} empresas
+                </span>
+              </div>
+              <div className="mt-4 flex items-baseline gap-3">
+                <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/15 px-3 py-1 text-[13px] font-medium text-primary">
+                  {diagnostico.perfil}
+                </span>
+                <span className="text-[12px] text-muted">
+                  distância ao centróide{" "}
+                  <span className="font-mono text-foreground">
+                    {diagnostico.distancia.toFixed(2).replace(".", ",")}
+                  </span>
+                </span>
+              </div>
+              <div className="mt-5 space-y-3">
+                <div>
+                  <div className="mb-1.5 flex justify-between text-[12px]">
+                    <span className="text-muted">Sua empresa</span>
+                    <span className="font-mono">{diagnostico.scoreEmpresa}</span>
+                  </div>
+                  <div className="h-2 overflow-hidden rounded-full bg-surface-2">
+                    <div
+                      className="h-full bg-foreground/70 transition-[width] duration-500"
+                      style={{ width: `${diagnostico.scoreEmpresa}%` }}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="mb-1.5 flex justify-between text-[12px]">
+                    <span className="text-muted">Média do cluster</span>
+                    <span className="font-mono">{diagnostico.scoreCluster}</span>
+                  </div>
+                  <div className="h-2 overflow-hidden rounded-full bg-surface-2">
+                    <div
+                      className="animate-sweep h-full origin-left bg-primary transition-[width] duration-500"
+                      style={{ width: `${diagnostico.scoreCluster}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+              <p className="mt-4 text-[12px] leading-relaxed text-muted">
+                {diagnostico.descricao}
+              </p>
+            </section>
+
+            <section className="animate-rise rounded-lg border border-primary/30 bg-surface-2 p-5">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
+                  Projeção · Patrimônio Líquido
+                </span>
+                <span
+                  className={`font-mono text-[11px] ${variacao < 0 ? "text-negative" : "text-positive"}`}
+                >
+                  {variacao >= 0 ? "+" : ""}
+                  {variacao.toFixed(1).replace(".", ",")}%
+                </span>
+              </div>
+              <div className="mt-3 font-mono text-[2.6rem] font-semibold leading-none tracking-tight tabular-nums text-foreground">
+                {formatarMoeda(projecao)}
+              </div>
+              <div className="mt-3 flex items-center gap-2 text-[12px] text-muted">
+                <span className="size-1.5 animate-pulse rounded-full bg-positive" /> Atualizado em
+                tempo real · regressão linear
+              </div>
+            </section>
+
+            <button className="rounded-md border border-primary/40 px-4 py-3 text-[14px] font-medium text-primary transition-colors hover:bg-primary/10">
+              Exportar Relatório (PDF)
+            </button>
+          </div>
+
+          <div className="col-span-12 lg:col-span-8">
+            <section className="animate-rise overflow-hidden rounded-lg border border-border bg-surface">
+              <div className="flex h-11 items-center justify-between border-b border-border px-5">
+                <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
+                  Linhas de simulação · ajuste por passo
+                </span>
+                <span className="font-mono text-[11px] text-muted">
+                  passo ± {formatarMoeda(PASSO)}
+                </span>
+              </div>
+
+              {LINHAS.map((linha, i) => (
+                <div
+                  key={linha.chave}
+                  className={`flex items-center gap-4 px-5 py-4 ${
+                    i < LINHAS.length - 1 ? "border-b border-border/70" : ""
+                  }`}
+                >
+                  <div className="w-40 shrink-0">
+                    <div className="text-[13px] font-medium">{linha.label}</div>
+                    <div className="font-mono text-[10px] tracking-[0.1em] text-muted">
+                      {linha.codigo}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => passo(linha.chave, -1)}
+                    aria-label={`Diminuir ${linha.label}`}
+                    className="grid size-9 shrink-0 place-items-center rounded-md border border-border text-lg text-muted transition-colors hover:bg-surface-2 hover:text-foreground"
+                  >
+                    −
+                  </button>
+                  <div className="flex-1 text-right font-mono text-2xl font-semibold tracking-tight tabular-nums">
+                    {formatarMoeda(dados[linha.chave])}
+                  </div>
+                  <button
+                    onClick={() => passo(linha.chave, 1)}
+                    aria-label={`Aumentar ${linha.label}`}
+                    className="grid size-9 shrink-0 place-items-center rounded-md border border-border text-lg text-muted transition-colors hover:bg-surface-2 hover:text-foreground"
+                  >
+                    +
+                  </button>
+                </div>
+              ))}
+            </section>
+
+            {alerta && (
+              <p className="mt-3 rounded-md border border-primary/30 bg-primary/5 px-3 py-2 font-mono text-[11px] leading-relaxed text-primary">
+                {alerta}
+              </p>
+            )}
+
+            <p className="mt-3 font-mono text-[11px] leading-relaxed text-muted">
+              RN01 · Trava de multicolinearidade ativa (ρ ={" "}
+              {PEARSON_RECEITA_CUSTOS.toFixed(4).replace(".", ",")}): o aumento de Receita recalibra
+              automaticamente Custos e Despesas. RN02 · Teto de escala do Box Plot aplicável.
+            </p>
+          </div>
+        </div>
+      </main>
+
+      {modalAberto && (
+        <EntradaDadosModal
+          inicial={dados}
+          onCancelar={base ? () => setModalAberto(false) : undefined}
+          onConfirmar={(novos) => {
+            setBase(novos);
+            setDados(novos);
+            setAlerta(null);
+            setModalAberto(false);
+          }}
+        />
+      )}
     </div>
   );
 }
