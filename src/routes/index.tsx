@@ -12,6 +12,7 @@ import {
 } from "@/lib/sad-model";
 
 export const Route = createFileRoute("/")({
+  codeSplitGroupings: [["loader", "component"]],
   head: () => ({
     meta: [
       { title: "ATLAS.SAD — Diagnóstico e Simulação de Cenários" },
