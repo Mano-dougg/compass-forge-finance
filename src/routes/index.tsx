@@ -57,8 +57,9 @@ function Index() {
   const projecao = useMemo(() => preverPatrimonio(dados), [dados]);
   const variacao = base ? ((projecao - base.patrimonio) / base.patrimonio) * 100 : 0;
 
-  function passo(campo: keyof EmpresaDados, direcao: 1 | -1) {
-    const r = aplicarPasso(dados, campo, PASSO * direcao);
+  function passo(campo: keyof EmpresaDados, direcao: 1 | -1 | 0, valorDireto?: number) {
+    const ajuste = valorDireto === undefined ? PASSO * direcao : valorDireto - dados[campo];
+    const r = aplicarPasso(dados, campo, ajuste);
     setDados(r.dados);
     setAlerta(r.alerta);
   }
