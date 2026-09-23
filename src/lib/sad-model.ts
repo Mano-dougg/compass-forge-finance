@@ -167,3 +167,119 @@ export function parseNumero(s: string): number {
   const limpo = s.replace(/[^\d]/g, "");
   return limpo ? Number(limpo) : 0;
 }
+
+// ---------------------------------------------------------------------------
+// RF03 · dados para os gráficos comparativos (mock derivado dos centróides)
+// ---------------------------------------------------------------------------
+
+export type BarraComparativa = {
+  indicador: string;
+  empresa: number;
+  cluster: number;
+  sufixo: string;
+};
+
+function centroideDoPerfil(perfil: string): Centroide {
+  return CENTROIDES.find((c) => c.perfil === perfil) ?? CENTROIDES[0]!;
+}
+
+export function comparativoCluster(d: EmpresaDados, perfil: string): BarraComparativa[] {
+  const ind = indicadores(d);
+  const c = centroideDoPerfil(perfil);
+  return [
+    {
+      indicador: "Margem",
+      empresa: +(ind.margem * 100).toFixed(1),
+      cluster: +(c.margem * 100).toFixed(1),
+      sufixo: "%",
+    },
+    {
+      indicador: "Invest./Receita",
+      empresa: +(ind.intensidadeInvestimento * 100).toFixed(1),
+      cluster: +(c.intensidadeInvestimento * 100).toFixed(1),
+      sufixo: "%",
+    },
+    {
+      indicador: "Giro do PL",
+      empresa: +ind.alavancagem.toFixed(2),
+      cluster: +c.alavancagem.toFixed(2),
+      sufixo: "x",
+    },
+  ];
+}
+
+export type PontoDispersao = { margem: number; alavancagem: number; perfil: string };
+
+/** Nuvem sintética de empresas da B3 (mock determinístico). */
+export function nuvemB3(): PontoDispersao[] {
+  const pontos: PontoDispersao[] = [];
+  CENTROIDES.forEach((c, ci) => {
+    for (let i = 0; i < 18; i++) {
+      const s = Math.sin((ci + 1) * 12.9898 + i * 78.233) * 43758.5453;
+      const r1 = s - Math.floor(s);
+      const t = Math.sin((ci + 1) * 4.898 + i * 23.233) * 12345.6789;
+      const r2 = t - Math.floor(t);
+      pontos.push({
+        perfil: c.perfil,
+        margem: +Math.max(0, c.margem * 100 + (r1 - 0.5) * 12).toFixed(1),
+        alavancagem: +Math.max(0.1, c.alavancagem + (r2 - 0.5) * 0.7).toFixed(2),
+      });
+    }
+  });
+  return pontos;
+}
+
+export function pontoEmpresa(d: EmpresaDados): PontoDispersao {
+  const ind = indicadores(d);
+  return {
+    perfil: "Sua empresa",
+    margem: +(ind.margem * 100).toFixed(1),
+    alavancagem: +ind.alavancagem.toFixed(2),
+  };
+}
+
+// ---------------------------------------------------------------------------
+// RF06 · recomendações estratégicas (mock baseado nos indicadores)
+// ---------------------------------------------------------------------------
+
+export function recomendacoes(d: EmpresaDados, diag: Diagnostico): string[] {
+  const ind = indicadores(d);
+  const c = centroideDoPerfil(diag.perfil);
+  const lista: string[] = [];
+
+  if (ind.margem < c.margem) {
+    lista.push(
+      `Margem operacional ${(ind.margem * 100).toFixed(1)}% abaixo da média do cluster (${(c.margem * 100).toFixed(1)}%): priorizar revisão de custos fixos antes de novas expansões de receita.`,
+    );
+  } else {
+    lista.push(
+      `Margem operacional ${(ind.margem * 100).toFixed(1)}% acima da média do cluster: há espaço para ampliar o fluxo de investimento sem comprometer o caixa.`,
+    );
+  }
+
+  if (ind.intensidadeInvestimento < c.intensidadeInvestimento) {
+    lista.push(
+      "Intensidade de investimento abaixo dos pares: considerar alocação incremental em CAPEX para sustentar crescimento no próximo ciclo.",
+    );
+  } else {
+    lista.push(
+      "Intensidade de investimento acima dos pares: monitorar o retorno sobre o capital investido para evitar diluição de margem.",
+    );
+  }
+
+  if (ind.alavancagem > 2) {
+    lista.push(
+      "Giro de receita sobre patrimônio elevado: reforçar a base patrimonial antes de assumir novos compromissos de dívida.",
+    );
+  } else {
+    lista.push(
+      "Estrutura patrimonial equilibrada em relação à receita: cenário adequado para captação planejada de recursos.",
+    );
+  }
+
+  lista.push(
+    "Reavaliar o cenário trimestralmente: a projeção possui 48,7% de variância não explicada (R² de 51,3%).",
+  );
+
+  return lista;
+}

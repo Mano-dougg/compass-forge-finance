@@ -1,15 +1,19 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { ClientOnly, createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { EntradaDadosModal } from "@/components/EntradaDadosModal";
+import { GraficoBarras, GraficoDispersao } from "@/components/GraficosComparativos";
+import { gerarRelatorioPDF } from "@/lib/relatorio";
 import {
   aplicarPasso,
   diagnosticar,
   formatarMoeda,
   preverPatrimonio,
+  recomendacoes,
   PEARSON_RECEITA_CUSTOS,
   TETOS,
   type EmpresaDados,
 } from "@/lib/sad-model";
+
 
 export const Route = createFileRoute("/")({
   codeSplitGroupings: [["loader", "component"]],
@@ -65,6 +69,22 @@ function Index() {
     setAlerta(r.alerta);
   }
 
+  const recs = useMemo(() => recomendacoes(dados, diagnostico), [dados, diagnostico]);
+
+  function exportar() {
+    try {
+      const ok = gerarRelatorioPDF({ dados, base, diagnostico, projecao });
+      setAlerta(
+        ok
+          ? null
+          : "Não foi possível abrir a janela do relatório. Libere os pop-ups deste site e tente novamente.",
+      );
+    } catch {
+      setAlerta("Falha ao gerar o relatório. Tente novamente em alguns instantes.");
+    }
+  }
+
+
   return (
     <div className="min-h-screen bg-background font-sans text-sm text-foreground">
       <header className="sticky top-0 z-20 border-b border-border bg-background/95">
@@ -96,9 +116,13 @@ function Index() {
             >
               Editar dados
             </button>
-            <button className="rounded-md bg-primary px-3 py-2 text-[13px] font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+            <button
+              onClick={exportar}
+              className="rounded-md bg-primary px-3 py-2 text-[13px] font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            >
               Exportar Relatório
             </button>
+
           </div>
         </div>
       </header>
@@ -196,9 +220,29 @@ function Index() {
               </div>
             </section>
 
-            <button className="rounded-md border border-primary/40 px-4 py-3 text-[14px] font-medium text-primary transition-colors hover:bg-primary/10">
+            <section className="animate-rise rounded-lg border border-border bg-surface p-5">
+              <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
+                Recomendações estratégicas
+              </span>
+              <ol className="mt-3 space-y-2.5">
+                {recs.map((r, i) => (
+                  <li key={i} className="flex gap-2 text-[12px] leading-relaxed text-foreground/90">
+                    <span className="font-mono text-[11px] text-primary">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span>{r}</span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <button
+              onClick={exportar}
+              className="rounded-md border border-primary/40 px-4 py-3 text-[14px] font-medium text-primary transition-colors hover:bg-primary/10"
+            >
               Exportar Relatório (PDF)
             </button>
+
           </div>
 
           <div className="col-span-12 lg:col-span-8">
@@ -286,6 +330,33 @@ function Index() {
               {PEARSON_RECEITA_CUSTOS.toFixed(4).replace(".", ",")}): o aumento de Receita recalibra
               automaticamente Custos e Despesas. RN02 · Teto de escala do Box Plot aplicável.
             </p>
+
+            <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-2">
+              <section className="animate-rise rounded-lg border border-border bg-surface p-5">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
+                    Comparativo · empresa vs. cluster
+                  </span>
+                  <span className="font-mono text-[10px] text-muted">tempo real</span>
+                </div>
+                <ClientOnly fallback={<div className="h-[220px]" />}>
+                  <GraficoBarras dados={dados} diagnostico={diagnostico} />
+                </ClientOnly>
+              </section>
+
+              <section className="animate-rise rounded-lg border border-border bg-surface p-5">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
+                    Dispersão · margem × giro do PL
+                  </span>
+                  <span className="font-mono text-[10px] text-muted">amostra B3</span>
+                </div>
+                <ClientOnly fallback={<div className="h-[240px]" />}>
+                  <GraficoDispersao dados={dados} diagnostico={diagnostico} />
+                </ClientOnly>
+              </section>
+            </div>
+
           </div>
         </div>
       </main>
