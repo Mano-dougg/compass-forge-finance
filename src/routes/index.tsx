@@ -330,6 +330,33 @@ function Index() {
               {PEARSON_RECEITA_CUSTOS.toFixed(4).replace(".", ",")}): o aumento de Receita recalibra
               automaticamente Custos e Despesas. RN02 · Teto de escala do Box Plot aplicável.
             </p>
+
+            <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-2">
+              <section className="animate-rise rounded-lg border border-border bg-surface p-5">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
+                    Comparativo · empresa vs. cluster
+                  </span>
+                  <span className="font-mono text-[10px] text-muted">tempo real</span>
+                </div>
+                <ClientOnly fallback={<div className="h-[220px]" />}>
+                  <GraficoBarras dados={dados} diagnostico={diagnostico} />
+                </ClientOnly>
+              </section>
+
+              <section className="animate-rise rounded-lg border border-border bg-surface p-5">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
+                    Dispersão · margem × giro do PL
+                  </span>
+                  <span className="font-mono text-[10px] text-muted">amostra B3</span>
+                </div>
+                <ClientOnly fallback={<div className="h-[240px]" />}>
+                  <GraficoDispersao dados={dados} diagnostico={diagnostico} />
+                </ClientOnly>
+              </section>
+            </div>
+
           </div>
         </div>
       </main>
