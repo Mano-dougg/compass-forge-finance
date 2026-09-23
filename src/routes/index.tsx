@@ -220,9 +220,29 @@ function Index() {
               </div>
             </section>
 
-            <button className="rounded-md border border-primary/40 px-4 py-3 text-[14px] font-medium text-primary transition-colors hover:bg-primary/10">
+            <section className="animate-rise rounded-lg border border-border bg-surface p-5">
+              <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
+                Recomendações estratégicas
+              </span>
+              <ol className="mt-3 space-y-2.5">
+                {recs.map((r, i) => (
+                  <li key={i} className="flex gap-2 text-[12px] leading-relaxed text-foreground/90">
+                    <span className="font-mono text-[11px] text-primary">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span>{r}</span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <button
+              onClick={exportar}
+              className="rounded-md border border-primary/40 px-4 py-3 text-[14px] font-medium text-primary transition-colors hover:bg-primary/10"
+            >
               Exportar Relatório (PDF)
             </button>
+
           </div>
 
           <div className="col-span-12 lg:col-span-8">
