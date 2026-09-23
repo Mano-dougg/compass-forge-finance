@@ -1,15 +1,19 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { ClientOnly, createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { EntradaDadosModal } from "@/components/EntradaDadosModal";
+import { GraficoBarras, GraficoDispersao } from "@/components/GraficosComparativos";
+import { gerarRelatorioPDF } from "@/lib/relatorio";
 import {
   aplicarPasso,
   diagnosticar,
   formatarMoeda,
   preverPatrimonio,
+  recomendacoes,
   PEARSON_RECEITA_CUSTOS,
   TETOS,
   type EmpresaDados,
 } from "@/lib/sad-model";
+
 
 export const Route = createFileRoute("/")({
   codeSplitGroupings: [["loader", "component"]],
