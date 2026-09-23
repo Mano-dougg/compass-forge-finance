@@ -69,6 +69,22 @@ function Index() {
     setAlerta(r.alerta);
   }
 
+  const recs = useMemo(() => recomendacoes(dados, diagnostico), [dados, diagnostico]);
+
+  function exportar() {
+    try {
+      const ok = gerarRelatorioPDF({ dados, base, diagnostico, projecao });
+      setAlerta(
+        ok
+          ? null
+          : "Não foi possível abrir a janela do relatório. Libere os pop-ups deste site e tente novamente.",
+      );
+    } catch {
+      setAlerta("Falha ao gerar o relatório. Tente novamente em alguns instantes.");
+    }
+  }
+
+
   return (
     <div className="min-h-screen bg-background font-sans text-sm text-foreground">
       <header className="sticky top-0 z-20 border-b border-border bg-background/95">
@@ -100,9 +116,13 @@ function Index() {
             >
               Editar dados
             </button>
-            <button className="rounded-md bg-primary px-3 py-2 text-[13px] font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+            <button
+              onClick={exportar}
+              className="rounded-md bg-primary px-3 py-2 text-[13px] font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            >
               Exportar Relatório
             </button>
+
           </div>
         </div>
       </header>
