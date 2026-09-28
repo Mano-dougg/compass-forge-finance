@@ -355,6 +355,7 @@ function Index() {
                 );
               })}
             </section>
+            </div>
 
             {alerta && (
               <p className="mt-3 rounded-md border border-primary/30 bg-primary/5 px-3 py-2 font-mono text-[11px] leading-relaxed text-primary">
