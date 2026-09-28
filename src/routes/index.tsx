@@ -9,6 +9,8 @@ import {
   formatarMoeda,
   preverPatrimonio,
   recomendacoes,
+  tamanhoCluster,
+  CENTROIDES,
   PEARSON_RECEITA_CUSTOS,
   TETOS,
   type EmpresaDados,
