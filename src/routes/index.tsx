@@ -9,6 +9,8 @@ import {
   formatarMoeda,
   preverPatrimonio,
   recomendacoes,
+  tamanhoCluster,
+  CENTROIDES,
   PEARSON_RECEITA_CUSTOS,
   TETOS,
   type EmpresaDados,
@@ -197,6 +199,36 @@ function Index() {
               <p className="mt-4 text-[12px] leading-relaxed text-muted">
                 {diagnostico.descricao}
               </p>
+              <div className="mt-4 border-t border-border pt-3">
+                <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.15em] text-muted">
+                  Clusters da B3
+                </div>
+                <div className="space-y-1.5">
+                  {CENTROIDES.map((c) => {
+                    const ativo = c.perfil === diagnostico.perfil;
+                    return (
+                      <div
+                        key={c.perfil}
+                        className={`flex items-center justify-between rounded-md px-2.5 py-1.5 text-[12px] ${
+                          ativo
+                            ? "border border-primary/40 bg-primary/10 text-primary"
+                            : "text-muted"
+                        }`}
+                      >
+                        <span className="flex items-center gap-2">
+                          <span
+                            className={`size-1.5 rounded-full ${ativo ? "bg-primary" : "bg-border"}`}
+                          />
+                          {c.perfil}
+                        </span>
+                        <span className="font-mono text-[11px] tabular-nums">
+                          {tamanhoCluster(c.perfil)} empresas
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </section>
 
             <section className="animate-rise rounded-lg border border-primary/30 bg-surface-2 p-5">
