@@ -149,7 +149,7 @@ function Index() {
         </div>
 
         <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-12 flex flex-col gap-4 lg:col-span-4">
+          <div className="col-span-12 flex flex-col gap-4 lg:col-span-3">
             <section className="animate-rise rounded-lg border border-border bg-surface p-5">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
@@ -257,33 +257,51 @@ function Index() {
 
           </div>
 
-          <div className="col-span-12 lg:col-span-8">
-            <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-[300px_minmax(0,1fr)]">
-            <section className="animate-rise sticky top-[72px] rounded-lg border border-primary/30 bg-surface-2 p-5">
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
-                  Projeção · PL
-                </span>
-                <span
-                  className={`font-mono text-[11px] ${variacao < 0 ? "text-negative" : "text-positive"}`}
-                >
-                  {variacao >= 0 ? "+" : ""}
-                  {variacao.toFixed(1).replace(".", ",")}%
-                </span>
-              </div>
-              <div className="mt-3 font-mono text-[1.9rem] font-semibold leading-tight tracking-tight tabular-nums text-foreground">
-                {formatarMoeda(projecao)}
-              </div>
-              <div className="mt-3 flex items-center gap-2 text-[12px] text-muted">
-                <span className="size-1.5 animate-pulse rounded-full bg-positive" /> Atualizado em
-                tempo real · regressão linear
-              </div>
-              <p className="mt-3 border-t border-border/70 pt-3 text-[11px] leading-relaxed text-muted">
-                Margem de variância não explicada de 48,7% (100% − R² 51,3%).
-              </p>
-            </section>
+          <div className="col-span-12 lg:col-span-9">
+            <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
+              <section className="animate-rise col-span-2 rounded-lg border border-primary/30 bg-surface-2 p-5">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
+                    Projeção · Patrimônio Líquido
+                  </span>
+                  <span
+                    className={`font-mono text-[11px] ${variacao < 0 ? "text-negative" : "text-positive"}`}
+                  >
+                    {variacao >= 0 ? "+" : ""}
+                    {variacao.toFixed(1).replace(".", ",")}%
+                  </span>
+                </div>
+                <div className="mt-2 font-mono text-3xl font-semibold leading-tight tracking-tight tabular-nums text-foreground">
+                  {formatarMoeda(projecao)}
+                </div>
+                <div className="mt-2 flex items-center gap-2 text-[11px] text-muted">
+                  <span className="size-1.5 animate-pulse rounded-full bg-positive" /> Tempo real ·
+                  regressão linear · margem não explicada 48,7%
+                </div>
+              </section>
 
-            <section className="animate-rise overflow-hidden rounded-lg border border-border bg-surface">
+              {[
+                { label: "Receita Líquida", valor: dados.receita },
+                { label: "Custos e Despesas", valor: dados.custos },
+              ].map((kpi) => (
+                <section
+                  key={kpi.label}
+                  className="animate-rise rounded-lg border border-border bg-surface p-5"
+                >
+                  <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
+                    {kpi.label}
+                  </span>
+                  <div className="mt-2 font-mono text-xl font-semibold tracking-tight tabular-nums">
+                    {formatarMoeda(kpi.valor)}
+                  </div>
+                  <div className="mt-2 text-[11px] text-muted">
+                    teto Box Plot · {formatarMoeda(TETOS[kpi.label === "Receita Líquida" ? "receita" : "custos"])}
+                  </div>
+                </section>
+              ))}
+            </div>
+
+            <section className="animate-rise mt-4 overflow-hidden rounded-lg border border-border bg-surface">
               <div className="flex h-11 items-center justify-between border-b border-border px-5">
                 <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
                   Linhas de simulação · ajuste por passo
@@ -293,6 +311,12 @@ function Index() {
                 </span>
               </div>
 
+              <div className="hidden grid-cols-[180px_minmax(0,1fr)_190px] items-center gap-4 border-b border-border/70 bg-surface-2/50 px-5 py-2 font-mono text-[10px] uppercase tracking-[0.12em] text-muted md:grid">
+                <span>Variável</span>
+                <span>Ajuste · arraste ou use −/+</span>
+                <span className="text-right">Valor atual</span>
+              </div>
+
               {LINHAS.map((linha, i) => {
                 const valor = dados[linha.chave];
                 const teto = TETOS[linha.chave];
@@ -300,19 +324,14 @@ function Index() {
                 return (
                   <div
                     key={linha.chave}
-                    className={`px-5 py-5 ${
+                    className={`grid grid-cols-1 items-center gap-3 px-5 py-4 md:grid-cols-[180px_minmax(0,1fr)_190px] md:gap-4 ${
                       i < LINHAS.length - 1 ? "border-b border-border/70" : ""
                     }`}
                   >
-                    <div className="mb-3 flex items-baseline justify-between gap-4">
-                      <div>
-                        <div className="text-[13px] font-medium">{linha.label}</div>
-                        <div className="font-mono text-[10px] tracking-[0.1em] text-muted">
-                          {linha.codigo}
-                        </div>
-                      </div>
-                      <div className="font-mono text-2xl font-semibold tracking-tight tabular-nums">
-                        {formatarMoeda(valor)}
+                    <div>
+                      <div className="text-[13px] font-medium">{linha.label}</div>
+                      <div className="font-mono text-[10px] tracking-[0.1em] text-muted">
+                        {linha.codigo} · teto {formatarMoeda(teto)}
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
@@ -346,16 +365,13 @@ function Index() {
                         +
                       </button>
                     </div>
-                    <div className="mt-1.5 flex justify-between font-mono text-[10px] text-muted">
-                      <span>← arraste para diminuir</span>
-                      <span>teto Box Plot: {formatarMoeda(teto)}</span>
-                      <span>arraste para aumentar →</span>
+                    <div className="font-mono text-xl font-semibold tracking-tight tabular-nums md:text-right">
+                      {formatarMoeda(valor)}
                     </div>
                   </div>
                 );
               })}
             </section>
-            </div>
 
             {alerta && (
               <p className="mt-3 rounded-md border border-primary/30 bg-primary/5 px-3 py-2 font-mono text-[11px] leading-relaxed text-primary">
