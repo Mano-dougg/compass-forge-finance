@@ -311,6 +311,12 @@ function Index() {
                 </span>
               </div>
 
+              <div className="hidden grid-cols-[180px_minmax(0,1fr)_190px] items-center gap-4 border-b border-border/70 bg-surface-2/50 px-5 py-2 font-mono text-[10px] uppercase tracking-[0.12em] text-muted md:grid">
+                <span>Variável</span>
+                <span>Ajuste · arraste ou use −/+</span>
+                <span className="text-right">Valor atual</span>
+              </div>
+
               {LINHAS.map((linha, i) => {
                 const valor = dados[linha.chave];
                 const teto = TETOS[linha.chave];
@@ -318,19 +324,14 @@ function Index() {
                 return (
                   <div
                     key={linha.chave}
-                    className={`px-5 py-5 ${
+                    className={`grid grid-cols-1 items-center gap-3 px-5 py-4 md:grid-cols-[180px_minmax(0,1fr)_190px] md:gap-4 ${
                       i < LINHAS.length - 1 ? "border-b border-border/70" : ""
                     }`}
                   >
-                    <div className="mb-3 flex items-baseline justify-between gap-4">
-                      <div>
-                        <div className="text-[13px] font-medium">{linha.label}</div>
-                        <div className="font-mono text-[10px] tracking-[0.1em] text-muted">
-                          {linha.codigo}
-                        </div>
-                      </div>
-                      <div className="font-mono text-2xl font-semibold tracking-tight tabular-nums">
-                        {formatarMoeda(valor)}
+                    <div>
+                      <div className="text-[13px] font-medium">{linha.label}</div>
+                      <div className="font-mono text-[10px] tracking-[0.1em] text-muted">
+                        {linha.codigo} · teto {formatarMoeda(teto)}
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
@@ -364,16 +365,13 @@ function Index() {
                         +
                       </button>
                     </div>
-                    <div className="mt-1.5 flex justify-between font-mono text-[10px] text-muted">
-                      <span>← arraste para diminuir</span>
-                      <span>teto Box Plot: {formatarMoeda(teto)}</span>
-                      <span>arraste para aumentar →</span>
+                    <div className="font-mono text-xl font-semibold tracking-tight tabular-nums md:text-right">
+                      {formatarMoeda(valor)}
                     </div>
                   </div>
                 );
               })}
             </section>
-            </div>
 
             {alerta && (
               <p className="mt-3 rounded-md border border-primary/30 bg-primary/5 px-3 py-2 font-mono text-[11px] leading-relaxed text-primary">
