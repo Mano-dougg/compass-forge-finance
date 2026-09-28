@@ -122,7 +122,7 @@ export function diagnosticar(d: EmpresaDados): Diagnostico {
     distancia: menor,
     scoreEmpresa,
     scoreCluster,
-    empresasNoCluster: 96 + CENTROIDES.indexOf(melhor) * 23,
+    empresasNoCluster: tamanhoCluster(melhor.perfil),
   };
 }
 
