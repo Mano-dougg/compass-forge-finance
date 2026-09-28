@@ -258,7 +258,7 @@ function Index() {
           </div>
 
           <div className="col-span-12 lg:col-span-8">
-            <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-[300px_minmax(0,1fr)]">
+            <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-[300px_minmax(0,1fr)]">
             <section className="animate-rise sticky top-[72px] rounded-lg border border-primary/30 bg-surface-2 p-5">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
