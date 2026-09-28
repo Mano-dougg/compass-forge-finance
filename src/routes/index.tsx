@@ -149,7 +149,7 @@ function Index() {
         </div>
 
         <div className="grid grid-cols-12 gap-4">
-          <div className="col-span-12 flex flex-col gap-4 lg:col-span-4">
+          <div className="col-span-12 flex flex-col gap-4 lg:col-span-3">
             <section className="animate-rise rounded-lg border border-border bg-surface p-5">
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
