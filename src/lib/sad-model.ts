@@ -90,6 +90,8 @@ function indicadores(d: EmpresaDados) {
 
 export function diagnosticar(d: EmpresaDados): Diagnostico {
   const ind = indicadores(d);
+  // Escala normalizada: receita relativa ao teto do Box Plot.
+  const escala = Math.min(1, d.receita / TETOS.receita);
 
   let melhor: Centroide = CENTROIDES[0]!;
   let menor = Number.POSITIVE_INFINITY;
@@ -98,7 +100,8 @@ export function diagnosticar(d: EmpresaDados): Diagnostico {
     const dist = Math.sqrt(
       (ind.margem - c.margem) ** 2 +
         (ind.intensidadeInvestimento - c.intensidadeInvestimento) ** 2 +
-        ((ind.alavancagem - c.alavancagem) / 3) ** 2,
+        ((ind.alavancagem - c.alavancagem) / 3) ** 2 +
+        (escala - c.escala) ** 2,
     );
     if (dist < menor) {
       menor = dist;
