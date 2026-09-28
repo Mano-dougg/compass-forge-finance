@@ -231,26 +231,6 @@ function Index() {
               </div>
             </section>
 
-            <section className="animate-rise rounded-lg border border-primary/30 bg-surface-2 p-5">
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
-                  Projeção · Patrimônio Líquido
-                </span>
-                <span
-                  className={`font-mono text-[11px] ${variacao < 0 ? "text-negative" : "text-positive"}`}
-                >
-                  {variacao >= 0 ? "+" : ""}
-                  {variacao.toFixed(1).replace(".", ",")}%
-                </span>
-              </div>
-              <div className="mt-3 font-mono text-[2.6rem] font-semibold leading-none tracking-tight tabular-nums text-foreground">
-                {formatarMoeda(projecao)}
-              </div>
-              <div className="mt-3 flex items-center gap-2 text-[12px] text-muted">
-                <span className="size-1.5 animate-pulse rounded-full bg-positive" /> Atualizado em
-                tempo real · regressão linear
-              </div>
-            </section>
 
             <section className="animate-rise rounded-lg border border-border bg-surface p-5">
               <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
@@ -278,6 +258,31 @@ function Index() {
           </div>
 
           <div className="col-span-12 lg:col-span-8">
+            <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-[300px_minmax(0,1fr)]">
+            <section className="animate-rise sticky top-[72px] rounded-lg border border-primary/30 bg-surface-2 p-5">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
+                  Projeção · PL
+                </span>
+                <span
+                  className={`font-mono text-[11px] ${variacao < 0 ? "text-negative" : "text-positive"}`}
+                >
+                  {variacao >= 0 ? "+" : ""}
+                  {variacao.toFixed(1).replace(".", ",")}%
+                </span>
+              </div>
+              <div className="mt-3 font-mono text-[1.9rem] font-semibold leading-tight tracking-tight tabular-nums text-foreground">
+                {formatarMoeda(projecao)}
+              </div>
+              <div className="mt-3 flex items-center gap-2 text-[12px] text-muted">
+                <span className="size-1.5 animate-pulse rounded-full bg-positive" /> Atualizado em
+                tempo real · regressão linear
+              </div>
+              <p className="mt-3 border-t border-border/70 pt-3 text-[11px] leading-relaxed text-muted">
+                Margem de variância não explicada de 48,7% (100% − R² 51,3%).
+              </p>
+            </section>
+
             <section className="animate-rise overflow-hidden rounded-lg border border-border bg-surface">
               <div className="flex h-11 items-center justify-between border-b border-border px-5">
                 <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
@@ -350,6 +355,7 @@ function Index() {
                 );
               })}
             </section>
+            </div>
 
             {alerta && (
               <p className="mt-3 rounded-md border border-primary/30 bg-primary/5 px-3 py-2 font-mono text-[11px] leading-relaxed text-primary">
