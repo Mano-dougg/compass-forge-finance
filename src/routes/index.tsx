@@ -231,26 +231,6 @@ function Index() {
               </div>
             </section>
 
-            <section className="animate-rise rounded-lg border border-primary/30 bg-surface-2 p-5">
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
-                  Projeção · Patrimônio Líquido
-                </span>
-                <span
-                  className={`font-mono text-[11px] ${variacao < 0 ? "text-negative" : "text-positive"}`}
-                >
-                  {variacao >= 0 ? "+" : ""}
-                  {variacao.toFixed(1).replace(".", ",")}%
-                </span>
-              </div>
-              <div className="mt-3 font-mono text-[2.6rem] font-semibold leading-none tracking-tight tabular-nums text-foreground">
-                {formatarMoeda(projecao)}
-              </div>
-              <div className="mt-3 flex items-center gap-2 text-[12px] text-muted">
-                <span className="size-1.5 animate-pulse rounded-full bg-positive" /> Atualizado em
-                tempo real · regressão linear
-              </div>
-            </section>
 
             <section className="animate-rise rounded-lg border border-border bg-surface p-5">
               <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
