@@ -25,38 +25,49 @@ type Centroide = {
   margem: number; // (receita - custos) / receita
   intensidadeInvestimento: number; // investimento / receita
   alavancagem: number; // receita / patrimonio
+  escala: number; // receita / teto do Box Plot — separa os gigantes setoriais
 };
 
+/** Os 3 clusters da B3 usados na classificação. */
 export const CENTROIDES: Centroide[] = [
   {
-    perfil: "Conservador",
-    descricao: "Baixa intensidade de investimento e estrutura patrimonial robusta.",
-    margem: 0.22,
-    intensidadeInvestimento: 0.05,
-    alavancagem: 0.7,
+    perfil: "Conservadores",
+    descricao:
+      "Baixa intensidade de investimento e estrutura patrimonial robusta: priorizam preservação de capital e crescimento orgânico.",
+    margem: 0.18,
+    intensidadeInvestimento: 0.04,
+    alavancagem: 0.65,
+    escala: 0.35,
   },
   {
-    perfil: "Expansionista",
-    descricao: "Alto reinvestimento com giro de receita acima do patrimônio.",
+    perfil: "Expansionistas",
+    descricao:
+      "Alto reinvestimento com giro de receita acima do patrimônio: foco em crescimento acelerado e ganho de participação de mercado.",
     margem: 0.3,
-    intensidadeInvestimento: 0.18,
-    alavancagem: 1.2,
+    intensidadeInvestimento: 0.2,
+    alavancagem: 1.1,
+    escala: 0.55,
   },
   {
-    perfil: "Alavancado",
-    descricao: "Receita elevada sobre base patrimonial estreita e margem comprimida.",
-    margem: 0.12,
+    perfil: "Gigantes setoriais",
+    descricao:
+      "Escala de receita dominante no setor, margens estáveis e base patrimonial consolidada: referência de preço e capacidade de investimento.",
+    margem: 0.24,
     intensidadeInvestimento: 0.12,
-    alavancagem: 2.4,
-  },
-  {
-    perfil: "Eficiente",
-    descricao: "Margem superior ao setor com investimento moderado e disciplinado.",
-    margem: 0.38,
-    intensidadeInvestimento: 0.09,
-    alavancagem: 1.0,
+    alavancagem: 1.9,
+    escala: 0.88,
   },
 ];
+
+/** Quantidade de empresas da B3 em cada cluster (mock determinístico). */
+export function tamanhoCluster(perfil: string): number {
+  const tamanhos: Record<string, number> = {
+    Conservadores: 118,
+    Expansionistas: 87,
+    "Gigantes setoriais": 34,
+  };
+  return tamanhos[perfil] ?? 60;
+}
 
 export type Diagnostico = {
   perfil: string;
