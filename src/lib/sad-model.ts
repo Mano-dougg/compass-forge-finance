@@ -126,11 +126,42 @@ export function diagnosticar(d: EmpresaDados): Diagnostico {
   };
 }
 
-/** Regressão múltipla mockada para o Patrimônio Líquido projetado. */
+/**
+ * RF05 (ajustado) · Regressão linear mockada que calcula o Patrimônio Líquido
+ * Teórico (benchmark B3) exigido para suportar o volume de operações simulado.
+ */
 export function preverPatrimonio(d: EmpresaDados): number {
   return (
     d.patrimonio * 1.014 + 0.58 * (d.receita - d.custos) + 0.31 * d.investimento - 1_250_000
   );
+}
+
+export type PosicaoEstrutural = {
+  plReal: number;
+  plTeorico: number;
+  gap: number; // plReal - plTeorico
+  gapPct: number; // gap / plTeorico
+  suficiente: boolean;
+  status: string;
+};
+
+/** Compara o PL Real com o PL Teórico e diagnostica a estrutura de capital. */
+export function posicaoEstrutural(d: EmpresaDados): PosicaoEstrutural {
+  const plTeorico = preverPatrimonio(d);
+  const plReal = d.patrimonio;
+  const gap = plReal - plTeorico;
+  const gapPct = plTeorico !== 0 ? (gap / Math.abs(plTeorico)) * 100 : 0;
+  const suficiente = gap >= 0;
+  return {
+    plReal,
+    plTeorico,
+    gap,
+    gapPct,
+    suficiente,
+    status: suficiente
+      ? "Estrutura de capital suficiente para o volume de operações simulado."
+      : "Estrutura de capital insuficiente: o PL Real está abaixo do benchmark da B3 para este volume de operações.",
+  };
 }
 
 /**
