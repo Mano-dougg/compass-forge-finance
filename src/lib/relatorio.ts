@@ -71,13 +71,16 @@ export function gerarRelatorioPDF(args: {
     ${base ? `<tr><td class="muted">Patrimônio Líquido informado (base)</td><td class="v muted">${escapar(formatarMoeda(base.patrimonio))}</td></tr>` : ""}
   </tbody></table>
 
-  <h2>3 · Projeção de Patrimônio Líquido (regressão múltipla)</h2>
-  <div class="big">${escapar(formatarMoeda(projecao))}</div>
-  ${
-    base
-      ? `<p class="mono muted">variação sobre a base: ${(((projecao - base.patrimonio) / base.patrimonio) * 100).toFixed(1).replace(".", ",")}%</p>`
-      : ""
-  }
+  <h2>3 · Posição Estrutural — PL Real vs. PL Teórico (regressão linear)</h2>
+  <table><tbody>
+    <tr><td>Patrimônio Líquido Real (informado)</td><td class="v">${escapar(formatarMoeda(dados.patrimonio))}</td></tr>
+    <tr><td>Patrimônio Líquido Teórico (benchmark B3)</td><td class="v">${escapar(formatarMoeda(projecao))}</td></tr>
+    <tr><td><strong>Gap estrutural</strong></td><td class="v"><strong>${escapar(formatarMoeda(dados.patrimonio - projecao))} (${projecao !== 0 ? (((dados.patrimonio - projecao) / Math.abs(projecao)) * 100).toFixed(1).replace(".", ",") : "0,0"}%)</strong></td></tr>
+  </tbody></table>
+  <p>${dados.patrimonio >= projecao
+    ? "Diagnóstico: a estrutura de capital é <strong>suficiente</strong> para suportar o volume de operações simulado, segundo os padrões da B3."
+    : "Diagnóstico: a estrutura de capital é <strong>insuficiente</strong> — o PL Real está abaixo do benchmark da B3 para o volume de operações simulado."}</p>
+  ${base ? `<p class="mono muted">Patrimônio Líquido informado na entrada de dados: ${escapar(formatarMoeda(base.patrimonio))}</p>` : ""}
 
   <h2>4 · Comparativo com a média do cluster</h2>
   <table><thead><tr><th>Indicador</th><th class="v">Sua empresa</th><th class="v">Média do cluster</th></tr></thead>

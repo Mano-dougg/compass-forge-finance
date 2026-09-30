@@ -7,6 +7,7 @@ import {
   aplicarPasso,
   diagnosticar,
   formatarMoeda,
+  posicaoEstrutural,
   preverPatrimonio,
   recomendacoes,
   tamanhoCluster,
@@ -62,7 +63,7 @@ function Index() {
 
   const diagnostico = useMemo(() => diagnosticar(dados), [dados]);
   const projecao = useMemo(() => preverPatrimonio(dados), [dados]);
-  const variacao = base ? ((projecao - base.patrimonio) / base.patrimonio) * 100 : 0;
+  const posicao = useMemo(() => posicaoEstrutural(dados), [dados]);
 
   function passo(campo: keyof EmpresaDados, direcao: 1 | -1 | 0, valorDireto?: number) {
     const ajuste = valorDireto === undefined ? PASSO * direcao : valorDireto - dados[campo];
@@ -258,21 +259,63 @@ function Index() {
           </div>
 
           <div className="col-span-12 lg:col-span-9">
-            <section className="animate-rise rounded-lg border border-primary/30 bg-surface-2 p-5">
+            <section
+              className={`animate-rise rounded-lg border p-5 ${
+                posicao.suficiente
+                  ? "border-positive/40 bg-surface-2"
+                  : "border-negative/50 bg-surface-2"
+              }`}
+            >
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
-                  Projeção · Patrimônio Líquido
+                  Posição Estrutural · PL Real vs. PL Teórico
                 </span>
                 <span
-                  className={`font-mono text-[11px] ${variacao < 0 ? "text-negative" : "text-positive"}`}
+                  className={`rounded-full border px-2.5 py-0.5 font-mono text-[11px] ${
+                    posicao.suficiente
+                      ? "border-positive/40 bg-positive/10 text-positive"
+                      : "border-negative/50 bg-negative/10 text-negative"
+                  }`}
                 >
-                  {variacao >= 0 ? "+" : ""}
-                  {variacao.toFixed(1).replace(".", ",")}%
+                  {posicao.suficiente ? "Estrutura suficiente" : "Capital insuficiente"}
                 </span>
               </div>
-              <div className="mt-2 font-mono text-3xl font-semibold leading-tight tracking-tight tabular-nums text-foreground">
-                {formatarMoeda(projecao)}
+              <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+                    PL Real (informado)
+                  </div>
+                  <div className="mt-1 font-mono text-2xl font-semibold tabular-nums text-foreground">
+                    {formatarMoeda(posicao.plReal)}
+                  </div>
+                </div>
+                <div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+                    PL Teórico (benchmark B3)
+                  </div>
+                  <div className="mt-1 font-mono text-2xl font-semibold tabular-nums text-foreground">
+                    {formatarMoeda(posicao.plTeorico)}
+                  </div>
+                </div>
+                <div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+                    Gap estrutural
+                  </div>
+                  <div
+                    className={`mt-1 font-mono text-2xl font-semibold tabular-nums ${
+                      posicao.suficiente ? "text-positive" : "text-negative"
+                    }`}
+                  >
+                    {posicao.gap >= 0 ? "+" : "−"}
+                    {formatarMoeda(Math.abs(posicao.gap)).replace("R$", "R$")}
+                    <span className="ml-2 text-sm font-normal text-muted">
+                      ({posicao.gapPct >= 0 ? "+" : ""}
+                      {posicao.gapPct.toFixed(1).replace(".", ",")}%)
+                    </span>
+                  </div>
+                </div>
               </div>
+              <p className="mt-3 text-[12px] leading-relaxed text-muted">{posicao.status}</p>
               <div className="mt-2 flex items-center gap-2 text-[11px] text-muted">
                 <span className="size-1.5 animate-pulse rounded-full bg-positive" /> Tempo real ·
                 regressão linear · margem não explicada 48,7%
