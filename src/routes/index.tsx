@@ -7,6 +7,7 @@ import {
   aplicarPasso,
   diagnosticar,
   formatarMoeda,
+  posicaoEstrutural,
   preverPatrimonio,
   recomendacoes,
   tamanhoCluster,
