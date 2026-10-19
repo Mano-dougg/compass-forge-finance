@@ -31,7 +31,7 @@ type Centroide = {
 /** Os 3 clusters da B3 usados na classificação. */
 export const CENTROIDES: Centroide[] = [
   {
-    perfil: "Conservadores",
+    perfil: "Conservador",
     descricao:
       "Baixa intensidade de investimento e estrutura patrimonial robusta: priorizam preservação de capital e crescimento orgânico.",
     margem: 0.18,
@@ -40,7 +40,7 @@ export const CENTROIDES: Centroide[] = [
     escala: 0.35,
   },
   {
-    perfil: "Expansionistas",
+    perfil: "Expansivo",
     descricao:
       "Alto reinvestimento com giro de receita acima do patrimônio: foco em crescimento acelerado e ganho de participação de mercado.",
     margem: 0.3,
@@ -49,7 +49,7 @@ export const CENTROIDES: Centroide[] = [
     escala: 0.55,
   },
   {
-    perfil: "Gigantes setoriais",
+    perfil: "Estruturado",
     descricao:
       "Escala de receita dominante no setor, margens estáveis e base patrimonial consolidada: referência de preço e capacidade de investimento.",
     margem: 0.24,
@@ -62,9 +62,9 @@ export const CENTROIDES: Centroide[] = [
 /** Quantidade de empresas da B3 em cada cluster (mock determinístico). */
 export function tamanhoCluster(perfil: string): number {
   const tamanhos: Record<string, number> = {
-    Conservadores: 118,
-    Expansionistas: 87,
-    "Gigantes setoriais": 34,
+    Conservador: 118,
+    Expansivo: 87,
+    Estruturado: 34,
   };
   return tamanhos[perfil] ?? 60;
 }
@@ -93,7 +93,8 @@ export function diagnosticar(d: EmpresaDados): Diagnostico {
   // Escala normalizada: receita relativa ao teto do Box Plot.
   const escala = Math.min(1, d.receita / TETOS.receita);
 
-  let melhor: Centroide = CENTROIDES[0]!;
+  let melhor = CENTROIDES[0];
+  if (!melhor) throw new Error("Nenhum centróide de referência disponível.");
   let menor = Number.POSITIVE_INFINITY;
 
   for (const c of CENTROIDES) {
@@ -225,7 +226,9 @@ export type BarraComparativa = {
 };
 
 function centroideDoPerfil(perfil: string): Centroide {
-  return CENTROIDES.find((c) => c.perfil === perfil) ?? CENTROIDES[0]!;
+  const centroide = CENTROIDES.find((c) => c.perfil === perfil) ?? CENTROIDES[0];
+  if (!centroide) throw new Error("Nenhum centróide de referência disponível.");
+  return centroide;
 }
 
 export function comparativoCluster(d: EmpresaDados, perfil: string): BarraComparativa[] {
