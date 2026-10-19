@@ -258,6 +258,7 @@ function Index() {
             </section>
 
             <Button
+              variant="outline"
               onClick={exportar}
               className="rounded-md border border-primary/40 px-4 py-3 text-[14px] font-medium text-primary transition-colors hover:bg-primary/10"
             >
