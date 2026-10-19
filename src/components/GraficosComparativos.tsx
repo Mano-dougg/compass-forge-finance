@@ -11,7 +11,9 @@ import {
   XAxis,
   YAxis,
   ZAxis,
+  Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
 } from "recharts";
+import { dadosRadar } from "@/lib/benchmarking";
 import {
   comparativoCluster,
   nuvemB3,
@@ -110,7 +112,7 @@ export function GraficoDispersao({
           <Legend
             wrapperStyle={{ fontSize: 11, fontFamily: "var(--font-mono)", color: "var(--muted)" }}
           />
-          <Scatter name="Empresas da B3" data={nuvem} fillOpacity={0.55}>
+          <Scatter name="Amostra simulada" data={nuvem} fillOpacity={0.55}>
             {nuvem.map((p, i) => (
               <Cell
                 key={i}
@@ -123,4 +125,21 @@ export function GraficoDispersao({
       </ResponsiveContainer>
     </div>
   );
+}
+
+export function GraficoRadar({ dados, diagnostico }: { dados: EmpresaDados; diagnostico: Diagnostico }) {
+  const radar = dadosRadar(dados, diagnostico.perfil);
+  return <div className="h-[280px] w-full" aria-label="Radar de competitividade">
+    <ResponsiveContainer width="100%" height="100%">
+      <RadarChart data={radar} margin={{ top: 20, right: 32, bottom: 10, left: 32 }}>
+        <PolarGrid stroke="var(--border)" />
+        <PolarAngleAxis dataKey="indicador" tick={eixo} />
+        <PolarRadiusAxis tick={eixo} domain={[0, Math.max(150, ...radar.map((r) => r.empresa))]} />
+        <Radar dataKey="cluster" name="Referência simulada (100)" stroke="var(--muted)" fill="var(--muted)" fillOpacity={0.12} />
+        <Radar dataKey="empresa" name="Sua empresa (% da referência)" stroke="var(--primary)" fill="var(--primary)" fillOpacity={0.25} />
+        <Tooltip {...tooltipEstilo} formatter={(v: number) => `${v.toFixed(1)}%`} />
+        <Legend wrapperStyle={{ fontSize: 11, fontFamily: "var(--font-mono)" }} />
+      </RadarChart>
+    </ResponsiveContainer>
+  </div>;
 }
