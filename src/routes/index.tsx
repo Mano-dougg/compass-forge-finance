@@ -1,7 +1,10 @@
 import { ClientOnly, createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { EntradaDadosModal } from "@/components/EntradaDadosModal";
-import { GraficoBarras, GraficoDispersao } from "@/components/GraficosComparativos";
+import { GraficoBarras, GraficoDispersao, GraficoRadar } from "@/components/GraficosComparativos";
+import { Button } from "@/components/ui/button";
+import { AnaliseGaps } from "@/components/AnaliseGaps";
+import { REFERENCIA } from "@/lib/benchmarking";
 import { gerarRelatorioPDF } from "@/lib/relatorio";
 import {
   aplicarPasso,
@@ -22,17 +25,19 @@ export const Route = createFileRoute("/")({
   codeSplitGroupings: [["loader", "component"]],
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "ATLAS.SAD — Diagnóstico e Simulação de Cenários" },
       {
         name: "description",
         content:
-          "Informe os dados da sua empresa, receba a classificação de perfil operacional e simule cenários de Patrimônio Líquido em tempo real.",
+          "Informe os dados da sua empresa, receba a classificação de perfil operacional e compare posição estrutural, eficiência de custos e investimento com referências simuladas.",
       },
       { property: "og:title", content: "ATLAS.SAD — Diagnóstico e Simulação de Cenários" },
       {
         property: "og:description",
         content:
-          "Diagnóstico por clusters da B3 e projeção preditiva de Patrimônio Líquido com simulador por passos.",
+          "Benchmarking demonstrativo por clusters, radar de competitividade e diagnóstico estrutural.",
       },
     ],
   }),
@@ -62,6 +67,7 @@ function Index() {
   const [alerta, setAlerta] = useState<string | null>(null);
 
   const diagnostico = useMemo(() => diagnosticar(dados), [dados]);
+  const perfilBase = base ? diagnosticar(base).perfil : null;
   const projecao = useMemo(() => preverPatrimonio(dados), [dados]);
   const posicao = useMemo(() => posicaoEstrutural(dados), [dados]);
 
@@ -111,26 +117,28 @@ function Index() {
           </nav>
           <div className="ml-auto flex items-center gap-4">
             <div className="hidden items-center gap-2 font-mono text-[11px] text-muted sm:flex">
-              <span className="size-1.5 animate-pulse rounded-full bg-positive" /> B3 · ao vivo
+              <span className="size-1.5 animate-pulse rounded-full bg-positive" /> Benchmark simulado
             </div>
-            <button
+            <Button
+              variant="outline"
               onClick={() => setModalAberto(true)}
               className="rounded-md border border-border px-3 py-2 text-[13px] transition-colors hover:border-primary/50 hover:text-foreground"
             >
               Editar dados
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={exportar}
               className="rounded-md bg-primary px-3 py-2 text-[13px] font-medium text-primary-foreground transition-colors hover:bg-primary/90"
             >
               Exportar Relatório
-            </button>
+            </Button>
 
           </div>
         </div>
       </header>
 
       <main className="mx-auto max-w-[1400px] px-6 py-7">
+        <p className="mb-4 border-l-2 border-primary pl-3 text-xs text-muted">{REFERENCIA}</p>
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
           <div>
             <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-primary">
@@ -143,7 +151,7 @@ function Index() {
           <div className="flex items-center gap-3 rounded-md border border-primary/30 bg-primary/5 px-3 py-2">
             <span className="size-2 rounded-full bg-primary" />
             <span className="text-[12px] text-foreground/90">
-              Margem de erro do modelo:{" "}
+              Variância não explicada:{" "}
               <span className="font-mono font-semibold text-primary">48,7%</span> (100% − R² 51,3%)
             </span>
           </div>
@@ -157,7 +165,7 @@ function Index() {
                   Diagnóstico
                 </span>
                 <span className="font-mono text-[11px] text-muted">
-                  Cluster B3 · {diagnostico.empresasNoCluster} empresas
+                  Amostra simulada · {diagnostico.empresasNoCluster} empresas
                 </span>
               </div>
               <div className="mt-4 flex items-baseline gap-3">
@@ -202,7 +210,7 @@ function Index() {
               </p>
               <div className="mt-4 border-t border-border pt-3">
                 <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.15em] text-muted">
-                  Clusters da B3
+                  Perfis de referência
                 </div>
                 <div className="space-y-1.5">
                   {CENTROIDES.map((c) => {
@@ -249,12 +257,12 @@ function Index() {
               </ol>
             </section>
 
-            <button
+            <Button
               onClick={exportar}
               className="rounded-md border border-primary/40 px-4 py-3 text-[14px] font-medium text-primary transition-colors hover:bg-primary/10"
             >
               Exportar Relatório (PDF)
-            </button>
+            </Button>
 
           </div>
 
@@ -285,7 +293,7 @@ function Index() {
                   <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
                     PL Real (informado)
                   </div>
-                  <div className="mt-1 font-mono text-2xl font-semibold tabular-nums text-foreground">
+                  <div className="mt-1 font-mono text-lg font-semibold tabular-nums text-foreground">
                     {formatarMoeda(posicao.plReal)}
                   </div>
                 </div>
@@ -293,7 +301,7 @@ function Index() {
                   <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
                     PL Teórico (benchmark B3)
                   </div>
-                  <div className="mt-1 font-mono text-2xl font-semibold tabular-nums text-foreground">
+                  <div className="mt-1 font-mono text-lg font-semibold tabular-nums text-foreground">
                     {formatarMoeda(posicao.plTeorico)}
                   </div>
                 </div>
@@ -302,7 +310,7 @@ function Index() {
                     Gap estrutural
                   </div>
                   <div
-                    className={`mt-1 font-mono text-2xl font-semibold tabular-nums ${
+                    className={`mt-1 font-mono text-lg font-semibold tabular-nums ${
                       posicao.suficiente ? "text-positive" : "text-negative"
                     }`}
                   >
@@ -322,6 +330,10 @@ function Index() {
               </div>
             </section>
 
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-y border-border py-3" aria-label="Enquadramento de cluster">
+              <p className="text-xs"><span className="text-muted">Perfil informado </span><strong>{perfilBase ?? "Não informado"}</strong><span className="mx-2 text-muted">→</span><span className="text-muted">Simulação </span><strong className="text-primary">{diagnostico.perfil}</strong><span className="ml-3 text-muted">{perfilBase === diagnostico.perfil ? "Sem migração" : perfilBase ? "Migração de perfil" : ""}</span></p>
+              <Button variant="outline" size="sm" disabled={!base} onClick={() => { if (base) { setDados(base); setAlerta(null); } }}>Restaurar dados informados</Button>
+            </div>
             <section className="animate-rise mt-4 overflow-hidden rounded-lg border border-border bg-surface">
               <div className="flex h-11 items-center justify-between border-b border-border px-5">
                 <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
@@ -356,13 +368,14 @@ function Index() {
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <button
+                      <Button
+                        variant="outline" size="icon"
                         onClick={() => passo(linha.chave, -1)}
                         aria-label={`Diminuir ${linha.label}`}
                         className="grid size-8 shrink-0 place-items-center rounded-md border border-border text-muted transition-colors hover:bg-surface-2 hover:text-foreground"
                       >
                         −
-                      </button>
+                      </Button>
                       <input
                         type="range"
                         min={0}
@@ -378,13 +391,14 @@ function Index() {
                           background: `linear-gradient(to right, var(--primary) ${pct}%, var(--surface-2) ${pct}%)`,
                         }}
                       />
-                      <button
+                      <Button
+                        variant="outline" size="icon"
                         onClick={() => passo(linha.chave, 1)}
                         aria-label={`Aumentar ${linha.label}`}
                         className="grid size-8 shrink-0 place-items-center rounded-md border border-border text-muted transition-colors hover:bg-surface-2 hover:text-foreground"
                       >
                         +
-                      </button>
+                      </Button>
                     </div>
                     <div className="font-mono text-xl font-semibold tracking-tight tabular-nums md:text-right">
                       {formatarMoeda(valor)}
@@ -406,8 +420,10 @@ function Index() {
               automaticamente Custos e Despesas. RN02 · Teto de escala do Box Plot aplicável.
             </p>
 
+            <AnaliseGaps dados={dados} perfil={diagnostico.perfil} />
+            <p className="mt-3 text-xs text-muted">Exportação: na janela de impressão, escolha Salvar como PDF.</p>
             <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-2">
-              <section className="animate-rise rounded-lg border border-border bg-surface p-5">
+              <section data-report-chart="Indicadores · empresa e referência simulada" className="animate-rise rounded-lg border border-border bg-surface p-5">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
                     Comparativo · empresa vs. cluster
@@ -419,16 +435,21 @@ function Index() {
                 </ClientOnly>
               </section>
 
-              <section className="animate-rise rounded-lg border border-border bg-surface p-5">
+              <section data-report-chart="Dispersão · amostra simulada" className="animate-rise rounded-lg border border-border bg-surface p-5">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
                     Dispersão · margem × giro do PL
                   </span>
-                  <span className="font-mono text-[10px] text-muted">amostra B3</span>
+                  <span className="font-mono text-[10px] text-muted">amostra simulada</span>
                 </div>
                 <ClientOnly fallback={<div className="h-[240px]" />}>
                   <GraficoDispersao dados={dados} diagnostico={diagnostico} />
                 </ClientOnly>
+              </section>
+              <section data-report-chart="Radar de competitividade · referência = 100%" className="border-t border-border py-5 xl:col-span-2">
+                <h2 className="font-mono text-xs uppercase text-muted">Radar de competitividade</h2>
+                <p className="mt-2 text-xs text-muted">Valores relativos à referência sintética (100%). Custos maiores não significam melhor eficiência.</p>
+                <ClientOnly fallback={<div className="h-[280px]" />}><GraficoRadar dados={dados} diagnostico={diagnostico} /></ClientOnly>
               </section>
             </div>
 

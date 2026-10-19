@@ -2,6 +2,7 @@
 
 import {
   comparativoCluster,
+  diagnosticar as diagnosticarBase,
   formatarMoeda,
   recomendacoes,
   type Diagnostico,
