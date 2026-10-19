@@ -67,7 +67,7 @@ export function gerarRelatorioPDF(args: {
     <div class="mono muted">${escapar(data)}</div>
   </div>
   <p class="muted">${escapar(REFERENCIA)}. Modelo demonstrativo, sem validação de mercado.</p>
-  <p>Perfil informado: <strong>${escapar(base ? diagnosticarBase(base) : diagnostico.perfil)}</strong> · cenário simulado: <strong>${escapar(diagnostico.perfil)}</strong>.</p>
+  <p>Perfil informado: <strong>${escapar(base ? diagnosticarBase(base).perfil : diagnostico.perfil)}</strong> · cenário simulado: <strong>${escapar(diagnostico.perfil)}</strong>.</p>
 
   <h2>1 · Diagnóstico de perfil operacional</h2>
   <p><span class="badge">${escapar(diagnostico.perfil)}</span>
