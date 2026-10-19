@@ -1,9 +1,19 @@
-import { describe, expect, test } from "bun:test";
+import { describe, test } from "node:test";
+import assert from "node:assert/strict";
+function expect(actual: unknown) {
+  return {
+    toBe: (expected: unknown) => assert.equal(actual, expected),
+    toEqual: (expected: unknown) => assert.deepEqual(actual, expected),
+    toBeNull: () => assert.equal(actual, null),
+    toHaveLength: (length: number) => assert.equal((actual as unknown[]).length, length),
+    toBeCloseTo: (expected: number) => assert.ok(typeof actual === "number" && Math.abs(actual - expected) < 0.01),
+  };
+}
 import { analisarGaps, benchmarkCluster, dadosRadar } from "./benchmarking";
 import { aplicarPasso, diagnosticar, posicaoEstrutural, TETOS } from "./sad-model";
 
 describe("RF07–RF12 referências simuladas", () => {
-  test.each(["Conservador", "Expansivo", "Estruturado"])("centróide %s classifica no próprio cluster", (perfil) => {
+  for (const perfil of ["Conservador", "Expansivo", "Estruturado"]) test(`centróide ${perfil} classifica no próprio cluster`, () => {
     expect(diagnosticar(benchmarkCluster(perfil)).perfil).toBe(perfil);
   });
   test("radar compara quatro valores reais com referência normalizada em 100", () => {

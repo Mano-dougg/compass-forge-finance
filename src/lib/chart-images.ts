@@ -24,7 +24,7 @@ export async function capturarGraficos(): Promise<{ titulo: string; url: string 
       const ctx = canvas.getContext("2d"); if (!ctx) continue;
       ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--surface").trim();
       ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      resultados.push({ titulo: container.dataset.reportChart ?? "Comparativo", url: canvas.toDataURL("image/png") });
+      resultados.push({ titulo: container.dataset["reportChart"] ?? "Comparativo", url: canvas.toDataURL("image/png") });
     } finally { URL.revokeObjectURL(url); }
   }
   return resultados;
