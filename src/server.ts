@@ -1,4 +1,6 @@
 import "./lib/error-capture";
+import { handleAuthApi } from "./server/auth-api";
+import type { Database } from "./server/database";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
@@ -47,6 +49,16 @@ function isH3SwallowedErrorBody(body: string): boolean {
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      if (new URL(request.url).pathname.startsWith("/api/")) {
+        const runtime = request as Request & {
+          runtime?: { cloudflare?: { env?: { ATLAS_DB?: Database } } };
+        };
+        const bindings = env as { ATLAS_DB?: Database } | undefined;
+        return handleAuthApi(
+          request,
+          bindings?.ATLAS_DB ?? runtime.runtime?.cloudflare?.env?.ATLAS_DB,
+        );
+      }
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);

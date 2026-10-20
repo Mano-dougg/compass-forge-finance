@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BenchmarkingRouteImport } from './routes/benchmarking'
+import { Route as CadastroRouteImport } from './routes/cadastro'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as PatrimonioFuturoRouteImport } from './routes/patrimonio-futuro'
+import { Route as RelatoriosRouteImport } from './routes/relatorios'
+import { Route as SimuladorRouteImport } from './routes/simulador'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BenchmarkingRoute = BenchmarkingRouteImport.update({
+  id: '/benchmarking',
+  path: '/benchmarking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CadastroRoute = CadastroRouteImport.update({
+  id: '/cadastro',
+  path: '/cadastro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PatrimonioFuturoRoute = PatrimonioFuturoRouteImport.update({
+  id: '/patrimonio-futuro',
+  path: '/patrimonio-futuro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RelatoriosRoute = RelatoriosRouteImport.update({
+  id: '/relatorios',
+  path: '/relatorios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SimuladorRoute = SimuladorRouteImport.update({
+  id: '/simulador',
+  path: '/simulador',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/benchmarking': typeof BenchmarkingRoute
+  '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
+  '/patrimonio-futuro': typeof PatrimonioFuturoRoute
+  '/relatorios': typeof RelatoriosRoute
+  '/simulador': typeof SimuladorRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/benchmarking': typeof BenchmarkingRoute
+  '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
+  '/patrimonio-futuro': typeof PatrimonioFuturoRoute
+  '/relatorios': typeof RelatoriosRoute
+  '/simulador': typeof SimuladorRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/benchmarking': typeof BenchmarkingRoute
+  '/cadastro': typeof CadastroRoute
+  '/login': typeof LoginRoute
+  '/patrimonio-futuro': typeof PatrimonioFuturoRoute
+  '/relatorios': typeof RelatoriosRoute
+  '/simulador': typeof SimuladorRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/benchmarking'
+    | '/cadastro'
+    | '/login'
+    | '/patrimonio-futuro'
+    | '/relatorios'
+    | '/simulador'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/benchmarking'
+    | '/cadastro'
+    | '/login'
+    | '/patrimonio-futuro'
+    | '/relatorios'
+    | '/simulador'
+  id:
+    | '__root__'
+    | '/'
+    | '/benchmarking'
+    | '/cadastro'
+    | '/login'
+    | '/patrimonio-futuro'
+    | '/relatorios'
+    | '/simulador'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BenchmarkingRoute: typeof BenchmarkingRoute
+  CadastroRoute: typeof CadastroRoute
+  LoginRoute: typeof LoginRoute
+  PatrimonioFuturoRoute: typeof PatrimonioFuturoRoute
+  RelatoriosRoute: typeof RelatoriosRoute
+  SimuladorRoute: typeof SimuladorRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/benchmarking': {
+      id: '/benchmarking'
+      path: '/benchmarking'
+      fullPath: '/benchmarking'
+      preLoaderRoute: typeof BenchmarkingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cadastro': {
+      id: '/cadastro'
+      path: '/cadastro'
+      fullPath: '/cadastro'
+      preLoaderRoute: typeof CadastroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/patrimonio-futuro': {
+      id: '/patrimonio-futuro'
+      path: '/patrimonio-futuro'
+      fullPath: '/patrimonio-futuro'
+      preLoaderRoute: typeof PatrimonioFuturoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/relatorios': {
+      id: '/relatorios'
+      path: '/relatorios'
+      fullPath: '/relatorios'
+      preLoaderRoute: typeof RelatoriosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/simulador': {
+      id: '/simulador'
+      path: '/simulador'
+      fullPath: '/simulador'
+      preLoaderRoute: typeof SimuladorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BenchmarkingRoute: BenchmarkingRoute,
+  CadastroRoute: CadastroRoute,
+  LoginRoute: LoginRoute,
+  PatrimonioFuturoRoute: PatrimonioFuturoRoute,
+  RelatoriosRoute: RelatoriosRoute,
+  SimuladorRoute: SimuladorRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

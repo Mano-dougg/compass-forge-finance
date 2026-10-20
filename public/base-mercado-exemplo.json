@@ -1,0 +1,70 @@
+{
+  "fonte": "Exemplo fictício para testar importação; não representa a B3",
+  "setor": "Setor fictício",
+  "periodo": "2025 anual (ilustrativo)",
+  "empresas": [
+    {
+      "empresa": "FICTICIA-1-1",
+      "receita": 95000000.0,
+      "custos": 77900000,
+      "patrimonio": 146153846,
+      "investimento": 3800000
+    },
+    {
+      "empresa": "FICTICIA-1-2",
+      "receita": 100000000.0,
+      "custos": 82000000,
+      "patrimonio": 153846154,
+      "investimento": 4000000
+    },
+    {
+      "empresa": "FICTICIA-1-3",
+      "receita": 105000000.0,
+      "custos": 86100000,
+      "patrimonio": 161538462,
+      "investimento": 4200000
+    },
+    {
+      "empresa": "FICTICIA-2-1",
+      "receita": 380000000.0,
+      "custos": 288800000,
+      "patrimonio": 200000000,
+      "investimento": 45600000
+    },
+    {
+      "empresa": "FICTICIA-2-2",
+      "receita": 400000000.0,
+      "custos": 304000000,
+      "patrimonio": 210526316,
+      "investimento": 48000000
+    },
+    {
+      "empresa": "FICTICIA-2-3",
+      "receita": 420000000.0,
+      "custos": 319200000,
+      "patrimonio": 221052632,
+      "investimento": 50400000
+    },
+    {
+      "empresa": "FICTICIA-3-1",
+      "receita": 617500000.0,
+      "custos": 432250000,
+      "patrimonio": 561363636,
+      "investimento": 123500000
+    },
+    {
+      "empresa": "FICTICIA-3-2",
+      "receita": 650000000.0,
+      "custos": 455000000,
+      "patrimonio": 590909091,
+      "investimento": 130000000
+    },
+    {
+      "empresa": "FICTICIA-3-3",
+      "receita": 682500000.0,
+      "custos": 477750000,
+      "patrimonio": 620454545,
+      "investimento": 136500000
+    }
+  ]
+}

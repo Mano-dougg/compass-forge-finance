@@ -1,0 +1,3371 @@
+{
+  "fonte": "CVM ITR/DFP 2026 · últimos 12 meses (TTM) · amostra da pesquisa",
+  "setor": "Amostra multissetorial da pesquisa",
+  "periodo": "01/07/2025 a 30/06/2026 (12 meses/TTM); PL em 30/06/2026",
+  "dataReferencia": "2026-06-30",
+  "empresas": [
+    {
+      "empresa": "ALGAR TELECOM S/A",
+      "cnpj": "71208516000174",
+      "setor": "Telecomunicações",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 854243000.0,
+      "receita": 2955683000.0,
+      "custos": 2648541000.0,
+      "investimento": 371532000.0,
+      "fluxoInvestimentoOriginal": -371532000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 2955683000.0,
+            "dfp": 2931979000.0,
+            "itrAtual": 1467700000.0,
+            "itrAnterior": 1443996000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -1825680000.0,
+            "dfp": -1883333000.0,
+            "itrAtual": -891243000.0,
+            "itrAnterior": -948896000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -822861000.0,
+            "dfp": -781972000.0,
+            "itrAtual": -418628000.0,
+            "itrAnterior": -377739000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -371532000.0,
+            "dfp": -397603000.0,
+            "itrAtual": -198265000.0,
+            "itrAnterior": -224336000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "AUREN ENERGIA S.A.",
+      "cnpj": "28594234000123",
+      "setor": "Energia Elétrica",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 12752850000.0,
+      "receita": 13469154000.0,
+      "custos": 11864823000.0,
+      "investimento": 1166502000.0,
+      "fluxoInvestimentoOriginal": -1166502000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 13469154000.0,
+            "dfp": 13176952000.0,
+            "itrAtual": 6130034000.0,
+            "itrAnterior": 5837832000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -11710432000.0,
+            "dfp": -11026216000.0,
+            "itrAtual": -5190342000.0,
+            "itrAnterior": -4506126000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -154391000.0,
+            "dfp": 165388000.0,
+            "itrAtual": -650002000.0,
+            "itrAnterior": -330223000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -1166502000.0,
+            "dfp": -1343425000.0,
+            "itrAtual": -82608000.0,
+            "itrAnterior": -259531000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "AZEVEDO & TRAVASSOS ENERGIA S.A.",
+      "cnpj": "52017473000103",
+      "setor": "Exploração. Refino e Distribuição",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 285937000.0,
+      "receita": 3671000.0,
+      "custos": 15507000.0,
+      "investimento": 61936000.0,
+      "fluxoInvestimentoOriginal": -61936000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 3671000.0,
+            "dfp": 2873000.0,
+            "itrAtual": 2015000.0,
+            "itrAnterior": 1217000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -1461000.0,
+            "dfp": -1174000.0,
+            "itrAtual": -1085000.0,
+            "itrAnterior": -798000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -14046000.0,
+            "dfp": -9685000.0,
+            "itrAtual": -6732000.0,
+            "itrAnterior": -2371000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -61936000.0,
+            "dfp": -65768000.0,
+            "itrAtual": -5582000.0,
+            "itrAnterior": -9414000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "AZZAS 2154 S.A.",
+      "cnpj": "16590234000176",
+      "setor": "Tecidos. Vestuário e Calçados",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 8040341000.0,
+      "receita": 11365137000.0,
+      "custos": 10605307000.0,
+      "investimento": 524773000.0,
+      "fluxoInvestimentoOriginal": -524773000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 2
+        },
+        "componentes": {
+          "receita": {
+            "valor": 11365137000.0,
+            "dfp": 11819492000.0,
+            "itrAtual": 5143568000.0,
+            "itrAnterior": 5597923000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 2
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -5159340000.0,
+            "dfp": -5324072000.0,
+            "itrAtual": -2335923000.0,
+            "itrAnterior": -2500655000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 2
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -5445967000.0,
+            "dfp": -5357228000.0,
+            "itrAtual": -2548048000.0,
+            "itrAnterior": -2459309000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 2
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -524773000.0,
+            "dfp": -534387000.0,
+            "itrAtual": -231775000.0,
+            "itrAnterior": -241389000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 2
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "BOA SAFRA SEMENTES S.A.",
+      "cnpj": "10807374000177",
+      "setor": "Agricultura",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 1352502000.0,
+      "receita": 2622835000.0,
+      "custos": 2483027000.0,
+      "investimento": 961200000.0,
+      "fluxoInvestimentoOriginal": -961200000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 2622835000.0,
+            "dfp": 2622416000.0,
+            "itrAtual": 256760000.0,
+            "itrAnterior": 256341000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 2
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -2315499000.0,
+            "dfp": -2352554000.0,
+            "itrAtual": -159941000.0,
+            "itrAnterior": -196996000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 2
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -167528000.0,
+            "dfp": -177581000.0,
+            "itrAtual": -55547000.0,
+            "itrAnterior": -65600000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 2
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -961200000.0,
+            "dfp": -354280000.0,
+            "itrAtual": -803099000.0,
+            "itrAnterior": -196179000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 2
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "BRASIL TECNOLOGIA E PARTICIPAÇÕES S.A. ",
+      "cnpj": "35764708000101",
+      "setor": "Computadores e Equipamentos",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 786571000.0,
+      "receita": 1996190000.0,
+      "custos": 1524994000.0,
+      "investimento": 753262000.0,
+      "fluxoInvestimentoOriginal": -753262000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 1996190000.0,
+            "dfp": 1754404000.0,
+            "itrAtual": 1048654000.0,
+            "itrAnterior": 806868000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -746434000.0,
+            "dfp": -645048000.0,
+            "itrAtual": -406654000.0,
+            "itrAnterior": -305268000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -778560000.0,
+            "dfp": -629043000.0,
+            "itrAtual": -410909000.0,
+            "itrAnterior": -261392000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -753262000.0,
+            "dfp": -997433000.0,
+            "itrAtual": -232115000.0,
+            "itrAnterior": -476286000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "CIA ELETRICIDADE EST. DA BAHIA - COELBA",
+      "cnpj": "15139629000194",
+      "setor": "Energia Elétrica",
+      "escopo": "ind",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 8315000000.0,
+      "receita": 19386000000.0,
+      "custos": 15091000000.0,
+      "investimento": 4413000000.0,
+      "fluxoInvestimentoOriginal": -4413000000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 19386000000.0,
+            "dfp": 18380000000.0,
+            "itrAtual": 9795000000.0,
+            "itrAnterior": 8789000000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -13878000000.0,
+            "dfp": -13002000000.0,
+            "itrAtual": -6880000000.0,
+            "itrAnterior": -6004000000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -1213000000.0,
+            "dfp": -1158000000.0,
+            "itrAtual": -628000000.0,
+            "itrAnterior": -573000000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -4413000000.0,
+            "dfp": -4177000000.0,
+            "itrAtual": -2003000000.0,
+            "itrAnterior": -1767000000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "CIA ENERGETICA DE PERNAMBUCO - CELPE",
+      "cnpj": "10835932000108",
+      "setor": "Energia Elétrica",
+      "escopo": "ind",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 4150000000.0,
+      "receita": 9289000000.0,
+      "custos": 7896000000.0,
+      "investimento": 1455000000.0,
+      "fluxoInvestimentoOriginal": -1455000000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 9289000000.0,
+            "dfp": 8681000000.0,
+            "itrAtual": 4689000000.0,
+            "itrAnterior": 4081000000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -7283000000.0,
+            "dfp": -6753000000.0,
+            "itrAtual": -3657000000.0,
+            "itrAnterior": -3127000000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -613000000.0,
+            "dfp": -578000000.0,
+            "itrAtual": -361000000.0,
+            "itrAnterior": -326000000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -1455000000.0,
+            "dfp": -1101000000.0,
+            "itrAtual": -843000000.0,
+            "itrAnterior": -489000000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "CIA MELHORAMENTOS DE SAO PAULO",
+      "cnpj": "60730348000166",
+      "setor": "Papel e Celulose",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 776777000.0,
+      "receita": 176343000.0,
+      "custos": 204262000.0,
+      "investimento": 58280000.0,
+      "fluxoInvestimentoOriginal": -58280000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 176343000.0,
+            "dfp": 177091000.0,
+            "itrAtual": 86512000.0,
+            "itrAnterior": 87260000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -132517000.0,
+            "dfp": -115212000.0,
+            "itrAtual": -70119000.0,
+            "itrAnterior": -52814000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -71745000.0,
+            "dfp": -74996000.0,
+            "itrAtual": -37511000.0,
+            "itrAnterior": -40762000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -58280000.0,
+            "dfp": -90078000.0,
+            "itrAtual": -2986000.0,
+            "itrAnterior": -34784000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "COMPANHIA BRASILEIRA DE ALUMÍNIO",
+      "cnpj": "61409892000173",
+      "setor": "Minerais Metálicos",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 5291514000.0,
+      "receita": 9321968000.0,
+      "custos": 8358252000.0,
+      "investimento": 580152000.0,
+      "fluxoInvestimentoOriginal": -580152000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 9321968000.0,
+            "dfp": 8788797000.0,
+            "itrAtual": 4875975000.0,
+            "itrAnterior": 4342804000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -8047407000.0,
+            "dfp": -8047183000.0,
+            "itrAtual": -3898505000.0,
+            "itrAnterior": -3898281000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -310845000.0,
+            "dfp": -162807000.0,
+            "itrAtual": -154829000.0,
+            "itrAnterior": -6791000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -580152000.0,
+            "dfp": -332414000.0,
+            "itrAtual": -242306000.0,
+            "itrAnterior": 5432000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "CONC SIST ANHANG-BANDEIRANT S.A. AUTOBAN",
+      "cnpj": "02451848000162",
+      "setor": "Exploração de Rodovias",
+      "escopo": "ind",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 917000000.0,
+      "receita": 3965224000.0,
+      "custos": 1514429000.0,
+      "investimento": 264677000.0,
+      "fluxoInvestimentoOriginal": -264677000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 3965224000.0,
+            "dfp": 3793596000.0,
+            "itrAtual": 1931000000.0,
+            "itrAnterior": 1759372000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -1314205000.0,
+            "dfp": -1109549000.0,
+            "itrAtual": -664000000.0,
+            "itrAnterior": -459344000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -200224000.0,
+            "dfp": -216084000.0,
+            "itrAtual": -91000000.0,
+            "itrAnterior": -106860000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -264677000.0,
+            "dfp": -335924000.0,
+            "itrAtual": -106000000.0,
+            "itrAnterior": -177247000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "CONCESSIONÁRIA DE RODOVIA SUL-MATOGROSSENSE S.A.",
+      "cnpj": "19642306000170",
+      "setor": "Exploração de Rodovias",
+      "escopo": "ind",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 624000000.0,
+      "receita": 1001335000.0,
+      "custos": 846559000.0,
+      "investimento": 1409209000.0,
+      "fluxoInvestimentoOriginal": -1409209000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 1001335000.0,
+            "dfp": 730483000.0,
+            "itrAtual": 495000000.0,
+            "itrAnterior": 224148000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -778944000.0,
+            "dfp": -518131000.0,
+            "itrAtual": -390000000.0,
+            "itrAnterior": -129187000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -67615000.0,
+            "dfp": -56189000.0,
+            "itrAtual": -38000000.0,
+            "itrAnterior": -26574000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -1409209000.0,
+            "dfp": -391884000.0,
+            "itrAtual": -1028000000.0,
+            "itrAnterior": -10675000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "CSN MINERAÇÃO S.A.",
+      "cnpj": "08902291000115",
+      "setor": "Minerais Metálicos",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 7339601000.0,
+      "receita": 17392874000.0,
+      "custos": 12750850000.0,
+      "investimento": 5924681000.0,
+      "fluxoInvestimentoOriginal": -5924681000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 17392874000.0,
+            "dfp": 18025121000.0,
+            "itrAtual": 7317337000.0,
+            "itrAnterior": 7949584000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 2
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -9375734000.0,
+            "dfp": -9850577000.0,
+            "itrAtual": -4140733000.0,
+            "itrAnterior": -4615576000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 2
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -3375116000.0,
+            "dfp": -3163401000.0,
+            "itrAtual": -1489867000.0,
+            "itrAnterior": -1278152000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 2
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -5924681000.0,
+            "dfp": -5718956000.0,
+            "itrAtual": -1083532000.0,
+            "itrAnterior": -877807000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 2
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "ENERGISA SERGIPE - DIST. DE ENERGIA S.A.",
+      "cnpj": "13017462000163",
+      "setor": "Energia Elétrica",
+      "escopo": "ind",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 922466000.0,
+      "receita": 2285440000.0,
+      "custos": 1748112000.0,
+      "investimento": 601003000.0,
+      "fluxoInvestimentoOriginal": -601003000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 2285440000.0,
+            "dfp": 2201946000.0,
+            "itrAtual": 1139407000.0,
+            "itrAnterior": 1055913000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -1601615000.0,
+            "dfp": -1525156000.0,
+            "itrAtual": -816502000.0,
+            "itrAnterior": -740043000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -146497000.0,
+            "dfp": -137512000.0,
+            "itrAtual": -66776000.0,
+            "itrAnterior": -57791000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -601003000.0,
+            "dfp": -524188000.0,
+            "itrAtual": -112850000.0,
+            "itrAnterior": -36035000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "INC EMPREENDIMENTOS IMOBILIÁRIOS S.A.",
+      "cnpj": "09611768000176",
+      "setor": "Incorporações",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 280501000.0,
+      "receita": 641546000.0,
+      "custos": 574355000.0,
+      "investimento": 13535000.0,
+      "fluxoInvestimentoOriginal": -13535000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 641546000.0,
+            "dfp": 560645000.0,
+            "itrAtual": 338020000.0,
+            "itrAnterior": 257119000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -426463000.0,
+            "dfp": -379420000.0,
+            "itrAtual": -225738000.0,
+            "itrAnterior": -178695000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -147892000.0,
+            "dfp": -104457000.0,
+            "itrAtual": -80330000.0,
+            "itrAnterior": -36895000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -13535000.0,
+            "dfp": 13004000.0,
+            "itrAtual": -4230000.0,
+            "itrAnterior": 22309000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "JHSF PARTICIPACOES S.A.",
+      "cnpj": "08294224000165",
+      "setor": "Incorporações",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 7898068000.0,
+      "receita": 4052742000.0,
+      "custos": 1486531000.0,
+      "investimento": 2531708000.0,
+      "fluxoInvestimentoOriginal": -2531708000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 4052742000.0,
+            "dfp": 3479142000.0,
+            "itrAtual": 1472980000.0,
+            "itrAnterior": 899380000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -1489873000.0,
+            "dfp": -1271981000.0,
+            "itrAtual": -557715000.0,
+            "itrAnterior": -339823000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": 3342000.0,
+            "dfp": 253769000.0,
+            "itrAtual": 95158000.0,
+            "itrAnterior": 345585000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -2531708000.0,
+            "dfp": -1750069000.0,
+            "itrAtual": -1196806000.0,
+            "itrAnterior": -415167000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "METISA METALURGICA TIMBOENSE S.A.",
+      "cnpj": "86375425000109",
+      "setor": "Máq. e Equip. Construção e Agrícolas",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 467179799.0,
+      "receita": 501730942.0,
+      "custos": 477607197.0,
+      "investimento": 34691288.0,
+      "fluxoInvestimentoOriginal": -34691288.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 501730942.0,
+            "dfp": 532602422.0,
+            "itrAtual": 238372894.0,
+            "itrAnterior": 269244374.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -395442547.0,
+            "dfp": -412590423.0,
+            "itrAtual": -189423194.0,
+            "itrAnterior": -206571070.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -82164650.0,
+            "dfp": -86528805.0,
+            "itrAtual": -39965612.0,
+            "itrAnterior": -44329767.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -34691288.0,
+            "dfp": -28230196.0,
+            "itrAtual": -16045610.0,
+            "itrAnterior": -9584518.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "MPM CORPÓREOS S.A.",
+      "cnpj": "26659061000159",
+      "setor": "Produtos de Uso Pessoal",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 861973000.0,
+      "receita": 1100045000.0,
+      "custos": 939694000.0,
+      "investimento": 83410000.0,
+      "fluxoInvestimentoOriginal": -83410000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 1100045000.0,
+            "dfp": 1092985000.0,
+            "itrAtual": 545638000.0,
+            "itrAnterior": 538578000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -727917000.0,
+            "dfp": -720250000.0,
+            "itrAtual": -359487000.0,
+            "itrAnterior": -351820000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -211777000.0,
+            "dfp": -201070000.0,
+            "itrAtual": -102424000.0,
+            "itrAnterior": -91717000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -83410000.0,
+            "dfp": -52056000.0,
+            "itrAtual": -49907000.0,
+            "itrAnterior": -18553000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "PACAEMBU CONSTRUTORA S.A.",
+      "cnpj": "96298013000168",
+      "setor": "Construção Civil",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 1008338000.0,
+      "receita": 2586408000.0,
+      "custos": 2161537000.0,
+      "investimento": 104212000.0,
+      "fluxoInvestimentoOriginal": -104212000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 2586408000.0,
+            "dfp": 2319828000.0,
+            "itrAtual": 1256802000.0,
+            "itrAnterior": 990222000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -1768024000.0,
+            "dfp": -1603736000.0,
+            "itrAtual": -859026000.0,
+            "itrAnterior": -694738000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -393513000.0,
+            "dfp": -372426000.0,
+            "itrAtual": -177840000.0,
+            "itrAnterior": -156753000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -104212000.0,
+            "dfp": -73563000.0,
+            "itrAtual": -33801000.0,
+            "itrAnterior": -3152000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "POSITIVO TECNOLOGIA S.A.",
+      "cnpj": "81243735000148",
+      "setor": "Computadores e Equipamentos",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 1560822000.0,
+      "receita": 3477364000.0,
+      "custos": 3222315000.0,
+      "investimento": 199929000.0,
+      "fluxoInvestimentoOriginal": -199929000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 3477364000.0,
+            "dfp": 3354898000.0,
+            "itrAtual": 1680123000.0,
+            "itrAnterior": 1557657000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -2608272000.0,
+            "dfp": -2511831000.0,
+            "itrAtual": -1278443000.0,
+            "itrAnterior": -1182002000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -614043000.0,
+            "dfp": -613065000.0,
+            "itrAtual": -287637000.0,
+            "itrAnterior": -286659000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -199929000.0,
+            "dfp": -177066000.0,
+            "itrAtual": -82754000.0,
+            "itrAnterior": -59891000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "PRIO FORTE S.A.",
+      "cnpj": "08926302000105",
+      "setor": "Exploração. Refino e Distribuição",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 24120694000.0,
+      "receita": 13954767000.0,
+      "custos": 8841752000.0,
+      "investimento": 5656484000.0,
+      "fluxoInvestimentoOriginal": -5656484000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 13954767000.0,
+            "dfp": 10177997000.0,
+            "itrAtual": 9883228000.0,
+            "itrAnterior": 6106458000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -8345654000.0,
+            "dfp": -6436556000.0,
+            "itrAtual": -5824425000.0,
+            "itrAnterior": -3915327000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -496098000.0,
+            "dfp": -585223000.0,
+            "itrAtual": -291362000.0,
+            "itrAnterior": -380487000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -5656484000.0,
+            "dfp": -5611016000.0,
+            "itrAtual": -2602165000.0,
+            "itrAnterior": -2556697000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MD",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MD",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MD",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "RODOVIAS DO BRASIL HOLDING S.A.",
+      "cnpj": "41508382000146",
+      "setor": "Transporte Rodoviário",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 414424000.0,
+      "receita": 1429578000.0,
+      "custos": 635451000.0,
+      "investimento": 162895000.0,
+      "fluxoInvestimentoOriginal": -162895000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 1429578000.0,
+            "dfp": 1371224000.0,
+            "itrAtual": 679067000.0,
+            "itrAnterior": 620713000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -587853000.0,
+            "dfp": -537149000.0,
+            "itrAtual": -280104000.0,
+            "itrAnterior": -229400000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -47598000.0,
+            "dfp": -50263000.0,
+            "itrAtual": -24909000.0,
+            "itrAnterior": -27574000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -162895000.0,
+            "dfp": -128298000.0,
+            "itrAtual": -68238000.0,
+            "itrAnterior": -33641000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "SBF COMÉRCIO DE PRODUTOS ESPORTIVOS S.A.",
+      "cnpj": "06347409000165",
+      "setor": "Tecidos. Vestuário e Calçados",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 3529806000.0,
+      "receita": 13492605000.0,
+      "custos": 12537424000.0,
+      "investimento": 539680000.0,
+      "fluxoInvestimentoOriginal": -539680000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 13492605000.0,
+            "dfp": 12088651000.0,
+            "itrAtual": 6370478000.0,
+            "itrAnterior": 4966524000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -9275057000.0,
+            "dfp": -8118698000.0,
+            "itrAtual": -4365179000.0,
+            "itrAnterior": -3208820000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -3262367000.0,
+            "dfp": -3057064000.0,
+            "itrAtual": -1600434000.0,
+            "itrAnterior": -1395131000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -539680000.0,
+            "dfp": -546409000.0,
+            "itrAtual": -167865000.0,
+            "itrAnterior": -174594000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "TERRA SANTA PROPRIEDADES AGRICOLAS S.A.",
+      "cnpj": "40337136000106",
+      "setor": "Agricultura",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 653550000.0,
+      "receita": 90740000.0,
+      "custos": 118765000.0,
+      "investimento": 1874000.0,
+      "fluxoInvestimentoOriginal": -1874000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 90740000.0,
+            "dfp": 96574000.0,
+            "itrAtual": 46027000.0,
+            "itrAnterior": 51861000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -4178000.0,
+            "dfp": -4282000.0,
+            "itrAtual": -2131000.0,
+            "itrAnterior": -2235000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -114587000.0,
+            "dfp": -93279000.0,
+            "itrAtual": -46263000.0,
+            "itrAnterior": -24955000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -1874000.0,
+            "dfp": 2219000.0,
+            "itrAtual": -377000.0,
+            "itrAnterior": 3716000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "TIM BRASIL SERVIÇOS E PARTICIPAÇÕES S.A.",
+      "cnpj": "02600854000134",
+      "setor": "Telecomunicações",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 20577667000.0,
+      "receita": 27402761000.0,
+      "custos": 20687583000.0,
+      "investimento": 3792979000.0,
+      "fluxoInvestimentoOriginal": -3792979000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 27402761000.0,
+            "dfp": 26624721000.0,
+            "itrAtual": 13771614000.0,
+            "itrAnterior": 12993574000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -12447779000.0,
+            "dfp": -12266584000.0,
+            "itrAtual": -6352317000.0,
+            "itrAnterior": -6171122000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -8239804000.0,
+            "dfp": -8016998000.0,
+            "itrAtual": -4205865000.0,
+            "itrAnterior": -3983059000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -3792979000.0,
+            "dfp": -4555006000.0,
+            "itrAtual": -1347462000.0,
+            "itrAnterior": -2109489000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "TIM S.A.",
+      "cnpj": "02421421000111",
+      "setor": "Telecomunicações",
+      "escopo": "ind",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 25015378000.0,
+      "receita": 27300213000.0,
+      "custos": 20594793000.0,
+      "investimento": 4161769000.0,
+      "fluxoInvestimentoOriginal": -4161769000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 27300213000.0,
+            "dfp": 26624721000.0,
+            "itrAtual": 13669066000.0,
+            "itrAnterior": 12993574000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -12362041000.0,
+            "dfp": -12266584000.0,
+            "itrAtual": -6266580000.0,
+            "itrAnterior": -6171123000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -8232752000.0,
+            "dfp": -8014105000.0,
+            "itrAtual": -4200445000.0,
+            "itrAnterior": -3981798000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -4161769000.0,
+            "dfp": -3560621000.0,
+            "itrAtual": -2734360000.0,
+            "itrAnterior": -2133212000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "TRISUL S.A.",
+      "cnpj": "08811643000127",
+      "setor": "Incorporações",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 1530313000.0,
+      "receita": 1526349000.0,
+      "custos": 1328281000.0,
+      "investimento": 58368000.0,
+      "fluxoInvestimentoOriginal": -58368000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 1526349000.0,
+            "dfp": 1378596000.0,
+            "itrAtual": 713403000.0,
+            "itrAnterior": 565650000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -1105946000.0,
+            "dfp": -974066000.0,
+            "itrAtual": -519628000.0,
+            "itrAnterior": -387748000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -222335000.0,
+            "dfp": -196330000.0,
+            "itrAtual": -113920000.0,
+            "itrAnterior": -87915000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -58368000.0,
+            "dfp": -31727000.0,
+            "itrAtual": -19659000.0,
+            "itrAnterior": 6982000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "UNIDAS LOCADORAS S.A.",
+      "cnpj": "45736131000170",
+      "setor": "Automóveis e Motocicletas",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 2135547000.0,
+      "receita": 4495413000.0,
+      "custos": 3890920000.0,
+      "investimento": 105221000.0,
+      "fluxoInvestimentoOriginal": -105221000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 4495413000.0,
+            "dfp": 4201733000.0,
+            "itrAtual": 2198560000.0,
+            "itrAnterior": 1904880000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -3324955000.0,
+            "dfp": -3131252000.0,
+            "itrAtual": -1606067000.0,
+            "itrAnterior": -1412364000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -565965000.0,
+            "dfp": -532681000.0,
+            "itrAtual": -293079000.0,
+            "itrAnterior": -259795000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -105221000.0,
+            "dfp": -109831000.0,
+            "itrAtual": -43546000.0,
+            "itrAnterior": -48156000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "empresa": "UNIPAR CARBOCLORO S.A.",
+      "cnpj": "33958695000178",
+      "setor": "Químicos Diversos",
+      "escopo": "con",
+      "dataReferencia": "2026-06-30",
+      "patrimonio": 2010867000.0,
+      "receita": 5233765000.0,
+      "custos": 4622250000.0,
+      "investimento": 864863000.0,
+      "fluxoInvestimentoOriginal": -864863000.0,
+      "conciliacao": {
+        "patrimonio": {
+          "demonstrativo": "BPP",
+          "conta": "2.03",
+          "versao": 1
+        },
+        "componentes": {
+          "receita": {
+            "valor": 5233765000.0,
+            "dfp": 5142676000.0,
+            "itrAtual": 2733910000.0,
+            "itrAnterior": 2642821000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.01",
+                "versao": 1
+              }
+            ]
+          },
+          "custo": {
+            "valor": -3830502000.0,
+            "dfp": -3677641000.0,
+            "itrAtual": -1982135000.0,
+            "itrAnterior": -1829274000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.02",
+                "versao": 1
+              }
+            ]
+          },
+          "despesa": {
+            "valor": -791748000.0,
+            "dfp": -671508000.0,
+            "itrAtual": -366327000.0,
+            "itrAnterior": -246087000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DRE",
+                "conta": "3.04",
+                "versao": 1
+              }
+            ]
+          },
+          "fluxo": {
+            "valor": -864863000.0,
+            "dfp": -811519000.0,
+            "itrAtual": -469758000.0,
+            "itrAnterior": -416414000.0,
+            "documentos": [
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              },
+              {
+                "demonstrativo": "DFC_MI",
+                "conta": "6.02",
+                "versao": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "excluidas": [
+    {
+      "empresa": "ALFA HOLDINGS S.A.",
+      "cnpj": "17167396000169",
+      "motivo": "con: ausentes dfp/receita, itrAtual/receita, itrAnterior/receita, dfp/custo, itrAtual/custo, itrAnterior/custo, dfp/despesa, itrAtual/despesa, itrAnterior/despesa, dfp/fluxo, itrAtual/fluxo, itrAnterior/fluxo, itrAtual/patrimonio; ind: PL/receita não positivos ou custos incompatíveis"
+    },
+    {
+      "empresa": "FERREIRA GOMES ENERGIA S.A.",
+      "cnpj": "12489315000123",
+      "motivo": "con: ausentes dfp/receita, itrAtual/receita, itrAnterior/receita, dfp/custo, itrAtual/custo, itrAnterior/custo, dfp/despesa, itrAtual/despesa, itrAnterior/despesa, dfp/fluxo, itrAtual/fluxo, itrAnterior/fluxo, itrAtual/patrimonio; ind: ausentes dfp/receita, dfp/custo, dfp/despesa, dfp/fluxo"
+    },
+    {
+      "empresa": "FERTILIZANTES HERINGER S.A.",
+      "cnpj": "22266175000188",
+      "motivo": "con: ausentes dfp/receita, itrAtual/receita, itrAnterior/receita, dfp/custo, itrAtual/custo, itrAnterior/custo, dfp/despesa, itrAtual/despesa, itrAnterior/despesa, dfp/fluxo, itrAtual/fluxo, itrAnterior/fluxo, itrAtual/patrimonio; ind: PL/receita não positivos ou custos incompatíveis"
+    },
+    {
+      "empresa": "INVESTIMENTOS BEMGE S.A.",
+      "cnpj": "01548981000179",
+      "motivo": "con: ausentes dfp/receita, itrAtual/receita, itrAnterior/receita, dfp/custo, itrAtual/custo, itrAnterior/custo, dfp/despesa, itrAtual/despesa, itrAnterior/despesa, dfp/fluxo, itrAtual/fluxo, itrAnterior/fluxo, itrAtual/patrimonio; ind: PL/receita não positivos ou custos incompatíveis"
+    },
+    {
+      "empresa": "ITAUSA S.A.",
+      "cnpj": "61532644000115",
+      "motivo": "con: PL/receita não positivos ou custos incompatíveis; ind: PL/receita não positivos ou custos incompatíveis"
+    },
+    {
+      "empresa": "ROSSI RESIDENCIAL S.A.",
+      "cnpj": "61065751000180",
+      "motivo": "con: PL/receita não positivos ou custos incompatíveis; ind: PL/receita não positivos ou custos incompatíveis"
+    }
+  ],
+  "metodologia": "Receita, custos e fluxo: DFP do ano anterior + ITR acumulado atual − ITR acumulado do mesmo período anterior. Patrimônio na data de corte. Valores em reais nominais; sem extrapolação do semestre.",
+  "origem": {
+    "repositorio": "https://github.com/Mano-dougg/metodos-estatisticos-scripts",
+    "commitPesquisa": "6b9d085d1e250a44b9c217264a523d92e4f04be6",
+    "coletadoEm": "2026-10-19T21:22:39.356987+00:00",
+    "arquivos": [
+      {
+        "tipo": "ITR",
+        "ano": 2026,
+        "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2026.zip",
+        "sha256": "56a82941d1c381b421a8075a584b498e4f183986ad526546e14682422773e6a1"
+      },
+      {
+        "tipo": "DFP",
+        "ano": 2025,
+        "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2025.zip",
+        "sha256": "5e273568aae97d1301c852e9f5d2ed024584beab31ee82a65eff47478ffdf34f"
+      },
+      {
+        "tipo": "ITR",
+        "ano": 2025,
+        "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/ITR/DADOS/itr_cia_aberta_2025.zip",
+        "sha256": "91d400df6f832c33a2b3cc1f233b06883037ad0843942aeb8e96d312123004d2"
+      }
+    ],
+    "periodosAvaliados": [
+      {
+        "data": "2026-06-30",
+        "incluidas": 29
+      }
+    ],
+    "selecionadas": 35,
+    "incluidas": 29,
+    "excluidas": 6,
+    "setores": {
+      "Telecomunicações": 3,
+      "Energia Elétrica": 4,
+      "Exploração. Refino e Distribuição": 2,
+      "Tecidos. Vestuário e Calçados": 2,
+      "Agricultura": 2,
+      "Computadores e Equipamentos": 2,
+      "Papel e Celulose": 1,
+      "Minerais Metálicos": 2,
+      "Exploração de Rodovias": 2,
+      "Incorporações": 3,
+      "Máq. e Equip. Construção e Agrícolas": 1,
+      "Produtos de Uso Pessoal": 1,
+      "Construção Civil": 1,
+      "Transporte Rodoviário": 1,
+      "Automóveis e Motocicletas": 1,
+      "Químicos Diversos": 1
+    },
+    "regras": "Mesmo CNPJ e escopo em todas as parcelas; última versão de cada documento; períodos acumulados desde 01/01. Custos = -(3.02+3.04); investimento = max(0, -fluxo TTM 6.02), saída líquida e não CAPEX bruto. Ausências não são imputadas. Não é classificação oficial de risco."
+  }
+}

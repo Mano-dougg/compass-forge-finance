@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  formatarNumero,
-  parseNumero,
-  TETOS,
-  type EmpresaDados,
-} from "@/lib/sad-model";
+import { formatarNumero, parseNumero, TETOS, type EmpresaDados } from "@/lib/sad-model";
 
 const CAMPOS: { chave: keyof EmpresaDados; label: string }[] = [
   { chave: "receita", label: "Receita Líquida (R$)" },
@@ -17,9 +12,10 @@ type Props = {
   inicial: EmpresaDados;
   onCancelar?: (() => void) | undefined;
   onConfirmar: (dados: EmpresaDados) => void;
+  tetos?: EmpresaDados;
 };
 
-export function EntradaDadosModal({ inicial, onCancelar, onConfirmar }: Props) {
+export function EntradaDadosModal({ inicial, onCancelar, onConfirmar, tetos = TETOS }: Props) {
   const [valores, setValores] = useState<Record<keyof EmpresaDados, string>>({
     receita: formatarNumero(inicial.receita),
     custos: formatarNumero(inicial.custos),
@@ -35,10 +31,16 @@ export function EntradaDadosModal({ inicial, onCancelar, onConfirmar }: Props) {
 
     for (const { chave } of CAMPOS) {
       const n = parseNumero(valores[chave]);
-      if (!n) {
-        novosErros[chave] = "Campo obrigatório · informe um valor em reais.";
-      } else if (n > TETOS[chave]) {
-        novosErros[chave] = "Cenário fora da escala de mercado (teto do Box Plot).";
+      if (
+        !valores[chave].trim() ||
+        !Number.isFinite(n) ||
+        n < 0 ||
+        ((chave === "receita" || chave === "patrimonio") && n <= 0)
+      ) {
+        novosErros[chave] =
+          "Use valores em reais sem sinal negativo; receita e patrimônio devem ser positivos.";
+      } else if (n > tetos[chave]) {
+        novosErros[chave] = "Cenário fora do limite de simulação da referência selecionada.";
       }
       dados[chave] = n;
     }
@@ -103,9 +105,7 @@ export function EntradaDadosModal({ inicial, onCancelar, onConfirmar }: Props) {
                   className="w-full bg-transparent py-2 font-mono text-[14px] tabular-nums outline-none"
                 />
               </div>
-              {erros[chave] && (
-                <p className="mt-1.5 text-[11px] text-negative">{erros[chave]}</p>
-              )}
+              {erros[chave] && <p className="mt-1.5 text-[11px] text-negative">{erros[chave]}</p>}
             </div>
           ))}
 

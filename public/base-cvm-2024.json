@@ -1,0 +1,359 @@
+{
+  "fonte": "CVM DFP 2024 · amostra de 35 empresas da pesquisa",
+  "setor": "Amostra multissetorial da pesquisa",
+  "periodo": "2024 anual",
+  "empresas": [
+    {
+      "empresa": "ALGAR TELECOM S/A",
+      "cnpj": "71208516000174",
+      "setor": "Telecomunicações",
+      "patrimonio": 1159636000.0,
+      "receita": 2821787000.0,
+      "custos": 2689326000.0,
+      "investimento": 453071000.0,
+      "fluxoInvestimentoOriginal": -453071000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "AUREN ENERGIA S.A.",
+      "cnpj": "28594234000123",
+      "setor": "Energia Elétrica",
+      "patrimonio": 14483354000.0,
+      "receita": 8059951000.0,
+      "custos": 6768286000.0,
+      "investimento": 4503278000.0,
+      "fluxoInvestimentoOriginal": -4503278000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "AZEVEDO & TRAVASSOS ENERGIA S.A.",
+      "cnpj": "52017473000103",
+      "setor": "Exploração. Refino e Distribuição",
+      "patrimonio": 154638000.0,
+      "receita": 2198000.0,
+      "custos": 59370000.0,
+      "investimento": 223859000.0,
+      "fluxoInvestimentoOriginal": -223859000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "AZZAS 2154 S.A.",
+      "cnpj": "16590234000176",
+      "setor": "Tecidos. Vestuário e Calçados",
+      "patrimonio": 7721515000.0,
+      "receita": 8379753000.0,
+      "custos": 7996114000.0,
+      "investimento": 0,
+      "fluxoInvestimentoOriginal": 525068000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "BOA SAFRA SEMENTES S.A.",
+      "cnpj": "10807374000177",
+      "setor": "Agricultura",
+      "patrimonio": 1954270000.0,
+      "receita": 1841052000.0,
+      "custos": 1695933000.0,
+      "investimento": 108497000.0,
+      "fluxoInvestimentoOriginal": -108497000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "BRASIL TECNOLOGIA E PARTICIPAÇÕES S.A. ",
+      "cnpj": "35764708000101",
+      "setor": "Computadores e Equipamentos",
+      "patrimonio": 484964000.0,
+      "receita": 1097526000.0,
+      "custos": 808445000.0,
+      "investimento": 597228000.0,
+      "fluxoInvestimentoOriginal": -597228000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "CIA ELETRICIDADE EST. DA BAHIA - COELBA",
+      "cnpj": "15139629000194",
+      "setor": "Energia Elétrica",
+      "patrimonio": 7424000000.0,
+      "receita": 16529000000.0,
+      "custos": 12554000000.0,
+      "investimento": 2957000000.0,
+      "fluxoInvestimentoOriginal": -2957000000.0,
+      "escopo": "ind"
+    },
+    {
+      "empresa": "CIA ENERGETICA DE PERNAMBUCO - CELPE",
+      "cnpj": "10835932000108",
+      "setor": "Energia Elétrica",
+      "patrimonio": 1623000000.0,
+      "receita": 8249000000.0,
+      "custos": 7166000000.0,
+      "investimento": 871000000.0,
+      "fluxoInvestimentoOriginal": -871000000.0,
+      "escopo": "ind"
+    },
+    {
+      "empresa": "CIA MELHORAMENTOS DE SAO PAULO",
+      "cnpj": "60730348000166",
+      "setor": "Papel e Celulose",
+      "patrimonio": 846585000.0,
+      "receita": 163122000.0,
+      "custos": 128492000.0,
+      "investimento": 61349000.0,
+      "fluxoInvestimentoOriginal": -61349000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "COMPANHIA BRASILEIRA DE ALUMÍNIO",
+      "cnpj": "61409892000173",
+      "setor": "Minerais Metálicos",
+      "patrimonio": 4011554000.0,
+      "receita": 8173649000.0,
+      "custos": 7513881000.0,
+      "investimento": 359171000.0,
+      "fluxoInvestimentoOriginal": -359171000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "CONC SIST ANHANG-BANDEIRANT S.A. AUTOBAN",
+      "cnpj": "02451848000162",
+      "setor": "Exploração de Rodovias",
+      "patrimonio": 534806000.0,
+      "receita": 3478205000.0,
+      "custos": 1259561000.0,
+      "investimento": 84172000.0,
+      "fluxoInvestimentoOriginal": -84172000.0,
+      "escopo": "ind"
+    },
+    {
+      "empresa": "CSN MINERAÇÃO S.A.",
+      "cnpj": "08902291000115",
+      "setor": "Minerais Metálicos",
+      "patrimonio": 10269114000.0,
+      "receita": 16496317000.0,
+      "custos": 11529009000.0,
+      "investimento": 1763970000.0,
+      "fluxoInvestimentoOriginal": -1763970000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "ENERGISA SERGIPE - DIST. DE ENERGIA S.A.",
+      "cnpj": "13017462000163",
+      "setor": "Energia Elétrica",
+      "patrimonio": 783699000.0,
+      "receita": 1866572000.0,
+      "custos": 1468843000.0,
+      "investimento": 241762000.0,
+      "fluxoInvestimentoOriginal": -241762000.0,
+      "escopo": "ind"
+    },
+    {
+      "empresa": "INC EMPREENDIMENTOS IMOBILIÁRIOS S.A.",
+      "cnpj": "09611768000176",
+      "setor": "Incorporações",
+      "patrimonio": 217218000.0,
+      "receita": 462103000.0,
+      "custos": 386104000.0,
+      "investimento": 38288000.0,
+      "fluxoInvestimentoOriginal": -38288000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "JHSF PARTICIPACOES S.A.",
+      "cnpj": "08294224000165",
+      "setor": "Incorporações",
+      "patrimonio": 5836514000.0,
+      "receita": 1607933000.0,
+      "custos": 384170000.0,
+      "investimento": 379919000.0,
+      "fluxoInvestimentoOriginal": -379919000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "METISA METALURGICA TIMBOENSE S.A.",
+      "cnpj": "86375425000109",
+      "setor": "Máq. e Equip. Construção e Agrícolas",
+      "patrimonio": 459343392.0,
+      "receita": 506964306.0,
+      "custos": 474714863.0,
+      "investimento": 20921605.0,
+      "fluxoInvestimentoOriginal": -20921605.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "MPM CORPÓREOS S.A.",
+      "cnpj": "26659061000159",
+      "setor": "Produtos de Uso Pessoal",
+      "patrimonio": 856065000.0,
+      "receita": 1029771000.0,
+      "custos": 879722000.0,
+      "investimento": 26394000.0,
+      "fluxoInvestimentoOriginal": -26394000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "PACAEMBU CONSTRUTORA S.A.",
+      "cnpj": "96298013000168",
+      "setor": "Construção Civil",
+      "patrimonio": 663570000.0,
+      "receita": 1692380000.0,
+      "custos": 1444854000.0,
+      "investimento": 37132000.0,
+      "fluxoInvestimentoOriginal": -37132000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "POSITIVO TECNOLOGIA S.A.",
+      "cnpj": "81243735000148",
+      "setor": "Computadores e Equipamentos",
+      "patrimonio": 1646121000.0,
+      "receita": 3688326000.0,
+      "custos": 3378816000.0,
+      "investimento": 286526000.0,
+      "fluxoInvestimentoOriginal": -286526000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "PRIO FORTE S.A.",
+      "cnpj": "08926302000105",
+      "setor": "Exploração. Refino e Distribuição",
+      "patrimonio": 22271345000.0,
+      "receita": 2348825000.0,
+      "custos": 1970617000.0,
+      "investimento": 0,
+      "fluxoInvestimentoOriginal": 1683584000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "RODOVIAS DO BRASIL HOLDING S.A.",
+      "cnpj": "41508382000146",
+      "setor": "Transporte Rodoviário",
+      "patrimonio": 399705000.0,
+      "receita": 1336565000.0,
+      "custos": 631194000.0,
+      "investimento": 281895000.0,
+      "fluxoInvestimentoOriginal": -281895000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "SBF COMÉRCIO DE PRODUTOS ESPORTIVOS S.A.",
+      "cnpj": "06347409000165",
+      "setor": "Tecidos. Vestuário e Calçados",
+      "patrimonio": 3062351000.0,
+      "receita": 9516148000.0,
+      "custos": 8944579000.0,
+      "investimento": 286998000.0,
+      "fluxoInvestimentoOriginal": -286998000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "TERRA SANTA PROPRIEDADES AGRICOLAS S.A.",
+      "cnpj": "40337136000106",
+      "setor": "Agricultura",
+      "patrimonio": 713751000.0,
+      "receita": 68332000.0,
+      "custos": 47906000.0,
+      "investimento": 0,
+      "fluxoInvestimentoOriginal": 2387000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "TIM BRASIL SERVIÇOS E PARTICIPAÇÕES S.A.",
+      "cnpj": "02600854000134",
+      "setor": "Telecomunicações",
+      "patrimonio": 22681077000.0,
+      "receita": 25447930000.0,
+      "custos": 19943217000.0,
+      "investimento": 5214285000.0,
+      "fluxoInvestimentoOriginal": -5214285000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "TIM S.A.",
+      "cnpj": "02421421000111",
+      "setor": "Telecomunicações",
+      "patrimonio": 26404636000.0,
+      "receita": 25447930000.0,
+      "custos": 19941243000.0,
+      "investimento": 4953872000.0,
+      "fluxoInvestimentoOriginal": -4953872000.0,
+      "escopo": "ind"
+    },
+    {
+      "empresa": "TRISUL S.A.",
+      "cnpj": "08811643000127",
+      "setor": "Incorporações",
+      "patrimonio": 1488057000.0,
+      "receita": 1346694000.0,
+      "custos": 1146378000.0,
+      "investimento": 0,
+      "fluxoInvestimentoOriginal": 59959000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "UNIDAS LOCADORAS S.A.",
+      "cnpj": "45736131000170",
+      "setor": "Automóveis e Motocicletas",
+      "patrimonio": 2134055000.0,
+      "receita": 4177442000.0,
+      "custos": 3719536000.0,
+      "investimento": 122853000.0,
+      "fluxoInvestimentoOriginal": -122853000.0,
+      "escopo": "con"
+    },
+    {
+      "empresa": "UNIPAR CARBOCLORO S.A.",
+      "cnpj": "33958695000178",
+      "setor": "Químicos Diversos",
+      "patrimonio": 2813929000.0,
+      "receita": 5431599000.0,
+      "custos": 4806580000.0,
+      "investimento": 622634000.0,
+      "fluxoInvestimentoOriginal": -622634000.0,
+      "escopo": "con"
+    }
+  ],
+  "origem": {
+    "repositorio": "https://github.com/Mano-dougg/metodos-estatisticos-scripts",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2024.zip",
+    "sha256": "b51c920793c18edb66e8780c0780836d441af1199e1077064b73c7de6c865df0",
+    "coletadoEm": "2026-10-19T00:37:20.731511+00:00",
+    "contas": {
+      "patrimonio": "BPP 2.03, fallback 2.04",
+      "receita": "DRE 3.01",
+      "custos": "-(DRE 3.02 + 3.04)",
+      "investimento": "max(0, -DFC 6.02), saída líquida de caixa; não equivale a CAPEX bruto"
+    },
+    "regras": "Exercício ÚLTIMO, anual de janeiro a dezembro, valores em reais; mesmo escopo por empresa. Sem imputar dados ausentes como zero. Perfil é operacional, não rating de crédito.",
+    "commitPesquisa": "6b9d085d1e250a44b9c217264a523d92e4f04be6"
+  },
+  "excluidas": [
+    {
+      "empresa": "ALFA HOLDINGS S.A.",
+      "motivo": "Demonstrações anuais completas e compatíveis não disponíveis; ou receita/PL não positivos/custos incompatíveis."
+    },
+    {
+      "empresa": "CONCESSIONÁRIA DE RODOVIA SUL-MATOGROSSENSE S.A.",
+      "motivo": "Demonstrações anuais completas e compatíveis não disponíveis; ou receita/PL não positivos/custos incompatíveis."
+    },
+    {
+      "empresa": "FERREIRA GOMES ENERGIA S.A.",
+      "motivo": "Demonstrações anuais completas e compatíveis não disponíveis; ou receita/PL não positivos/custos incompatíveis."
+    },
+    {
+      "empresa": "FERTILIZANTES HERINGER S.A.",
+      "motivo": "Demonstrações anuais completas e compatíveis não disponíveis; ou receita/PL não positivos/custos incompatíveis."
+    },
+    {
+      "empresa": "INVESTIMENTOS BEMGE S.A.",
+      "motivo": "Demonstrações anuais completas e compatíveis não disponíveis; ou receita/PL não positivos/custos incompatíveis."
+    },
+    {
+      "empresa": "ITAUSA S.A.",
+      "motivo": "Demonstrações anuais completas e compatíveis não disponíveis; ou receita/PL não positivos/custos incompatíveis."
+    },
+    {
+      "empresa": "ROSSI RESIDENCIAL S.A.",
+      "motivo": "Demonstrações anuais completas e compatíveis não disponíveis; ou receita/PL não positivos/custos incompatíveis."
+    }
+  ]
+}
