@@ -43,21 +43,16 @@ export function analisarGaps(
     retorno === null || retornoReferencia === null ? null : (retorno / retornoReferencia) * 100;
   const reducaoCustosPct = d.custos > 0 ? (excessoCustos / d.custos) * 100 : 0;
   const receitaAlvo = b.custos > 0 ? d.custos / (b.custos / b.receita) : null;
-  const investimentoLideres =
-    c?.intensidadeLideres === undefined ? null : d.receita * c.intensidadeLideres;
-  const deficitLideres =
-    investimentoLideres === null ? null : Math.max(0, investimentoLideres - d.investimento);
   const desvios = c?.desvios
     ? (Object.fromEntries(
-        (Object.keys(b) as (keyof EmpresaDados)[]).map((campo) => [
+        (["receita", "custos", "patrimonio", "investimento"] as const).map((campo) => [
           campo,
           c.desvios![campo] > 0 ? (d[campo] - b[campo]) / c.desvios![campo] : null,
         ]),
       ) as Record<keyof EmpresaDados, number | null>)
     : null;
   return {
-    investimentoLideres,
-    deficitLideres,
+    distribuicaoCustos: c?.distribuicaoCustos ?? null,
     desvios,
     benchmark: b,
     custoReferencia,
@@ -77,18 +72,11 @@ export function analisarGaps(
           ]
         : [
             excessoCustos > 0
-              ? `Otimizar custos em ${reducaoCustosPct.toFixed(1).replace(".", ",")}% (${formatarMoeda(excessoCustos)}) para alinhar a eficiência ao perfil ${perfil}. ${receitaAlvo === null ? "A referência tem custos zero: não há meta de receita calculável com despesas positivas." : `Alternativa: receita de ${formatarMoeda(receitaAlvo)} com a base atual de despesas, sem a trava de simulação.`}`
-              : "Preservar a eficiência de custos: a relação custo/receita está alinhada ou melhor que a referência do cluster.",
+              ? `Diferença de custos para a referência: ${reducaoCustosPct.toFixed(1).replace(".", ",")}% (${formatarMoeda(excessoCustos)}) para igualar a proporção do perfil ${perfil}. ${receitaAlvo === null ? "A referência tem custos zero: não há meta de receita calculável com despesas positivas." : `Alternativa: receita de ${formatarMoeda(receitaAlvo)} com a base atual de despesas. São equivalências aritméticas; investigar viabilidade antes de assumir uma meta.`}`
+              : "Acompanhar a proporção de custos: ela está igual ou abaixo da referência. Isso não comprova eficiência global.",
             deficitInvestimento > 0
               ? `Avaliar alocação adicional de ${formatarMoeda(deficitInvestimento)} para atingir ${formatarMoeda(investimentoReferencia)} de investimento, proporcional à receita. Validar caixa e retorno antes da decisão.`
               : "Investimento alinhado ou acima da referência proporcional à receita; avaliar o retorno do capital antes de ampliar a alocação.",
-            ...(deficitLideres !== null
-              ? [
-                  deficitLideres > 0
-                    ? `Investimento abaixo dos líderes em ${formatarMoeda(deficitLideres)}: avaliar meta de ${formatarMoeda(investimentoLideres!)}. Líderes são o quartil superior por receita do cluster; comparação proporcional à receita.`
-                    : "Investimento alinhado ou acima dos líderes (quartil superior por receita do cluster). Monitorar retorno e liquidez.",
-                ]
-              : []),
             c?.valores
               ? "Metas derivadas da base importada. Verificar origem, período e representatividade antes de decidir; correlação não implica causalidade."
               : "Revalidar estas metas com dados reais do setor: as referências e os centroides deste diagnóstico são simulados.",
@@ -127,43 +115,22 @@ export function recomendacoes(
       "Antes de simular novas despesas, levante o caixa disponível e os compromissos já assumidos; esses valores não estão incluídos neste diagnóstico.",
     ];
   }
-  const lista: string[] = [];
-  if (gaps.excessoCustos > 0) {
-    lista.push(
-      "Prioridade: investigar os custos. Sua empresa consome mais receita em custos que a referência. Separe despesas fixas e variáveis e identifique os maiores desvios antes de escolher cortes; os dados atuais não mostram qual despesa causou a diferença.",
-    );
-    lista.push(
-      gaps.deficitInvestimento > 0
-        ? "Depois, avalie os projetos de investimento. Há também uma diferença de alocação frente ao grupo, mas ela não deve virar aumento automático de gastos: compare retorno esperado, prazo de retorno e disponibilidade de caixa junto com a revisão de custos."
-        : "Ao revisar os custos, avalie o retorno dos investimentos já realizados. A alocação está na proporção do grupo ou acima dela; aumentar o volume, por si só, não resolve a diferença de eficiência.",
-    );
-  } else if (gaps.deficitInvestimento > 0) {
-    lista.push(
-      "Prioridade: avaliar oportunidades de investimento. A proporção de custos está na referência ou abaixo dela, enquanto a alocação de investimento é menor. Compare projetos por retorno esperado, prazo de retorno e caixa necessário antes de decidir; a margem não comprova dinheiro disponível.",
-    );
-    lista.push(
-      "Acompanhe os custos durante a expansão. Use a relação custo/receita como referência para conferir se novos projetos preservam a eficiência observada, sem tratar a média do grupo como uma obrigação de gasto.",
-    );
-  } else {
-    lista.push(
-      "Prioridade: acompanhar os resultados das alocações atuais. Custos e investimento não apresentam os gaps proporcionais sinalizados pelo sistema. Verifique se os projetos entregam o retorno esperado antes de ampliar os compromissos.",
-    );
-    lista.push(
-      "Revise a evolução da relação custo/receita nos próximos períodos. Estar alinhado ao grupo hoje não garante rentabilidade futura nem mede liquidez ou capacidade de endividamento.",
-    );
-  }
-  if (gaps.deficitLideres !== null && gaps.deficitLideres > 0) {
-    lista.push(
-      "Use os líderes como uma segunda comparação. Eles são as empresas de maior receita do grupo; investigue diferenças de estratégia e necessidade de capital antes de adotar sua proporção de investimento como meta.",
-    );
-  }
+  // Alternativas independentes de investigação, sem ranking causal ou ordem obrigatória.
+  const lista = [
+    gaps.excessoCustos > 0
+      ? "Investigar a diferença de custos por receita. Verifique composição das despesas, processo, setor e porte dos pares; a diferença não é uma economia comprovada nem uma ordem de corte."
+      : "Acompanhar custos por receita: a proporção está igual ou abaixo da referência, sem demonstrar eficiência global ou qualidade do serviço.",
+    gaps.deficitInvestimento > 0
+      ? "Avaliar os projetos de investimento: a saída líquida por receita é menor que a referência. Compare fluxos de caixa, prazo e retorno esperado; a média do grupo não define um orçamento obrigatório."
+      : "Revisar o retorno dos projetos existentes: investimento igual ou acima da referência não comprova competitividade ou rentabilidade.",
+  ];
   const referencia = centroides.find((c) => c.perfil === diagnostico.perfil);
   lista.push(
     !referencia?.valores
       ? "Valide as prioridades com uma base real do seu setor: a referência selecionada é demonstrativa."
       : (referencia.empresas ?? diagnostico.empresasNoCluster) < 5
         ? "Confirme a comparação com outras fontes: este grupo tem menos de cinco empresas e pode refletir casos particulares."
-        : "Confira período, setor e porte dos pares antes de executar o plano. Depois de alterar o cenário, reavalie as metas e as prioridades com a mesma base.",
+        : "Confira período, setor e porte dos pares antes de executar o plano. Ao alterar o cenário, reavalie as comparações com a mesma base.",
   );
   return lista;
 }

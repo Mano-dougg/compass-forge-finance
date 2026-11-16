@@ -13,6 +13,7 @@ import zipfile
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
+from catalogo_b3 import carregar_catalogo
 
 ROOT = Path(__file__).resolve().parents[1]
 INDICES = {380, 444, 106, 227, 406, 146, 168, 7, 207, 458, 417, 359, 326, 148, 42, 377, 268, 45, 8, 74, 447, 335, 465, 109, 119, 467, 446, 36, 229, 284, 404, 136, 281, 274, 80}
@@ -24,11 +25,10 @@ def cnpj(valor):
     return re.sub(r"\D", "", valor).zfill(14)
 
 
-def coletar(ano, arquivo_zip=None):
+def coletar(ano, arquivo_zip=None, universo="pesquisa"):
     url = f"https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_{ano}.zip"
     bruto = Path(arquivo_zip).read_bytes() if arquivo_zip else urllib.request.urlopen(url, timeout=120).read()
-    with (ROOT / "data/empresas-b3.csv").open(encoding="utf-8-sig") as arquivo_empresas:
-        empresas = [e for e in csv.DictReader(arquivo_empresas) if int(e["#"]) in INDICES]
+    empresas, catalogo = carregar_catalogo(ROOT, INDICES, universo)
     ids = {cnpj(e["CNPJ"]) for e in empresas}
     registros = defaultdict(list)
     tipos = {"BPP": {"2.03", "2.04"}, "DRE": {"3.01", "3.02", "3.04"}, "DFC_MI": {"6.02"}, "DFC_MD": {"6.02"}}
@@ -85,16 +85,15 @@ def coletar(ano, arquivo_zip=None):
             incluidos.append(resultado)
         else:
             excluidos.append(dict(empresa=e["Razão Social"], motivo="Demonstrações anuais completas e compatíveis não disponíveis; ou receita/PL não positivos/custos incompatíveis."))
-    return dict(fonte=f"CVM DFP {ano} · amostra de {len(INDICES)} empresas da pesquisa", setor="Amostra multissetorial da pesquisa", periodo=f"{ano} anual",
-                empresas=incluidos, origem=dict(repositorio=REPO, commitPesquisa=COMMIT_PESQUISA, url=url, sha256=hashlib.sha256(bruto).hexdigest(), coletadoEm=datetime.now(timezone.utc).isoformat(),
+    return dict(fonte=f"CVM DFP {ano} · {catalogo['descricao']}", setor=catalogo["descricao"], periodo=f"{ano} anual",
+                empresas=incluidos, universo=catalogo, origem=dict(repositorio=REPO, commitPesquisa=COMMIT_PESQUISA, url=url, sha256=hashlib.sha256(bruto).hexdigest(), coletadoEm=datetime.now(timezone.utc).isoformat(),
                 contas=dict(patrimonio="BPP 2.03, fallback 2.04", receita="DRE 3.01", custos="-(DRE 3.02 + 3.04)", investimento="max(0, -DFC 6.02), saída líquida de caixa; não equivale a CAPEX bruto"),
                 regras="Exercício ÚLTIMO, anual de janeiro a dezembro, valores em reais; mesmo escopo por empresa. Sem imputar dados ausentes como zero. Perfil é operacional, não rating de crédito."), excluidas=excluidos)
 
 
-def coletar_historico(anos, diretorio_zip=None):
+def coletar_historico(anos, diretorio_zip=None, universo="pesquisa"):
     """Séries anuais de PL da mesma empresa/escopo, sem imputação de ausências."""
-    with (ROOT / "data/empresas-b3.csv").open(encoding="utf-8-sig") as arquivo_empresas:
-        empresas = [e for e in csv.DictReader(arquivo_empresas) if int(e["#"]) in INDICES]
+    empresas, catalogo = carregar_catalogo(ROOT, INDICES, universo)
     ids = {cnpj(e["CNPJ"]) for e in empresas}
     series = defaultdict(list)
     fontes = []
@@ -135,7 +134,7 @@ def coletar_historico(anos, diretorio_zip=None):
         chave = cnpj(e["CNPJ"])
         historicos = [dict(escopo=escopo, observacoes=series[(chave, escopo)]) for escopo in ["con", "ind"] if series[(chave, escopo)]]
         saida.append(dict(empresa=e["Razão Social"], cnpj=chave, setor=e["Setor"], historicos=historicos))
-    return dict(fonte="CVM DFP · patrimônio líquido anual", anos=list(anos), unidade="BRL", empresas=saida,
+    return dict(fonte="CVM DFP · patrimônio líquido anual", anos=list(anos), unidade="BRL", empresas=saida, universo=catalogo,
                 origem=dict(repositorio=REPO, commitPesquisa=COMMIT_PESQUISA, coletadoEm=datetime.now(timezone.utc).isoformat(), arquivos=fontes,
                 regras="BPP 2.03 (fallback 2.04), 31/12, ÚLTIMO, última versão por ano. Consolidado e individual em séries separadas. Valores nominais em reais, sem corrigir inflação. Ausências não viram zero. Revisões disponíveis na data da coleta; não é base point-in-time."))
 
@@ -143,6 +142,7 @@ def coletar_historico(anos, diretorio_zip=None):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--ttm", action="store_true", help="Benchmark anual móvel com ITR do ano solicitado")
+    parser.add_argument("--universo", choices=["b3", "pesquisa"], default="b3", help="b3: catálogo integral de emissores do repositório (padrão); pesquisa: recorte original de 35 empresas")
     parser.add_argument("--data-referencia", help="Corte trimestral opcional, ex.: 2026-06-30")
     parser.add_argument("--historico", action="store_true", help="Coletar série anual de PL em vez do benchmark de um ano")
     parser.add_argument("--inicio", type=int, default=2021)
@@ -156,16 +156,16 @@ if __name__ == "__main__":
         parser.error("Escolha --ttm ou --historico, não ambos.")
     if args.ttm:
         from benchmark_ttm import coletar_ttm
-        base = coletar_ttm(args.ano, ROOT, INDICES, REPO, COMMIT_PESQUISA, args.cache_dir, args.data_referencia)
-        saida = args.saida or str(ROOT / f"public/base-cvm-{args.ano}.json")
+        base = coletar_ttm(args.ano, ROOT, INDICES, REPO, COMMIT_PESQUISA, args.cache_dir, args.data_referencia, args.universo)
+        saida = args.saida or str(ROOT / f"public/base-cvm-{args.ano}{'-b3' if args.universo == 'b3' else ''}.json")
     elif args.historico:
         if args.inicio > args.fim or args.fim - args.inicio > 20:
             parser.error("Use um intervalo crescente de até 21 anos.")
-        base = coletar_historico(range(args.inicio, args.fim + 1), args.cache_dir)
+        base = coletar_historico(range(args.inicio, args.fim + 1), args.cache_dir, args.universo)
         saida = args.saida or str(ROOT / "public/historico-patrimonio-cvm.json")
     else:
-        base = coletar(args.ano, args.zip)
-        saida = args.saida or str(ROOT / f"public/base-cvm-{args.ano}.json")
+        base = coletar(args.ano, args.zip, args.universo)
+        saida = args.saida or str(ROOT / f"public/base-cvm-{args.ano}{'-b3' if args.universo == 'b3' else ''}.json")
     if not args.historico and len(base["empresas"]) < 3:
         parser.error("Cobertura insuficiente: menos de três empresas completas. Nenhum arquivo foi gravado. Para ano em andamento, utilize --ttm com ITR acumulado.")
     import tempfile

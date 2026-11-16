@@ -1,5 +1,16 @@
-// Diagnóstico com centroides demonstrativos ou importados; regressão de patrimônio demonstrativa.
+import {
+  ajustarPadronizacao,
+  compararDistancias,
+  padronizar,
+  type Padronizacao,
+} from "./financial-standardization.ts";
+// Classificação por distância euclidiana sobre variáveis contábeis padronizadas.
 
+/** Variáveis do estudo: Trabalho metodos.pdf, §2.1/Quadro 1 (pp. 3–4).
+ * PL é posição na data; demais campos são fluxos no período.
+ * Custos e investimento aqui são magnitudes positivas, diferentemente dos sinais do estudo.
+ * Ver README: trabalho acadêmico de origem e limites de transferência.
+ */
 export type EmpresaDados = {
   receita: number;
   custos: number;
@@ -7,11 +18,11 @@ export type EmpresaDados = {
   investimento: number;
 };
 
+// Resultado reportado na Tabela 5 (p. 31), n=28, custos contábeis negativos.
+// Não reestimado para o benchmark atual; não constitui coeficiente de regressão para custos.
 export const PEARSON_RECEITA_CUSTOS = -0.9629;
-export const R2 = 0.513;
-export const VARIANCIA_NAO_EXPLICADA = 0.487;
 
-/** Tetos de escala derivados do Box Plot da pesquisa (mock). */
+/** Limites numéricos da demonstração; não são limites estatísticos de Box Plot. */
 export const TETOS: Record<keyof EmpresaDados, number> = {
   receita: 900_000_000,
   custos: 700_000_000,
@@ -20,20 +31,23 @@ export const TETOS: Record<keyof EmpresaDados, number> = {
 };
 
 export type Centroide = {
+  ordemTreino?: number;
+  padronizacao?: Padronizacao;
+  centroPadronizado?: number[];
   tetoReceita?: number;
-  valores?: EmpresaDados;
+  valores?: EmpresaDados & { fluxoInvestimentoOriginal?: number };
   desvios?: EmpresaDados;
-  intensidadeLideres?: number;
+  distribuicaoCustos?: { p25: number; mediana: number };
   empresas?: number;
   perfil: string;
   descricao: string;
   margem: number; // (receita - custos) / receita
   intensidadeInvestimento: number; // investimento / receita
   alavancagem: number; // receita / patrimonio
-  escala: number; // receita / teto do Box Plot — separa os gigantes setoriais
+  escala: number; // razão de receita usada apenas nas referências demonstrativas legadas
 };
 
-/** Os 3 clusters da B3 usados na classificação. */
+/** Referências sintéticas legadas; o benchmark padrão utiliza centroides treinados da CVM. */
 export const CENTROIDES: Centroide[] = [
   {
     perfil: "Conservador",
@@ -64,7 +78,7 @@ export const CENTROIDES: Centroide[] = [
   },
 ];
 
-/** Quantidade de empresas da B3 em cada cluster (mock determinístico). */
+/** Quantidades fictícias exclusivas da demonstração. */
 export function tamanhoCluster(perfil: string): number {
   const tamanhos: Record<string, number> = {
     Conservador: 118,
@@ -78,8 +92,6 @@ export type Diagnostico = {
   perfil: string;
   descricao: string;
   distancia: number;
-  scoreEmpresa: number;
-  scoreCluster: number;
   empresasNoCluster: number;
 };
 
@@ -94,84 +106,45 @@ export function indicadores(d: EmpresaDados) {
 }
 
 export function diagnosticar(d: EmpresaDados, centroides: Centroide[] = CENTROIDES): Diagnostico {
-  const ind = indicadores(d);
-  // Escala normalizada: teto demonstrativo ou máximo da base de treinamento.
-  const escala = Math.min(1, d.receita / (centroides[0]?.tetoReceita ?? TETOS.receita));
-
+  const valores = centroides.map(
+    (c) =>
+      c.valores ?? {
+        receita: c.escala * TETOS.receita,
+        custos: c.escala * TETOS.receita * (1 - c.margem),
+        patrimonio: (c.escala * TETOS.receita) / c.alavancagem,
+        investimento: c.escala * TETOS.receita * c.intensidadeInvestimento,
+      },
+  );
+  const referencia = centroides[0]?.padronizacao ?? ajustarPadronizacao(valores);
+  const ponto = padronizar(d, referencia);
   let melhor = centroides[0];
   if (!melhor) throw new Error("Nenhum centróide de referência disponível.");
   let menor = Number.POSITIVE_INFINITY;
 
   for (const c of centroides) {
-    const dist = Math.sqrt(
-      (ind.margem - c.margem) ** 2 +
-        (ind.intensidadeInvestimento - c.intensidadeInvestimento) ** 2 +
-        ((ind.alavancagem - c.alavancagem) / 3) ** 2 +
-        (escala - c.escala) ** 2,
-    );
-    if (dist < menor) {
+    const centro = c.centroPadronizado ?? padronizar(valores[centroides.indexOf(c)]!, referencia);
+    const dist = Math.sqrt(ponto.reduce((s, v, j) => s + (v - centro[j]!) ** 2, 0));
+    const comparacao = compararDistancias(dist, menor);
+    if (
+      comparacao < 0 ||
+      (comparacao === 0 &&
+        (c.ordemTreino ?? centroides.indexOf(c)) <
+          (melhor.ordemTreino ?? centroides.indexOf(melhor)))
+    ) {
       menor = dist;
       melhor = c;
     }
   }
 
-  const scoreEmpresa = Math.round(
-    Math.min(100, Math.max(5, ind.margem * 140 + ind.intensidadeInvestimento * 120)),
-  );
-  const scoreCluster = Math.round(
-    Math.min(100, Math.max(5, melhor.margem * 140 + melhor.intensidadeInvestimento * 120)),
-  );
-
   return {
     perfil: melhor.perfil,
     descricao: melhor.descricao,
     distancia: menor,
-    scoreEmpresa,
-    scoreCluster,
     empresasNoCluster: melhor.empresas ?? tamanhoCluster(melhor.perfil),
   };
 }
 
-/**
- * RF05 (ajustado) · Regressão linear mockada que calcula o Patrimônio Líquido
- * Teórico (benchmark B3) exigido para suportar o volume de operações simulado.
- */
-export function preverPatrimonio(d: EmpresaDados): number {
-  return d.patrimonio * 1.014 + 0.58 * (d.receita - d.custos) + 0.31 * d.investimento - 1_250_000;
-}
-
-export type PosicaoEstrutural = {
-  plReal: number;
-  plTeorico: number;
-  gap: number; // plReal - plTeorico
-  gapPct: number; // gap / plTeorico
-  suficiente: boolean;
-  status: string;
-};
-
-/** Compara o PL Real com o PL Teórico e diagnostica a estrutura de capital. */
-export function posicaoEstrutural(d: EmpresaDados): PosicaoEstrutural {
-  const plTeorico = preverPatrimonio(d);
-  const plReal = d.patrimonio;
-  const gap = plReal - plTeorico;
-  const gapPct = plTeorico !== 0 ? (gap / Math.abs(plTeorico)) * 100 : 0;
-  const suficiente = gap >= 0;
-  return {
-    plReal,
-    plTeorico,
-    gap,
-    gapPct,
-    suficiente,
-    status: suficiente
-      ? "Estrutura de capital suficiente segundo a regressão demonstrativa, não calibrada com a base de benchmarking importada."
-      : "Estrutura de capital insuficiente segundo a regressão demonstrativa, não calibrada com a base de benchmarking importada.",
-  };
-}
-
-/**
- * Aplica um passo em um dos campos, com trava de multicolinearidade (RN01)
- * e teto de escala do Box Plot (RN02).
- */
+/** Ajusta somente a variável escolhida; correlação não determina uma relação causal. */
 export function aplicarPasso(
   dados: EmpresaDados,
   campo: keyof EmpresaDados,
@@ -179,7 +152,7 @@ export function aplicarPasso(
   tetos: EmpresaDados = TETOS,
 ): { dados: EmpresaDados; alerta: string | null } {
   const proximo: EmpresaDados = { ...dados };
-  let alerta: string | null = null;
+  const alerta: string | null = null;
 
   if (!Number.isFinite(passo)) return { dados, alerta: "Informe um ajuste numérico válido." };
   const bruto = proximo[campo] + passo;
@@ -187,17 +160,6 @@ export function aplicarPasso(
     return { dados, alerta: "Cenário fora da escala de mercado (limite de simulação)." };
   }
   proximo[campo] = Math.max(0, bruto);
-
-  if (campo === "receita") {
-    const razao = dados.receita > 0 ? dados.custos / dados.receita : 0.6;
-    const ajuste = (proximo.receita - dados.receita) * Math.abs(PEARSON_RECEITA_CUSTOS) * razao;
-    const custosAjustados = proximo.custos + ajuste;
-    if (custosAjustados > tetos.custos) {
-      return { dados, alerta: "Cenário fora da escala de mercado (limite de simulação)." };
-    }
-    proximo.custos = Math.max(0, custosAjustados);
-    alerta = `RN01 · Custos reajustados em ${formatarMoeda(ajuste)} pela trava de multicolinearidade.`;
-  }
 
   return { dados: proximo, alerta };
 }

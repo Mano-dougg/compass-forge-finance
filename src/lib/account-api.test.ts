@@ -61,6 +61,13 @@ const document: CompanyDocument = {
   mercadoCompleto: null,
   setor: "",
   demonstracao: false,
+  planejamento: {
+    objetivo: { patrimonioAlvo: 200, anos: 3, distribuicaoPct: 0, anoBase: 2026 },
+    manual: { receita: 120, custos: 60 },
+    escolha: "manual",
+    assinatura: "assinatura-de-teste",
+    justificativa: "Manter o orçamento anual escolhido",
+  },
 };
 test("CNPJ: normalização, dígitos numéricos e alfanuméricos", () => {
   assert.equal(normalizarCnpj("12.abc.345/01de-35"), "12ABC34501DE35");
@@ -259,4 +266,134 @@ test("documento aceita horizonte de 1 a 5 anos e mantém compatibilidade com con
     assert.equal(companyDocumentSchema.parse({ ...document, horizonte }).horizonte, horizonte);
   for (const horizonte of [0, 6, 1.5, NaN])
     assert.equal(companyDocumentSchema.safeParse({ ...document, horizonte }).success, false);
+});
+
+test("documentos antigos com preferências de ordenação continuam legíveis sem mudar dados financeiros", () => {
+  const legado = {
+    ...document,
+    saw: {
+      pesos: { margem: 1, giro: 1, investimento: 1 },
+      metaInvestimentoPct: 10,
+      justificativa: "Preferências de uma versão anterior",
+    },
+  };
+  const carregado = companyDocumentSchema.parse(legado);
+  assert.deepEqual(carregado.dados, document.dados);
+  assert.deepEqual(carregado.base, document.base);
+  assert.deepEqual(carregado.linhas, document.linhas);
+  assert.equal(companyDocumentSchema.parse(document).saw, undefined);
+});
+
+test("documentos antigos descartam hipóteses de aquisição sem alterar os demais dados", async () => {
+  const legado = {
+    ...document,
+    hipotesesAquisicao: {
+      multiploCompra: "0.8",
+      multiploRevenda: "1.2",
+      custoEntrada: "10",
+      custoSaida: "5",
+      taxaDescontoPct: "12",
+    },
+  };
+  assert.deepEqual(companyDocumentSchema.parse(legado), document);
+  assert.deepEqual(companyDocumentSchema.parse(document), document);
+  assert.equal("hipotesesAquisicao" in companyDocumentSchema.parse(legado), false);
+  const { db, sqlite } = database();
+  try {
+    const registration = await handleAuthApi(
+      request("cadastro", "POST", {
+        cnpj: "11222333000181",
+        senha: "longa senha segura",
+        nome: document.nome,
+      }),
+      db,
+    );
+    assert.equal(registration.status, 200);
+    const cookie = registration.headers.get("set-cookie")!.split(";")[0]!;
+    const { account } = await registration.json();
+    cookieAccounts.set(cookie, account.id);
+    sqlite
+      .prepare(
+        "INSERT INTO company_documents (account_id, document, revision, updated_at) VALUES (?, ?, 1, ?)",
+      )
+      .run(account.id, JSON.stringify(legado), Date.now());
+    const response = await handleAuthApi(request("session", "GET", undefined, cookie), db);
+    assert.equal(response.status, 200);
+    const loaded = await response.json();
+    assert.deepEqual(loaded.document, document);
+    // Reading does not migrate or change the stored account document.
+    assert.deepEqual(
+      JSON.parse(
+        sqlite.prepare("SELECT document FROM company_documents").get()!["document"] as string,
+      ),
+      legado,
+    );
+    const saved = await handleAuthApi(
+      request(
+        "company",
+        "PUT",
+        { document: { ...legado, nome: "Nome atualizado" }, revision: loaded.revision },
+        cookie,
+      ),
+      db,
+    );
+    assert.equal(saved.status, 200);
+    assert.deepEqual(
+      JSON.parse(
+        sqlite.prepare("SELECT document FROM company_documents").get()!["document"] as string,
+      ),
+      { ...document, nome: "Nome atualizado" },
+    );
+  } finally {
+    sqlite.close();
+  }
+});
+
+test("conta salva filtro com poucos pares sem exigir três clusters e rejeita setor inexistente", async () => {
+  const { db, sqlite } = database();
+  try {
+    const cadastro = await handleAuthApi(
+      request("cadastro", "POST", {
+        cnpj: "11222333000181",
+        senha: "senha de teste longa",
+        nome: "Empresa setorial",
+      }),
+      db,
+    );
+    assert.equal(cadastro.status, 200);
+    const session = await cadastro.json();
+    const cookie = cadastro.headers.get("set-cookie")!.split(";")[0]!;
+    cookieAccounts.set(cookie, session.account.id);
+    const mercado = JSON.parse(
+      readFileSync(new URL("../../public/base-mercado-exemplo.json", import.meta.url), "utf8"),
+    );
+    mercado.empresas = mercado.empresas.map((e: object, i: number) => ({
+      ...e,
+      setor: i < 2 ? "Setor pequeno" : "Outro setor",
+    }));
+    const comFiltro = {
+      ...document,
+      mercadoCompleto: JSON.stringify(mercado),
+      setor: "Setor pequeno",
+    };
+    const salvo = await handleAuthApi(
+      request("company", "PUT", { document: comFiltro, revision: 0 }, cookie),
+      db,
+    );
+    assert.equal(salvo.status, 200);
+    const carregado = await handleAuthApi(request("session", "GET", undefined, cookie), db);
+    assert.equal((await carregado.json()).document.setor, "Setor pequeno");
+    const invalido = await handleAuthApi(
+      request(
+        "company",
+        "PUT",
+        { document: { ...comFiltro, setor: "Setor inexistente" }, revision: 1 },
+        cookie,
+      ),
+      db,
+    );
+    assert.equal(invalido.status, 400);
+  } finally {
+    sqlite.close();
+  }
 });

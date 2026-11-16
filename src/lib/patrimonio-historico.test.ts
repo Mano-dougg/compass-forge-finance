@@ -190,3 +190,71 @@ test("mantém negativos na série futura e valida o horizonte", () => {
   for (const horizonte of [0, 6, 2.5, NaN])
     assert.throws(() => preverCenarioPatrimonio({ ...args, horizonte }), /entre 1 e 5 anos/);
 });
+
+test("perdas não geram crédito fiscal automático e não são atenuadas pela retenção de lucros", () => {
+  const p = prever({ ...base, custos: 900 }, { ...hipoteses, impostoPct: 20, retencaoPct: 50 });
+  // Resultado base 200 -> retido 80; cenário −400 -> perda integral −400.
+  assert.equal(p.impactoRetido, -480);
+  assert.equal(p.comMudancas, -250);
+  const h = [100, 100, 100, 200].map((patrimonio, i) => ({ ano: 2022 + i, patrimonio }));
+  const prejuizo = { ...base, custos: 600 };
+  const outra = preverCenarioPatrimonio({
+    historico: h,
+    base: prejuizo,
+    cenario: { ...prejuizo, custos: 650 },
+    janela: 3,
+    hipoteses: { ...hipoteses, impostoPct: 30, retencaoPct: 0 },
+  });
+  assert.equal(outra.impactoRetido, -50);
+});
+
+test("validação por horizonte usa apenas a origem e anos passados; deriva linear tem erro zero", () => {
+  const h = Array.from({ length: 10 }, (_, i) => ({ ano: 2016 + i, patrimonio: 110 + i * 10 }));
+  const p = preverCenarioPatrimonio({
+    historico: h,
+    base,
+    cenario: base,
+    janela: 3,
+    hipoteses,
+    horizonte: 5,
+  });
+  p.validacaoHorizontes.forEach((v) => {
+    assert.equal(v.mae, 0);
+    assert.equal(v.maeIngenuo, v.horizonte * 10);
+    assert.equal(v.avaliacoes, 7 - v.horizonte);
+  });
+  const curto = preverCenarioPatrimonio({
+    historico,
+    base,
+    cenario: base,
+    janela: 3,
+    hipoteses,
+    horizonte: 5,
+  });
+  assert.equal(curto.validacaoHorizontes[0]!.mae, curto.mae);
+  assert.equal(curto.validacaoHorizontes[4]!.mae, null);
+});
+
+test("erros de dois e três anos usam deriva anterior ao alvo em uma série irregular", () => {
+  const h = [100, 110, 130, 160, 200, 250, 310].map((patrimonio, i) => ({
+    ano: 2019 + i,
+    patrimonio,
+  }));
+  const gerar = (serie: typeof h) =>
+    preverCenarioPatrimonio({
+      historico: serie,
+      base: { ...base, patrimonio: serie.at(-1)!.patrimonio },
+      cenario: { ...base, patrimonio: serie.at(-1)!.patrimonio },
+      janela: 3,
+      hipoteses,
+      horizonte: 3,
+    });
+  const v = gerar(h).validacaoHorizontes;
+  assert.equal(v[1]!.avaliacoes, 2);
+  assert.equal(v[1]!.mae, 50);
+  assert.equal(v[1]!.maeIngenuo, 100);
+  assert.equal(v[2]!.mae, 90);
+  // Mudar somente o alvo final não muda as previsões anteriores (200 e260).
+  const alterada = h.map((o, i) => (i === 6 ? { ...o, patrimonio: 1000 } : o));
+  assert.equal(gerar(alterada).validacaoHorizontes[1]!.mae, 395);
+});

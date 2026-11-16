@@ -51,9 +51,9 @@ export function GraficoPatrimonio({ diagnostico }: { diagnostico: DiagnosticoTem
           mais distantes envolvem maior incerteza.
         </p>
       </div>
-      <ClientOnly fallback={<div className="h-[260px]" />}>
+      <ClientOnly fallback={<div className="h-[320px]" />}>
         <div
-          className="h-[260px] w-full"
+          className="h-[320px] w-full"
           aria-label={`Histórico próprio de patrimônio e cenários de ${p.anoAlvo} até ${p.anoFinal}`}
         >
           <ResponsiveContainer width="100%" height="100%">
@@ -62,14 +62,14 @@ export function GraficoPatrimonio({ diagnostico }: { diagnostico: DiagnosticoTem
               <XAxis
                 dataKey="ano"
                 interval="preserveStartEnd"
-                tick={{ fill: "var(--muted)", fontSize: 11 }}
+                tick={{ fill: "var(--muted)", fontSize: 14 }}
               />
               <YAxis
-                width={75}
+                width={85}
                 tickFormatter={(v: number) =>
                   `${(v / 1e6).toLocaleString("pt-BR", { maximumFractionDigits: 1 })} mi`
                 }
-                tick={{ fill: "var(--muted)", fontSize: 10 }}
+                tick={{ fill: "var(--muted)", fontSize: 14 }}
               />
               <Tooltip
                 position={{ x: 0, y: 0 }}
@@ -79,10 +79,10 @@ export function GraficoPatrimonio({ diagnostico }: { diagnostico: DiagnosticoTem
                   background: "var(--surface)",
                   color: "var(--foreground)",
                   border: "1px solid var(--border)",
-                  fontSize: 12,
+                  fontSize: 14,
                 }}
               />
-              <Legend wrapperStyle={{ fontSize: 11 }} />
+              <Legend wrapperStyle={{ fontSize: 14 }} />
               <Line
                 isAnimationActive={false}
                 dataKey="realizado"

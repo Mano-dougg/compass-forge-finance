@@ -31,6 +31,7 @@ export function FinanceProvider({
     mercadoCompleto: state.mercadoCompleto ? JSON.stringify(state.mercadoCompleto) : null,
     setor: state.mercado && state.mercado !== state.mercadoCompleto ? state.mercado.setor : "",
     demonstracao: state.mercado === null,
+    planejamento: state.planejamento,
   };
   const serialized = JSON.stringify(document);
   const latest = useRef(serialized);

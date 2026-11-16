@@ -1,5 +1,5 @@
 import { useFinance } from "@/contexts/finance-state";
-import { formatarMoeda, PEARSON_RECEITA_CUSTOS, type EmpresaDados } from "@/lib/sad-model";
+import { formatarMoeda, type EmpresaDados } from "@/lib/sad-model";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -56,7 +56,7 @@ export function SimuladorControles() {
       </div>
       <section className="animate-rise mt-4 overflow-hidden rounded-lg border border-border bg-surface">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-5 py-3">
-          <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-muted">
+          <span className="font-mono text-xs uppercase tracking-[0.15em] text-muted">
             Ajustes do cenário
           </span>
           <div className="flex flex-wrap items-center gap-3 text-xs">
@@ -74,7 +74,7 @@ export function SimuladorControles() {
           </div>
         </div>
 
-        <div className="hidden grid-cols-[180px_minmax(0,1fr)_190px] items-center gap-4 border-b border-border/70 bg-surface-2/50 px-5 py-2 font-mono text-[10px] uppercase tracking-[0.12em] text-muted md:grid">
+        <div className="hidden grid-cols-[180px_minmax(0,1fr)_190px] items-center gap-4 border-b border-border/70 bg-surface-2/50 px-5 py-2 font-mono text-xs uppercase tracking-[0.12em] text-muted md:grid">
           <span>Variável</span>
           <span>Ajuste · arraste ou use −/+</span>
           <span className="text-right">Valor atual</span>
@@ -95,8 +95,8 @@ export function SimuladorControles() {
               }`}
             >
               <div>
-                <div className="text-[13px] font-medium">{linha.label}</div>
-                <div className="font-mono text-[10px] tracking-[0.1em] text-muted">
+                <div className="text-sm font-medium">{linha.label}</div>
+                <div className="font-mono text-xs tracking-[0.1em] text-muted">
                   {linha.codigo} · passo {formatarMoeda(passoAjuste)}
                 </div>
               </div>
@@ -140,7 +140,7 @@ export function SimuladorControles() {
                 </div>
               </div>
               <div className="min-w-0 md:text-right">
-                <label htmlFor={`cenario-${linha.chave}`} className="block text-[10px] text-muted">
+                <label htmlFor={`cenario-${linha.chave}`} className="block text-xs text-muted">
                   Valor do cenário (R$)
                 </label>
                 <input
@@ -170,13 +170,9 @@ export function SimuladorControles() {
           );
         })}
       </section>
-      <p className="mt-3 font-mono text-[11px] leading-relaxed text-muted">
-        RN01 · Trava de multicolinearidade ativa (ρ ={" "}
-        {PEARSON_RECEITA_CUSTOS.toFixed(4).replace(".", ",")}): o aumento de Receita recalibra
-        automaticamente Custos e Despesas.{" "}
-        {mercado
-          ? "Limites: maior valor entre os tetos demonstrativos e os máximos observados na base selecionada; não são os tetos da pesquisa original."
-          : "RN02 · Tetos demonstrativos do Box Plot."}
+      <p className="mt-3 font-mono text-xs leading-relaxed text-muted">
+        Cada variável é ajustada separadamente. Alterar a receita não modifica os custos
+        automaticamente. Os limites das barras servem para controlar a escala da simulação.
       </p>
     </>
   );

@@ -1,13 +1,8 @@
+import { ajustarRegressaoPatrimonio, posicaoEstrutural } from "@/lib/regressao-patrimonio";
 import { recomendacoes } from "@/lib/benchmarking";
-import { createContext, useContext, useMemo, useState } from "react";
-import {
-  aplicarPasso,
-  diagnosticar,
-  posicaoEstrutural,
-  preverPatrimonio,
-  type EmpresaDados,
-} from "@/lib/sad-model";
-import { importarBaseMercado, limitesMercado, type BaseMercado } from "@/lib/market-clusters";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { aplicarPasso, diagnosticar, type EmpresaDados } from "@/lib/sad-model";
+import { limitesMercado, type BaseMercado } from "@/lib/market-clusters";
 import {
   preverCenarioPatrimonio,
   prepararHistoricoPL,
@@ -19,6 +14,8 @@ import {
 
 import type { CompanyDocument } from "@/lib/company-document";
 import { criarBenchmarkPadrao } from "@/lib/default-benchmark";
+import { analisarPlanejamento, invalidarConfirmacao } from "@/lib/planejamento-metas";
+import { restaurarBenchmark } from "@/lib/benchmark-restoration";
 
 export const PASSO = 5_000_000;
 const PADRAO: EmpresaDados = {
@@ -30,44 +27,77 @@ const PADRAO: EmpresaDados = {
 
 export function useFinanceState(initial: CompanyDocument | null = null, accountName = "") {
   const [benchmarkPadrao] = useState(criarBenchmarkPadrao);
-  const [restored] = useState(() => {
-    const completa =
-      !initial?.demonstracao && initial?.mercadoCompleto
-        ? importarBaseMercado(initial.mercadoCompleto)
-        : benchmarkPadrao;
-    // Legacy demo selections return to the real default, without discarding company data.
-    const selecionada =
-      !initial?.demonstracao && initial?.setor
-        ? importarBaseMercado(
-            JSON.stringify({
-              ...completa,
-              setor: initial.setor,
-              empresas: completa.empresas.filter((e) => e.setor === initial.setor),
-            }),
-          )
-        : completa;
-    return { completa, selecionada };
-  });
+  const [restored] = useState(() => restaurarBenchmark(initial, benchmarkPadrao));
   const [mercado, setMercado] = useState<BaseMercado | null>(restored.selecionada);
   const [mercadoCompleto, setMercadoCompleto] = useState<BaseMercado | null>(restored.completa);
   const [base, setBase] = useState<EmpresaDados | null>(initial?.base ?? null);
   const [dados, setDados] = useState<EmpresaDados>(initial?.dados ?? PADRAO);
-  const [modalAberto, setModalAberto] = useState(!initial?.base);
-  const [alerta, setAlerta] = useState<string | null>(null);
+  const [modalAberto, setModalAberto] = useState(false);
+  const [alerta, setAlerta] = useState<string | null>(restored.aviso);
   const centroides = mercado?.centroides;
+  const dadosEmpresa = base ?? dados;
   const tetos = useMemo(() => limitesMercado(mercado), [mercado]);
-  const diagnostico = useMemo(() => diagnosticar(dados, centroides), [dados, centroides]);
-  const perfilBase = base ? diagnosticar(base, centroides).perfil : null;
-  const projecao = useMemo(() => preverPatrimonio(dados), [dados]);
-  const posicao = useMemo(() => posicaoEstrutural(dados), [dados]);
+  const diagnostico = useMemo(
+    () =>
+      centroides?.length === 0
+        ? {
+            perfil: "Indisponível",
+            descricao: mercado?.erroClusters ?? "Não há grupos suficientes neste recorte.",
+            distancia: 0,
+            empresasNoCluster: 0,
+          }
+        : diagnosticar(dadosEmpresa, centroides),
+    [dadosEmpresa, centroides, mercado?.erroClusters],
+  );
+  const perfilBase =
+    base && centroides?.length !== 0 ? diagnosticar(base, centroides).perfil : null;
+  const regressao = useMemo(() => ajustarRegressaoPatrimonio(mercado?.empresas ?? []), [mercado]);
+  const posicao = useMemo(
+    () => posicaoEstrutural(dadosEmpresa, regressao),
+    [dadosEmpresa, regressao],
+  );
   const recs = useMemo(
-    () => recomendacoes(dados, diagnostico, centroides),
-    [dados, diagnostico, centroides],
+    () => (centroides?.length === 0 ? [] : recomendacoes(dadosEmpresa, diagnostico, centroides)),
+    [dadosEmpresa, diagnostico, centroides],
   );
   const [janela, setJanela] = useState(initial?.janela ?? 3);
   const [horizonte, setHorizonte] = useState(initial?.horizonte ?? HORIZONTE_PADRAO_PATRIMONIO);
   const [nome, setNome] = useState(initial?.nome ?? accountName);
+  const [planejamento, setPlanejamento] = useState<NonNullable<CompanyDocument["planejamento"]>>(
+    initial?.planejamento ?? {
+      objetivo: {
+        patrimonioAlvo: initial?.base
+          ? Math.round(initial.base.patrimonio * 1.5 * 100) / 100
+          : 500_000_000,
+        anos: 3,
+        distribuicaoPct: 0,
+        anoBase: 2026,
+      },
+      manual: {
+        receita: initial?.base?.receita ?? PADRAO.receita,
+        custos: initial?.base?.custos ?? PADRAO.custos,
+      },
+      escolha: null,
+      assinatura: "",
+      justificativa: "",
+    },
+  );
+  const { patrimonio, receita, custos } = dadosEmpresa;
+  const analiseMetas = useMemo(
+    () =>
+      analisarPlanejamento(
+        { patrimonio, receita, custos },
+        planejamento.objetivo,
+        planejamento.manual,
+        mercado?.empresas ?? [],
+        { setor: mercado?.setor ?? "", periodo: mercado?.periodo ?? "" },
+      ),
+    [patrimonio, receita, custos, planejamento.objetivo, planejamento.manual, mercado],
+  );
   const [linhas, setLinhas] = useState(() => prepararHistoricoPL(initial?.linhas));
+  useEffect(() => {
+    setPlanejamento((p) => invalidarConfirmacao(p, analiseMetas.assinatura));
+  }, [analiseMetas.assinatura, planejamento.assinatura]);
   const [hipoteses, setHipoteses] = useState<Record<keyof HipotesesPL, string>>(
     initial?.hipoteses ?? {
       impostoPct: "0",
@@ -132,6 +162,9 @@ export function useFinanceState(initial: CompanyDocument | null = null, accountN
     }
   }
   function confirmarDados(novos: EmpresaDados) {
+    // A primeira empresa informada substitui também o orçamento fictício do formulário.
+    if (!base)
+      setPlanejamento((p) => ({ ...p, manual: { receita: novos.receita, custos: novos.custos } }));
     setBase(novos);
     setDados(novos);
     setAlerta(null);
@@ -152,7 +185,7 @@ export function useFinanceState(initial: CompanyDocument | null = null, accountN
     tetos,
     diagnostico,
     perfilBase,
-    projecao,
+    regressao,
     posicao,
     recs,
     janela,
@@ -161,6 +194,9 @@ export function useFinanceState(initial: CompanyDocument | null = null, accountN
     setHorizonte,
     nome,
     setNome,
+    planejamento,
+    setPlanejamento,
+    analiseMetas,
     linhas,
     setLinhas,
     hipoteses,

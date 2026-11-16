@@ -8,9 +8,10 @@ import math
 import re
 import urllib.request
 import zipfile
-from collections import Counter, defaultdict
+from collections import Counter
 from datetime import date, datetime, timezone
 from pathlib import Path
+from catalogo_b3 import carregar_catalogo
 
 
 def normalizar_cnpj(valor):
@@ -19,7 +20,7 @@ def normalizar_cnpj(valor):
 
 def ler_demonstracoes(bruto, tipo, ano, ids):
     contas = {"BPP": {"2.03", "2.04"}, "DRE": {"3.01", "3.02", "3.04"}, "DFC_MI": {"6.02"}, "DFC_MD": {"6.02"}}
-    grupos = defaultdict(list)
+    grupos = {}
     with zipfile.ZipFile(io.BytesIO(bruto)) as z:
         for demonstrativo, codigos in contas.items():
             for escopo in ["con", "ind"]:
@@ -36,10 +37,16 @@ def ler_demonstracoes(bruto, tipo, ano, ids):
                             continue
                         # Guarda também as demais contas para selecionar a última versão do documento,
                         # sem completar contas ausentes com uma versão antiga.
-                        grupos[(chave, escopo, demonstrativo, ref)].append(row)
+                        grupo = (chave, escopo, demonstrativo, ref)
+                        versao = int(row["VERSAO"])
+                        atual = grupos.get(grupo)
+                        if atual is None or versao > atual["versao"]:
+                            atual = grupos[grupo] = dict(versao=versao, rows=[])
+                        if versao == atual["versao"] and row["CD_CONTA"] in codigos:
+                            atual["rows"].append(row)
     saida = {}
-    for chave, rows in grupos.items():
-        versao = max(int(r["VERSAO"]) for r in rows)
+    for chave, grupo in grupos.items():
+        rows, versao = grupo["rows"], grupo["versao"]
         valores = {}
         for row in rows:
             if int(row["VERSAO"]) != versao or row["CD_CONTA"] not in contas[chave[2]]:
@@ -110,9 +117,8 @@ def montar_ttm(empresas, atual, anual, anterior, referencia):
     return incluidos, excluidos
 
 
-def coletar_ttm(ano, root, indices, repositorio, commit, diretorio_cache=None, referencia=None):
-    with (root / "data/empresas-b3.csv").open(encoding="utf-8-sig") as arquivo:
-        empresas = [e for e in csv.DictReader(arquivo) if int(e["#"]) in indices]
+def coletar_ttm(ano, root, indices, repositorio, commit, diretorio_cache=None, referencia=None, universo="pesquisa"):
+    empresas, catalogo = carregar_catalogo(root, indices, universo)
     ids = {normalizar_cnpj(e["CNPJ"]) for e in empresas}
     bases, fontes = {}, []
     for nome, tipo, ano_base in [("atual", "itr", ano), ("anual", "dfp", ano - 1), ("anterior", "itr", ano - 1)]:
@@ -129,7 +135,8 @@ def coletar_ttm(ano, root, indices, repositorio, commit, diretorio_cache=None, r
                 cache.write_bytes(bruto)
         fontes.append(dict(tipo=tipo.upper(), ano=ano_base, url=url, sha256=hashlib.sha256(bruto).hexdigest()))
         bases[nome] = ler_demonstracoes(bruto, tipo, ano_base, ids)
-    candidatos = sorted({k[3] for k in bases["atual"] if k[2] == "BPP" and k[3][5:] in {"03-31", "06-30", "09-30"}}, reverse=True)
+    hoje = date.today().isoformat()
+    candidatos = sorted({k[3] for k in bases["atual"] if k[2] == "BPP" and k[3] <= hoje and k[3][5:] in {"03-31", "06-30", "09-30"}}, reverse=True)
     if referencia:
         if referencia not in candidatos:
             raise ValueError("Data de referência trimestral indisponível na amostra.")
@@ -146,6 +153,6 @@ def coletar_ttm(ano, root, indices, repositorio, commit, diretorio_cache=None, r
         raise ValueError(f"Cobertura insuficiente para um benchmark TTM da amostra: {resultados}")
     corte = date.fromisoformat(referencia)
     inicio = date(ano - 1, corte.month + 1, 1)
-    return dict(fonte=f"CVM ITR/DFP {ano} · últimos 12 meses (TTM) · amostra da pesquisa", setor="Amostra multissetorial da pesquisa", periodo=f"{inicio:%d/%m/%Y} a {corte:%d/%m/%Y} (12 meses/TTM); PL em {corte:%d/%m/%Y}", dataReferencia=referencia, empresas=incluidos, excluidas=excluidos,
-                metodologia="Receita, custos e fluxo: DFP do ano anterior + ITR acumulado atual − ITR acumulado do mesmo período anterior. Patrimônio na data de corte. Valores em reais nominais; sem extrapolação do semestre.",
-                origem=dict(repositorio=repositorio, commitPesquisa=commit, coletadoEm=datetime.now(timezone.utc).isoformat(), arquivos=fontes, periodosAvaliados=resultados, selecionadas=len(empresas), incluidas=len(incluidos), excluidas=len(excluidos), setores=dict(Counter(e["setor"] for e in incluidos)), regras="Mesmo CNPJ e escopo em todas as parcelas; última versão de cada documento; períodos acumulados desde 01/01. Custos = -(3.02+3.04); investimento = max(0, -fluxo TTM 6.02), saída líquida e não CAPEX bruto. Ausências não são imputadas. Não é classificação oficial de risco."))
+    return dict(fonte=f"CVM ITR/DFP {ano} · últimos 12 meses (TTM) · {catalogo['descricao']}", setor=catalogo["descricao"], periodo=f"{inicio:%d/%m/%Y} a {corte:%d/%m/%Y} (12 meses/TTM); PL em {corte:%d/%m/%Y}", dataReferencia=referencia, empresas=incluidos, excluidas=excluidos, universo=catalogo,
+                metodologia="Receita, custos e fluxo: DFP do ano anterior + ITR acumulado atual − ITR acumulado do mesmo período anterior. Patrimônio na data de corte. Valores em reais nominais; sem extrapolação do semestre. " + catalogo["limitacao"],
+                origem=dict(repositorio=repositorio, commitPesquisa=commit, catalogo=catalogo, coletadoEm=datetime.now(timezone.utc).isoformat(), arquivos=fontes, periodosAvaliados=resultados, criterioCorte="Trimestre calendário mais recente, não futuro, com pelo menos 3 empresas completas e 50% dos emissores selecionados; regra operacional de cobertura, não garantia de representatividade estatística.", minimoCobertura=max(3, math.ceil(len(empresas) / 2)), selecionadas=len(empresas), incluidas=len(incluidos), excluidas=len(excluidos), setores=dict(Counter(e["setor"] for e in incluidos)), regras="Mesmo CNPJ e escopo em todas as parcelas; última versão de cada documento; períodos acumulados desde 01/01. Custos = -(3.02+3.04); investimento = max(0, -fluxo TTM 6.02), saída líquida e não CAPEX bruto. Ausências não são imputadas. Não é classificação oficial de risco."))

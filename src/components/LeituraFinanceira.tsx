@@ -2,7 +2,8 @@ import { useFinance } from "@/contexts/finance-state";
 import { leituraFinanceira } from "@/lib/leitura-financeira";
 
 export function LeituraFinanceira({ compacta = false }: { compacta?: boolean }) {
-  const { dados, base, diagnostico, centroides, mercado } = useFinance();
+  const { dados: cenarioLegado, base, diagnostico, centroides, mercado } = useFinance();
+  const dados = base ?? cenarioLegado;
   if (!base)
     return (
       <section className="my-6 border-y border-border py-5">
@@ -14,9 +15,6 @@ export function LeituraFinanceira({ compacta = false }: { compacta?: boolean }) 
       </section>
     );
   const { resumo } = leituraFinanceira(dados, diagnostico.perfil, centroides);
-  const alterado = Object.keys(base).some(
-    (campo) => base[campo as keyof typeof base] !== dados[campo as keyof typeof dados],
-  );
   return (
     <section
       className={compacta ? "min-w-0" : "my-6 border-y border-border py-5"}
@@ -28,10 +26,8 @@ export function LeituraFinanceira({ compacta = false }: { compacta?: boolean }) 
             O que os números dizem sobre sua empresa
           </h2>
           <p className="mt-2 max-w-prose text-sm leading-relaxed text-muted">
-            {alterado
-              ? "Esta leitura usa as mudanças que você está testando no simulador."
-              : "Esta leitura usa os dados que você informou."}{" "}
-            Comparamos empresas de tamanhos diferentes usando a mesma base: R$ 100 de receita.
+            Esta leitura usa os dados que você informou. Comparamos empresas de tamanhos diferentes
+            usando a mesma base: R$ 100 de receita.
           </p>
         </>
       )}

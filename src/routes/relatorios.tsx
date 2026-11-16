@@ -1,130 +1,149 @@
-import { ANO_PREVISAO_PATRIMONIO } from "@/lib/patrimonio-historico";
-import { CompraRevenda } from "@/components/CompraRevenda";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { nomeOrcamento } from "@/lib/planejamento-metas";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { useFinance } from "@/contexts/finance-state";
-import { gerarRelatorioPDF } from "@/lib/relatorio";
-import { descricaoReferencia } from "@/lib/market-clusters";
-import { formatarMoeda } from "@/lib/sad-model";
-import { ComparativosMercado } from "@/components/ComparativosMercado";
-import { GraficoPatrimonio } from "@/components/GraficoPatrimonio";
-import { ResumoFinanceiro } from "@/components/ResumoFinanceiro";
-import { AnaliseGaps } from "@/components/AnaliseGaps";
+import { usePlanejamento } from "@/contexts/planejamento-state";
+import { GraficoMetas } from "@/components/GraficoMetas";
+import {
+  AvisoDados,
+  ErroPlanejamento,
+  ValoresOrcamento,
+  TabelaTrajetoria,
+  ReferenciaParesMetas,
+} from "@/components/PlanejamentoComum";
+import { exportarRelatorioMetas } from "@/lib/relatorio-metas";
+import { formatarReais } from "@/lib/planejamento-metas";
 import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/relatorios")({
-  head: () => ({ meta: [{ title: "Relatórios · ATLAS.SAD" }] }),
+  head: () => ({ meta: [{ title: "Relatório do plano · ATLAS.SAD" }] }),
   component: Relatorios,
 });
 function Relatorios() {
-  const { dados, base, diagnostico, projecao, mercado, temporal, centroides, setAlerta } =
-    useFinance();
+  const { entrada, resultado, planejamento, escolhida, mercado, nome, base, erro, assinatura } =
+    usePlanejamento();
   const [pronto, setPronto] = useState(false);
-  const [falha, setFalha] = useState(false);
+  const [erroExportacao, setErroExportacao] = useState("");
+  const resultadoDisponivel = resultado !== null;
   useEffect(() => {
     setPronto(false);
-    setFalha(false);
-    const inicio = performance.now();
     let frame: number;
-    function verificar() {
-      const graficos = [...document.querySelectorAll("[data-report-chart]")].map((container) =>
-        container.querySelector("svg.recharts-surface"),
-      );
-      if (
-        graficos.length === (temporal ? 4 : 3) &&
-        graficos.every(
-          (g) => g && g.getBoundingClientRect().width > 0 && g.getBoundingClientRect().height > 0,
-        )
-      ) {
+    const inicio = performance.now();
+    function conferir() {
+      const svg = document.querySelector("[data-report-chart] svg.recharts-surface");
+      if (svg && svg.getBoundingClientRect().width > 0 && svg.getBoundingClientRect().height > 0) {
         setPronto(true);
         return;
       }
       if (performance.now() - inicio > 8000) {
-        setFalha(true);
+        setErroExportacao("O gráfico não ficou pronto. Recarregue a página para tentar novamente.");
         return;
       }
-      frame = requestAnimationFrame(verificar);
+      frame = requestAnimationFrame(conferir);
     }
-    frame = requestAnimationFrame(verificar);
+    if (resultadoDisponivel) frame = requestAnimationFrame(conferir);
     return () => cancelAnimationFrame(frame);
-  }, [dados, mercado, temporal]);
+  }, [assinatura, resultadoDisponivel]);
   function exportar() {
     try {
-      const ok = gerarRelatorioPDF({ dados, base, diagnostico, projecao, mercado, temporal });
-      setAlerta(
-        ok
-          ? null
-          : "Não foi possível abrir a janela do relatório. Libere os pop-ups deste site e tente novamente.",
-      );
-    } catch {
-      setAlerta("Falha ao gerar o relatório. Tente novamente em alguns instantes.");
+      const ok = exportarRelatorioMetas({
+        base: entrada,
+        objetivo: planejamento.objetivo,
+        mercado,
+        manual: planejamento.manual,
+        escolha: escolhida ? planejamento.escolha : null,
+        justificativa: planejamento.justificativa,
+        nome: nome || (base ? "Empresa informada" : "Empresa fictícia"),
+        exemplo: !base,
+      });
+      setErroExportacao(ok ? "" : "Permita a abertura da janela de impressão e tente novamente.");
+    } catch (e) {
+      setErroExportacao(e instanceof Error ? e.message : "Não foi possível gerar o relatório.");
     }
   }
   return (
     <>
-      <div className="flex flex-wrap items-start justify-between gap-4">
+      <AvisoDados />
+      <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="font-display text-2xl font-semibold tracking-tight">
-            Relatório executivo
+            O plano e as razões da sua escolha
           </h1>
-          <p className="mt-2 max-w-prose text-sm text-muted">
-            Revise o cenário e exporte o dossiê com diagnóstico, gráficos, gaps e plano de ação.
+          <p className="mt-2 max-w-prose text-muted">
+            Revise objetivo, orçamento e premissas antes de compartilhar o relatório.
           </p>
         </div>
-        <Button onClick={exportar} disabled={!pronto}>
-          Exportar Relatório (PDF)
+        <Button disabled={!pronto || !resultado} onClick={exportar}>
+          Exportar plano em PDF
         </Button>
       </div>
       <p className="mt-3 text-xs text-muted">
         Na janela de impressão, escolha Salvar como PDF.{" "}
-        {pronto
-          ? "Gráficos prontos para exportação."
-          : falha
-            ? "Não foi possível preparar os gráficos. Recarregue esta página para tentar novamente."
-            : "Preparando gráficos…"}
+        {!pronto
+          ? "Preparando gráfico…"
+          : "O relatório inclui uma imagem do gráfico e os valores anuais."}
       </p>
-      <p className="mt-4 text-xs text-muted">{descricaoReferencia(mercado)}</p>
-      <p className="mt-3 text-sm">
-        Grupo de comparação: <strong className="text-primary">{diagnostico.perfil}</strong>, com{" "}
-        {diagnostico.empresasNoCluster} empresas de referência.
-      </p>
-      <ComparativosMercado />
-      <ResumoFinanceiro />
-      <AnaliseGaps dados={dados} perfil={diagnostico.perfil} centroides={centroides} />
-      <section
-        className="mt-7 border-t border-border pt-5"
-        aria-label="Patrimônio futuro no relatório"
-      >
-        <h2 className="font-medium">
-          Patrimônio futuro a partir de {ANO_PREVISAO_PATRIMONIO} no dossiê
-        </h2>
-        {temporal ? (
-          <>
-            <p className="mt-3 text-sm">
-              {temporal.empresa} · cenário inicial para {temporal.previsao.anoAlvo}:{" "}
-              <strong className="font-mono text-primary">
-                {formatarMoeda(temporal.previsao.comMudancas)}
-              </strong>
-              .
-            </p>
-            <p className="mt-2 text-xs text-muted">
-              Sem mudanças: {formatarMoeda(temporal.previsao.semMudancas)}. Hipóteses: imposto{" "}
-              {temporal.hipoteses.impostoPct}%, retenção {temporal.hipoteses.retencaoPct}% e retorno
-              adicional {temporal.hipoteses.retornoInvestimentoPct}%. Cenário condicional, sem
-              intervalo de confiança calibrado.
-            </p>
-            <GraficoPatrimonio diagnostico={temporal} />
-          </>
-        ) : (
-          <p className="mt-3 text-xs text-muted">
-            A previsão ainda não tem um histórico válido para o cenário atual.{" "}
-            <Link to="/patrimonio-futuro" className="text-primary underline underline-offset-4">
-              Preencha ou revise o histórico
-            </Link>{" "}
-            para incluí-la; o diagnóstico de mercado pode ser exportado agora.
+      <ErroPlanejamento erro={erro} />
+      {erroExportacao && (
+        <p role="alert" className="mt-4 text-negative">
+          {erroExportacao}
+        </p>
+      )}
+      <section className="mt-6 grid gap-6 rounded-xl border border-border bg-surface p-5 sm:p-6 lg:grid-cols-2">
+        <div>
+          <h2 className="text-lg font-semibold">Objetivo do planejamento</h2>
+          <p className="mt-3">
+            Partir de <strong>{formatarReais(entrada.patrimonio)}</strong> em{" "}
+            {planejamento.objetivo.anoBase} para{" "}
+            <strong className="text-primary">
+              {formatarReais(planejamento.objetivo.patrimonioAlvo)}
+            </strong>{" "}
+            em {planejamento.objetivo.anoBase + planejamento.objetivo.anos}.
           </p>
-        )}
+          <p className="mt-3 text-sm text-muted">
+            Prazo: {planejamento.objetivo.anos} ano(s). Distribuição:{" "}
+            {planejamento.objetivo.distribuicaoPct.toLocaleString("pt-BR")}% do resultado positivo.
+            Mesmos valores anuais de receita e custos durante todo o prazo.
+          </p>
+          <h3 className="mt-6 font-semibold">
+            {escolhida ? nomeOrcamento(planejamento.escolha) : "Orçamento ainda não confirmado"}
+          </h3>
+          <p className="mt-3 whitespace-pre-wrap break-words text-sm text-muted">
+            {planejamento.justificativa ||
+              "Justificativa não preenchida. A escolha final é do gestor."}
+          </p>
+        </div>
+        <div>
+          {escolhida ? (
+            <ValoresOrcamento orcamento={escolhida} />
+          ) : (
+            <p className="text-sm text-muted">
+              O PDF pode ser exportado como comparação de alternativas. Para registrar uma decisão,
+              escolha ou confirme um orçamento em Planejar metas.
+            </p>
+          )}
+        </div>
       </section>
-      <CompraRevenda />
+      {resultado && (
+        <>
+          <section
+            className="mt-6 rounded-xl border border-border bg-surface p-4 sm:p-6"
+            aria-label="Trajetória do relatório"
+          >
+            <GraficoMetas
+              patrimonio={entrada.patrimonio}
+              objetivo={planejamento.objetivo}
+              referencia={resultado.referencia}
+              escolhida={escolhida}
+            />
+          </section>
+          <TabelaTrajetoria />
+        </>
+      )}
+      <ReferenciaParesMetas />
+      <p className="mt-6 max-w-prose text-xs leading-relaxed text-muted">
+        Uso educacional. O resultado simplificado não é lucro líquido contábil. O plano não inclui
+        inflação, aportes ou outras mutações do patrimônio. O benchmark não valida a viabilidade
+        comercial das metas.
+      </p>
     </>
   );
 }

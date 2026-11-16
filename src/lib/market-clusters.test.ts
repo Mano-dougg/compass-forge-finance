@@ -14,9 +14,9 @@ describe("RF07–RF13 base de mercado e diagnóstico compartilhado", () => {
     const b = importar();
     assert.equal(b.centroides.length, 3);
     for (const c of b.centroides) {
-      assert.equal(c.empresas, 3);
+      assert.ok(c.empresas! > 0);
       const membros = b.empresas.filter((e) => diagnosticar(e, b.centroides).perfil === c.perfil);
-      assert.equal(membros.length, 3);
+      assert.equal(membros.length, c.empresas);
       for (const campo of ["receita", "custos", "patrimonio", "investimento"] as const) {
         const media: number = membros.reduce((s, e) => s + e[campo], 0) / membros.length;
         assert.equal(benchmarkCluster(c.perfil, b.centroides)[campo], media);
@@ -44,22 +44,26 @@ describe("RF07–RF13 base de mercado e diagnóstico compartilhado", () => {
     assert.ok(Math.abs(a.excessoCustos - 8_000_000) < 1);
     assert.ok(Math.abs(a.reducaoCustosPct - 8.8888889) < 0.00001);
     assert.ok(Math.abs(a.receitaAlvo! / d.custos - 1 / 0.82) < 1e-8);
-    assert.ok(Math.abs(a.investimentoLideres! - 4_000_000) < 1);
-    assert.equal(a.deficitLideres, a.investimentoLideres);
+    assert.ok(a.distribuicaoCustos!.p25 <= a.distribuicaoCustos!.mediana);
     assert.ok(a.desvios!.custos! > 0);
     assert.equal(
       dadosRadar(d, c.perfil, b.centroides).find((p) => p.indicador === "Receita")!.empresa,
       100,
     );
-    assert.ok(a.acoes.some((acao) => acao.includes("líderes")));
+    assert.ok(a.acoes.every((acao) => !acao.includes("líderes")));
   });
-  test("líderes são selecionados por receita, com intensidade ponderada pela receita", () => {
+  test("quartis descrevem custo/receita, sem selecionar empresas pela maior receita", () => {
     const b = importar();
-    const c = b.centroides[0]!;
-    const membros = b.empresas
-      .filter((e) => diagnosticar(e, b.centroides).perfil === c.perfil)
-      .sort((a, b) => b.receita - a.receita);
-    assert.equal(c.intensidadeLideres, membros[0]!.investimento / membros[0]!.receita);
+    for (const c of b.centroides) {
+      const ratios = b.empresas
+        .filter((e) => diagnosticar(e, b.centroides).perfil === c.perfil)
+        .map((e) => e.custos / e.receita)
+        .sort((a, b) => a - b);
+      assert.ok(c.distribuicaoCustos!.p25 >= ratios[0]!);
+      assert.ok(c.distribuicaoCustos!.p25 <= c.distribuicaoCustos!.mediana);
+      if (ratios.length === 3)
+        assert.equal(c.distribuicaoCustos!.p25, (ratios[0]! + ratios[1]!) / 2);
+    }
   });
   test("média zero e dispersão zero não geram NaN ou infinito", () => {
     const b = importar();
@@ -114,11 +118,11 @@ describe("RF07–RF13 base de mercado e diagnóstico compartilhado", () => {
       /distintos/,
     );
   });
-  test("ajuste negativo limitado em zero recalibra apenas a receita efetivamente removida", () => {
+  test("ajuste de receita limitado em zero mantém os custos independentes", () => {
     const d = { receita: 1_000_000, custos: 2_000_000, patrimonio: 1_000_000, investimento: 0 };
     const r = aplicarPasso(d, "receita", -5_000_000);
     assert.equal(r.dados.receita, 0);
-    assert.equal(r.dados.custos, 74_200);
+    assert.equal(r.dados.custos, 2_000_000);
     assert.deepEqual(aplicarPasso(d, "receita", Number.NaN).dados, d);
   });
 });

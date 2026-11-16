@@ -169,11 +169,13 @@ export function preverCenarioPatrimonio(args: {
   const deltaInvestimento = cenario.investimento - base.investimento;
   const resultadoOperacional = deltaReceita - deltaCustos;
   const retornoInvestimento = (deltaInvestimento * hipoteses.retornoInvestimentoPct) / 100;
-  const impactoRetido =
-    ((resultadoOperacional + retornoInvestimento) *
-      (1 - hipoteses.impostoPct / 100) *
-      hipoteses.retencaoPct) /
-    100;
+  // Aproximação incremental da mutação do PL (CPC 26, 106–110).
+  // Lucro é tributado/retenido; prejuízo entra integralmente, sem crédito fiscal presumido (CPC 32, 34).
+  const resultadoBase = base.receita - base.custos;
+  const resultadoCenario = cenario.receita - cenario.custos + retornoInvestimento;
+  const aposImposto = (r: number) => r - (Math.max(0, r) * hipoteses.impostoPct) / 100;
+  const retido = (r: number) => (r > 0 ? (r * hipoteses.retencaoPct) / 100 : r);
+  const impactoRetido = retido(aposImposto(resultadoCenario)) - retido(aposImposto(resultadoBase));
   const ajustePatrimonio = cenario.patrimonio - base.patrimonio;
   const semMudancas = base.patrimonio + variacaoMedia;
   const comMudancas = semMudancas + ajustePatrimonio + impactoRetido;
@@ -206,7 +208,44 @@ export function preverCenarioPatrimonio(args: {
   const maeIngenuo = avaliacoes.length
     ? avaliacoes.reduce((s, a) => s + Math.abs(a.real - a.ingenuo) / avaliacoes.length, 0)
     : null;
+  // Origem móvel: para cada horizonte, somente observações anteriores à origem.
+  const validacaoHorizontes = Array.from({ length: horizonte }, (_, j) => {
+    const h = j + 1;
+    const erros = serie.flatMap((origem, i) => {
+      const treino = serie.slice(Math.max(0, i - janela), i + 1);
+      const alvo = serie[i + h];
+      if (
+        treino.length !== janela + 1 ||
+        !alvo ||
+        !consecutivos(serie.slice(i - janela, i + h + 1))
+      )
+        return [];
+      const deriva = (origem.patrimonio - treino[0]!.patrimonio) / janela;
+      return [
+        {
+          anoOrigem: origem.ano,
+          anoAlvo: alvo.ano,
+          real: alvo.patrimonio,
+          previsto: origem.patrimonio + h * deriva,
+          ingenuo: origem.patrimonio,
+        },
+      ];
+    });
+    return {
+      horizonte: h,
+      avaliacoes: erros.length,
+      mae: erros.length
+        ? erros.reduce((s, e) => s + Math.abs(e.real - e.previsto), 0) / erros.length
+        : null,
+      maeIngenuo: erros.length
+        ? erros.reduce((s, e) => s + Math.abs(e.real - e.ingenuo), 0) / erros.length
+        : null,
+    };
+  });
   return {
+    validacaoHorizontes,
+    resultadoBase,
+    resultadoCenario,
     anoAlvo: mediaVariacoes.anoAlvo,
     anoFinal: projecoes.at(-1)!.ano,
     horizonte,

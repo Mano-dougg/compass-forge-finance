@@ -3,6 +3,7 @@ import {
   BarChart,
   CartesianGrid,
   Legend,
+  LabelList,
   ResponsiveContainer,
   Scatter,
   ScatterChart,
@@ -10,11 +11,6 @@ import {
   XAxis,
   YAxis,
   ZAxis,
-  Radar,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
 } from "recharts";
 import { pontosAmostra, type BaseMercado } from "@/lib/market-clusters";
 import { leituraFinanceira } from "@/lib/leitura-financeira";
@@ -29,7 +25,7 @@ import {
 
 const eixo = {
   stroke: "var(--muted)",
-  fontSize: 11,
+  fontSize: 14,
   fontFamily: "var(--font-mono)",
 };
 
@@ -38,7 +34,7 @@ const tooltipEstilo = {
     background: "var(--surface-2)",
     border: "1px solid var(--border)",
     borderRadius: 6,
-    fontSize: 11,
+    fontSize: 14,
     fontFamily: "var(--font-mono)",
     color: "var(--foreground)",
   },
@@ -66,9 +62,9 @@ export function GraficoBarras({
   ];
 
   return (
-    <div className="h-[220px] w-full">
+    <div className="h-[260px] w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={barras} margin={{ top: 8, right: 8, bottom: 0, left: -18 }}>
+        <BarChart data={barras} margin={{ top: 8, right: 8, bottom: 0, left: -8 }}>
           <CartesianGrid stroke="var(--border)" strokeDasharray="2 4" vertical={false} />
           <XAxis dataKey="indicador" tickLine={false} axisLine={false} tick={eixo} />
           <YAxis tickLine={false} axisLine={false} tick={eixo} unit="%" />
@@ -82,7 +78,7 @@ export function GraficoBarras({
             {...tooltipEstilo}
           />
           <Legend
-            wrapperStyle={{ fontSize: 11, fontFamily: "var(--font-mono)", color: "var(--muted)" }}
+            wrapperStyle={{ fontSize: 14, fontFamily: "var(--font-mono)", color: "var(--muted)" }}
           />
           <Bar
             isAnimationActive={false}
@@ -133,9 +129,9 @@ export function GraficoDispersao({
   const empresa = [pontoEmpresa(dados)];
 
   return (
-    <div className="h-[240px] w-full">
+    <div className="h-[320px] w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <ScatterChart margin={{ top: 8, right: 12, bottom: 4, left: -18 }}>
+        <ScatterChart margin={{ top: 8, right: 12, bottom: 4, left: -8 }}>
           <CartesianGrid stroke="var(--border)" strokeDasharray="2 4" />
           <XAxis
             type="number"
@@ -206,7 +202,7 @@ export function GraficoDispersao({
             {...tooltipEstilo}
           />
           <Legend
-            wrapperStyle={{ fontSize: 11, fontFamily: "var(--font-mono)", color: "var(--muted)" }}
+            wrapperStyle={{ fontSize: 14, fontFamily: "var(--font-mono)", color: "var(--muted)" }}
           />
           <Scatter
             isAnimationActive={false}
@@ -238,7 +234,7 @@ export function GraficoDispersao({
   );
 }
 
-export function GraficoRadar({
+export function GraficoPorte({
   dados,
   diagnostico,
   centroides,
@@ -247,42 +243,89 @@ export function GraficoRadar({
   diagnostico: Diagnostico;
   centroides?: Centroide[] | undefined;
 }) {
-  const radar = dadosRadar(dados, diagnostico.perfil, centroides);
+  const comparacao = dadosRadar(dados, diagnostico.perfil, centroides).map((item) => ({
+    ...item,
+    empresa: item.semReferencia ? null : item.empresa,
+    cluster: item.semReferencia ? null : item.cluster,
+  }));
+  const percentual = (valor: unknown) =>
+    typeof valor === "number"
+      ? `${valor.toLocaleString("pt-BR", { maximumFractionDigits: 2 })}%`
+      : "";
+  const maximo = Math.max(150, ...comparacao.map((item) => item.empresa ?? 0));
   return (
-    <div className="h-[280px] w-full" aria-label="Radar de competitividade">
+    <div
+      className="h-[360px] w-full"
+      role="img"
+      aria-label="Barras horizontais do tamanho da empresa em relação à média do grupo. Percentuais e valores completos estão descritos ao lado."
+    >
       <ResponsiveContainer width="100%" height="100%">
-        <RadarChart data={radar} margin={{ top: 20, right: 88, bottom: 10, left: 88 }}>
-          <PolarGrid stroke="var(--border)" />
-          <PolarAngleAxis dataKey="indicador" tick={eixo} />
-          <PolarRadiusAxis
+        <BarChart
+          layout="vertical"
+          data={comparacao}
+          margin={{ top: 12, right: 88, bottom: 8, left: 0 }}
+          barGap={4}
+        >
+          <CartesianGrid stroke="var(--border)" strokeDasharray="2 4" horizontal={false} />
+          <XAxis
+            type="number"
+            domain={[0, maximo]}
+            ticks={[0, 100, maximo]}
+            interval="preserveStartEnd"
             tick={eixo}
-            domain={[0, Math.max(150, ...radar.map((r) => r.empresa))]}
+            tickLine={false}
+            axisLine={false}
+            tickFormatter={percentual}
+            minTickGap={8}
           />
-          <Radar
-            isAnimationActive={false}
-            dataKey="cluster"
-            name={centroides ? "Grupo de referência (100%)" : "Referência simulada (100)"}
-            stroke="var(--muted)"
-            fill="var(--muted)"
-            fillOpacity={0.12}
-          />
-          <Radar
-            isAnimationActive={false}
-            dataKey="empresa"
-            name="Sua empresa (% da referência)"
-            dot={{ r: 3, fill: "var(--primary)" }}
-            stroke="var(--primary)"
-            fill="var(--primary)"
-            fillOpacity={0.25}
+          <YAxis
+            type="category"
+            dataKey="indicador"
+            width={100}
+            tick={{ ...eixo, fontFamily: "var(--font-sans)" }}
+            tickLine={false}
+            axisLine={false}
           />
           <Tooltip
-            position={{ x: 0, y: 0 }}
             isAnimationActive={false}
+            formatter={percentual}
+            cursor={{ fill: "var(--surface-2)" }}
             {...tooltipEstilo}
-            formatter={(v: number) => `${v.toFixed(1)}%`}
           />
-          <Legend wrapperStyle={{ fontSize: 11, fontFamily: "var(--font-mono)" }} />
-        </RadarChart>
+          <Legend wrapperStyle={{ fontSize: 14, fontFamily: "var(--font-sans)", paddingTop: 12 }} />
+          <Bar
+            isAnimationActive={false}
+            dataKey="cluster"
+            name="Média do grupo (100%)"
+            fill="var(--muted)"
+            barSize={12}
+            radius={[0, 2, 2, 0]}
+          >
+            <LabelList
+              dataKey="cluster"
+              position="right"
+              formatter={percentual}
+              fill="var(--muted)"
+              fontSize={14}
+            />
+          </Bar>
+          <Bar
+            isAnimationActive={false}
+            dataKey="empresa"
+            name="Sua empresa"
+            fill="var(--primary)"
+            barSize={12}
+            radius={[0, 2, 2, 0]}
+          >
+            <LabelList
+              dataKey="empresa"
+              position="right"
+              formatter={percentual}
+              fill="var(--primary)"
+              fontSize={14}
+            />
+          </Bar>
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );

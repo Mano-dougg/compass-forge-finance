@@ -5,7 +5,15 @@ import { LeituraFinanceira } from "@/components/LeituraFinanceira";
 
 /** The picture and its interpretation use the same reference and update together. */
 export function ComparacaoReceita() {
-  const { dados, base, diagnostico, centroides } = useFinance();
+  const { dados: cenarioLegado, base, diagnostico, centroides } = useFinance();
+  const dados = base ?? cenarioLegado;
+  if (dados.receita <= 0)
+    return (
+      <p className="my-6 rounded-lg border border-border p-5 text-muted">
+        A comparação por R$ 100 de receita está indisponível com receita zero. Os valores absolutos
+        continuam disponíveis.
+      </p>
+    );
   return (
     <section
       data-report-chart="Quanto da receita vai para custos e investimento"
@@ -16,7 +24,7 @@ export function ComparacaoReceita() {
       </h2>
       <p className="mt-2 text-sm leading-relaxed text-muted">
         {base
-          ? "O gráfico e as explicações acompanham o cenário atual."
+          ? "O gráfico e as explicações usam os dados informados da empresa."
           : "Os valores do gráfico são um exemplo até você informar seus dados."}{" "}
         As barras colocam sua empresa e o grupo na mesma escala: R$ 100 de receita.
       </p>

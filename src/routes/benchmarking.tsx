@@ -1,8 +1,8 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
-// Keep existing bookmarks working after merging market comparison into the diagnosis.
+// Keep previous market-analysis bookmarks pointing to the detailed analysis.
 export const Route = createFileRoute("/benchmarking")({
   beforeLoad: () => {
-    throw redirect({ to: "/", hash: "mercado", replace: true });
+    throw redirect({ to: "/analise-detalhada", hash: "mercado", replace: true });
   },
 });

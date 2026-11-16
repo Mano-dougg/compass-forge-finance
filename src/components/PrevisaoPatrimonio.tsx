@@ -9,8 +9,8 @@ import { useFinance } from "@/contexts/finance-state";
 import { GraficoPatrimonio } from "@/components/GraficoPatrimonio";
 
 const CAMPOS_HIPOTESES: { chave: keyof HipotesesPL; label: string }[] = [
-  { chave: "impostoPct", label: "Imposto sobre resultado adicional (%)" },
-  { chave: "retencaoPct", label: "Retenção do resultado adicional (%)" },
+  { chave: "impostoPct", label: "Alíquota sobre resultado positivo (%)" },
+  { chave: "retencaoPct", label: "Retenção de lucros (%)" },
   { chave: "retornoInvestimentoPct", label: "Retorno anual do investimento adicional (%)" },
 ];
 const campo =
@@ -42,10 +42,10 @@ export function PrevisaoPatrimonio() {
       <p className="mt-2 max-w-prose text-xs leading-relaxed text-muted">
         Projeções a partir de {ANO_PREVISAO_PATRIMONIO}, com base em {ANO_BASE_PATRIMONIO}. Informe
         o patrimônio dos anos anteriores e o PL atual ou estimado para o fechamento de{" "}
-        {ANO_BASE_PATRIMONIO}. A média móvel das variações anuais cria a referência; as alterações
-        no simulador ajustam o cenário conforme as hipóteses abaixo. Receita, custos e investimento
-        iniciais devem corresponder ao período-base de {ANO_BASE_PATRIMONIO}. Valores estimados
-        desse ano são hipóteses informadas por você.
+        {ANO_BASE_PATRIMONIO}. A deriva histórica em janela móvel (média das variações anuais) cria
+        a referência; as alterações no simulador ajustam o cenário conforme as hipóteses abaixo.
+        Receita, custos e investimento iniciais devem corresponder ao período-base de{" "}
+        {ANO_BASE_PATRIMONIO}. Valores estimados desse ano são hipóteses informadas por você.
       </p>
       <div className="mt-4">
         <label htmlFor="nome-historico" className="block text-xs text-muted">
@@ -151,7 +151,7 @@ export function PrevisaoPatrimonio() {
       </div>
       <fieldset className="mt-5 border-t border-border pt-3">
         <legend className="pr-3 text-xs font-medium">
-          Hipóteses anuais mantidas durante a projeção
+          Hipóteses anuais mantidas durante a projeção · ajustáveis
         </legend>
         <div className="mt-2 grid gap-3 sm:grid-cols-3">
           {CAMPOS_HIPOTESES.map(({ chave, label }) => (
@@ -181,6 +181,13 @@ export function PrevisaoPatrimonio() {
           valores e taxas.
         </p>
       </fieldset>
+      <p className="mt-3 text-sm leading-relaxed text-muted">
+        A deriva é recalculada nas últimas variações observadas, sem adicionar previsões ao
+        histórico. Janela e horizonte são escolhas de análise, sem garantia de serem os melhores
+        para a empresa. O efeito incremental compara o resultado retido simplificado do cenário com
+        o da base; a evolução histórica já contém os movimentos habituais. Revise eventos não
+        recorrentes.
+      </p>
       {resultado.erro && (
         <p role="status" className="mt-3 text-xs text-muted">
           {resultado.erro}
@@ -233,16 +240,44 @@ export function PrevisaoPatrimonio() {
               {p.mae === null
                 ? "Sem anos suficientes para testar a referência histórica contra resultados conhecidos."
                 : `Teste retrospectivo da referência em ${p.avaliacoes.length} ano(s): erro absoluto médio de ${formatarMoeda(p.mae)}; repetindo o último PL, ${formatarMoeda(p.maeIngenuo!)}. ${p.mae < p.maeIngenuo! ? "A média das variações teve menor erro nesta amostra." : "A média das variações não superou a repetição do último PL nesta amostra."}`}{" "}
-              Esse teste avalia um ano à frente; não valida os efeitos das mudanças simuladas nem a
-              precisão dos anos mais distantes.
+              Essa comparação avalia apenas a referência histórica, não os efeitos das mudanças
+              simuladas.
             </p>
+            <div className="mt-4 overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <caption className="mb-2 text-left">Validação por horizonte · origem móvel</caption>
+                <thead>
+                  <tr>
+                    <th className="p-2">Anos à frente</th>
+                    <th className="p-2">Testes</th>
+                    <th className="p-2">Erro médio da deriva</th>
+                    <th className="p-2">Erro repetindo último PL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {p.validacaoHorizontes.map((v) => (
+                    <tr key={v.horizonte} className="border-t border-border">
+                      <td className="p-2">{v.horizonte}</td>
+                      <td className="p-2">{v.avaliacoes}</td>
+                      <td className="p-2">
+                        {v.mae === null ? "Sem histórico suficiente" : formatarMoeda(v.mae)}
+                      </td>
+                      <td className="p-2">
+                        {v.maeIngenuo === null ? "Indisponível" : formatarMoeda(v.maeIngenuo)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
             <p className="mt-2 max-w-prose text-xs leading-relaxed text-muted">
               Cenários condicionais em reais nominais para até {horizonte}{" "}
               {horizonte === 1 ? "ano" : "anos"}, sem intervalo de confiança calibrado. A referência
               já contém o resultado e as distribuições habituais do passado; apenas efeitos
-              adicionais são somados. Imposto e retenção são taxas marginais simplificadas,
-              inclusive para resultados adicionais negativos. Mudanças contábeis, inflação e choques
-              não são modelados.
+              adicionais são somados. O imposto incide sobre resultados simplificados positivos, sem
+              crédito fiscal automático por prejuízo. A retenção se aplica a lucros; perdas reduzem
+              integralmente o PL. Não inclui todos os componentes da DMPL. Mudanças contábeis,
+              inflação e choques não são modelados.
             </p>
           </details>
         </div>

@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AnaliseDetalhadaRouteImport } from './routes/analise-detalhada'
 import { Route as BenchmarkingRouteImport } from './routes/benchmarking'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as LoginRouteImport } from './routes/login'
@@ -20,6 +21,11 @@ import { Route as SimuladorRouteImport } from './routes/simulador'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnaliseDetalhadaRoute = AnaliseDetalhadaRouteImport.update({
+  id: '/analise-detalhada',
+  path: '/analise-detalhada',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BenchmarkingRoute = BenchmarkingRouteImport.update({
@@ -55,6 +61,7 @@ const SimuladorRoute = SimuladorRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/analise-detalhada': typeof AnaliseDetalhadaRoute
   '/benchmarking': typeof BenchmarkingRoute
   '/cadastro': typeof CadastroRoute
   '/login': typeof LoginRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/analise-detalhada': typeof AnaliseDetalhadaRoute
   '/benchmarking': typeof BenchmarkingRoute
   '/cadastro': typeof CadastroRoute
   '/login': typeof LoginRoute
@@ -74,6 +82,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/analise-detalhada': typeof AnaliseDetalhadaRoute
   '/benchmarking': typeof BenchmarkingRoute
   '/cadastro': typeof CadastroRoute
   '/login': typeof LoginRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/analise-detalhada'
     | '/benchmarking'
     | '/cadastro'
     | '/login'
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/analise-detalhada'
     | '/benchmarking'
     | '/cadastro'
     | '/login'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/analise-detalhada'
     | '/benchmarking'
     | '/cadastro'
     | '/login'
@@ -113,6 +125,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AnaliseDetalhadaRoute: typeof AnaliseDetalhadaRoute
   BenchmarkingRoute: typeof BenchmarkingRoute
   CadastroRoute: typeof CadastroRoute
   LoginRoute: typeof LoginRoute
@@ -128,6 +141,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/analise-detalhada': {
+      id: '/analise-detalhada'
+      path: '/analise-detalhada'
+      fullPath: '/analise-detalhada'
+      preLoaderRoute: typeof AnaliseDetalhadaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/benchmarking': {
@@ -177,6 +197,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AnaliseDetalhadaRoute: AnaliseDetalhadaRoute,
   BenchmarkingRoute: BenchmarkingRoute,
   CadastroRoute: CadastroRoute,
   LoginRoute: LoginRoute,

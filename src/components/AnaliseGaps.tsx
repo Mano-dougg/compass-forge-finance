@@ -19,7 +19,7 @@ export function AnaliseGaps({
       <h2 className="text-sm font-medium text-primary">Metas em reais e detalhes dos cálculos</h2>
       <div className="mt-4 grid gap-6 md:grid-cols-2">
         <div className="min-w-0">
-          <h3 className="font-medium">Eficiência de custos</h3>
+          <h3 className="font-medium">Cobertura relativa dos custos</h3>
           <div
             className={`mt-2 font-mono text-xl ${a.excessoCustos > 0 ? "text-negative" : "text-positive"}`}
           >
@@ -27,18 +27,8 @@ export function AnaliseGaps({
               ? "Não calculável"
               : `${a.eficiencia.toFixed(1).replace(".", ",")}% da referência`}
           </div>
-          <meter
-            aria-label="Termômetro de eficiência de custos"
-            min={0}
-            max={200}
-            low={90}
-            high={100}
-            optimum={120}
-            value={a.eficiencia ?? 0}
-            className="mt-2 h-3 w-full accent-primary"
-          />
           <p className="mt-2 text-xs text-muted">
-            Retorno operacional (receita/custos):{" "}
+            Cobertura dos custos pela receita (receita/custos):{" "}
             {a.retorno === null ? "indefinido — custos zero" : `${a.retorno.toFixed(2)}x`} ·
             referência{" "}
             {a.retornoReferencia === null
@@ -48,11 +38,12 @@ export function AnaliseGaps({
           </p>
           <p className="mt-2 text-xs">
             {a.excessoCustos > 0
-              ? `Custos acima do padrão: ${formatarMoeda(a.excessoCustos)}.`
-              : "Custos dentro ou abaixo do padrão proporcional à receita."}
+              ? `Diferença de custos para a referência: ${formatarMoeda(a.excessoCustos)}.`
+              : "Custos iguais ou inferiores à referência proporcional à receita."}
           </p>
           <p className="mt-2 text-xs text-muted">
-            100% = referência. Pearson −0,9629 orienta a trava; não é uma equação de custos.
+            100% representa a referência do grupo. O indicador compara quanto a receita cobre os
+            custos da empresa em relação aos pares.
           </p>
         </div>
         <div className="min-w-0">
@@ -75,12 +66,19 @@ export function AnaliseGaps({
             </div>
           </dl>
           <p className="mt-3 text-xs text-muted">
-            {a.investimentoLideres === null
-              ? "Referência do centróide simulado, não dos líderes reais do mercado."
-              : `Líderes (25% de maior receita): meta proporcional de ${formatarMoeda(a.investimentoLideres)}; déficit de ${formatarMoeda(a.deficitLideres!)}.`}
+            Comparação descritiva da saída líquida de investimento. Uma diferença não demonstra
+            necessidade de gastar mais nem permite identificar os melhores projetos.
           </p>
         </div>
       </div>
+      {a.distribuicaoCustos && (
+        <p className="mt-4 text-sm text-muted">
+          Distribuição de custos/receita dos pares: P25{" "}
+          {(a.distribuicaoCustos.p25 * 100).toFixed(2).replace(".", ",")}%; mediana{" "}
+          {(a.distribuicaoCustos.mediana * 100).toFixed(2).replace(".", ",")}%. P25 é uma referência
+          de menor custo relativo, não uma classificação geral de eficiência.
+        </p>
+      )}
       {a.desvios && (
         <div className="mt-4 text-xs text-muted">
           <p>Distância da média em desvios padrão (valores absolutos, sem ajuste de porte):</p>

@@ -3,19 +3,13 @@ import { formatarMoeda, tamanhoCluster, CENTROIDES } from "@/lib/sad-model";
 
 export function PerfilCluster() {
   const { mercado, centroides, diagnostico } = useFinance();
-  const descricoes: Record<string, string> = {
-    Conservador: "Entre os três grupos, este destina a menor parcela da receita a investimentos.",
-    Estruturado:
-      "Entre os três grupos, este destina uma parcela intermediária da receita a investimentos.",
-    Expansivo: "Entre os três grupos, este destina a maior parcela da receita a investimentos.",
-  };
   return (
     <section className="rounded-lg border border-border bg-surface p-5">
       <h2 className="text-lg font-semibold">Com quem comparamos sua empresa?</h2>
       <p className="mt-3 text-sm">
         Seu perfil mais próximo é <strong className="text-primary">{diagnostico.perfil}</strong>.
       </p>
-      <p className="mt-3 text-sm leading-relaxed">{descricoes[diagnostico.perfil]}</p>
+      <p className="mt-3 text-sm leading-relaxed">{diagnostico.descricao}</p>
       <p className="mt-3 text-sm leading-relaxed text-muted">
         O grupo reúne {diagnostico.empresasNoCluster} empresas com características de operação
         semelhantes. O nome do perfil descreve o grupo; não é uma nota de qualidade ou um selo
@@ -26,8 +20,10 @@ export function PerfilCluster() {
           Como o grupo foi escolhido
         </summary>
         <p className="mt-3 text-xs leading-relaxed text-muted">
-          O sistema compara os indicadores com o ponto médio de cada grupo (centróide) e escolhe o
-          mais próximo. Distância: {diagnostico.distancia.toFixed(2).replace(".", ",")}.{" "}
+          K-Means com três grupos: patrimônio, receita, custos e fluxo líquido de investimento são
+          padronizados por Z-score usando a amostra selecionada. A distância euclidiana ao centróide
+          determina o perfil mais próximo. Distância:{" "}
+          {diagnostico.distancia.toFixed(2).replace(".", ",")}.{" "}
           {mercado ? "Usa a base selecionada." : "Usa uma amostra simulada."}
         </p>
         <ul className="mt-3 space-y-2 text-xs text-muted">
@@ -45,22 +41,34 @@ export function RecomendacoesEstrategicas() {
   const { recs } = useFinance();
   return (
     <section className="rounded-lg border border-border bg-surface p-5">
-      <h2 className="text-sm font-medium text-primary">O que priorizar agora</h2>
-      <ol className="mt-3 space-y-2.5">
+      <h2 className="text-sm font-medium text-primary">Pontos para avaliar</h2>
+      <ul className="mt-3 space-y-2.5">
         {recs.map((r, i) => (
-          <li key={i} className="flex gap-2 text-[12px] leading-relaxed text-foreground/90">
-            <span className="font-mono text-[11px] text-primary">
-              {String(i + 1).padStart(2, "0")}
+          <li key={i} className="flex gap-2 text-sm leading-relaxed text-foreground/90">
+            <span aria-hidden="true" className="text-primary">
+              •
             </span>
             <span>{r}</span>
           </li>
         ))}
-      </ol>
+      </ul>
     </section>
   );
 }
 export function PosicaoEstrutural() {
-  const { posicao } = useFinance();
+  const { posicao, regressao, dados: cenarioLegado, base } = useFinance();
+  const dados = base ?? cenarioLegado;
+  if (!posicao || !regressao.disponivel)
+    return (
+      <section className="rounded-lg border border-border bg-surface p-5">
+        <h2 className="text-base font-semibold">Patrimônio da empresa · gap estrutural</h2>
+        <p className="mt-3 font-mono">Patrimônio atual: {formatarMoeda(dados.patrimonio)}</p>
+        <p className="mt-3 text-sm text-muted">
+          Referência indisponível:{" "}
+          {regressao.disponivel ? "Não foi possível calcular o gap." : regressao.motivo}
+        </p>
+      </section>
+    );
   const valores = [
     { nome: "Patrimônio atual", valor: posicao.plReal, cor: "var(--primary)" },
     { nome: "Referência do modelo", valor: posicao.plTeorico, cor: "var(--muted)" },
@@ -96,8 +104,9 @@ export function PosicaoEstrutural() {
             {posicao.gap > 0 ? "+" : ""}
             {formatarMoeda(posicao.gap)}
             <span className="mt-1 block text-sm font-normal">
-              {posicao.gapPct > 0 ? "+" : ""}
-              {posicao.gapPct.toFixed(1).replace(".", ",")}% em relação ao modelo
+              {posicao.gapPct === null
+                ? "Percentual indisponível: referência igual a zero."
+                : `${posicao.gapPct > 0 ? "+" : ""}${posicao.gapPct.toFixed(1).replace(".", ",")}% em relação ao modelo`}
             </span>
           </dd>
         </div>
@@ -155,8 +164,11 @@ export function PosicaoEstrutural() {
         </p>
       </figure>
       <p className="mt-4 text-xs leading-relaxed text-muted">
-        Modelo demonstrativo, não ajustado à base da B3 selecionada. O gap não comprova falta ou
-        sobra de capital e não é uma previsão de patrimônio futuro.
+        Regressão por mínimos quadrados ajustada às {regressao.n} empresas da amostra selecionada.
+        R² na própria amostra:{" "}
+        {regressao.r2 === null ? "indisponível" : regressao.r2.toFixed(3).replace(".", ",")}; erro
+        residual: {formatarMoeda(regressao.erroResidual)}. O R² mede ajuste, não precisão futura. O
+        gap não comprova falta ou sobra de capital e não é uma previsão temporal.
       </p>
     </section>
   );

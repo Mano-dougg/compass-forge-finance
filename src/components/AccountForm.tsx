@@ -61,12 +61,12 @@ export function AccountForm({ mode }: { mode: "login" | "cadastro" }) {
             As decisões da sua empresa começam com os seus dados.
           </h1>
           <p className="mt-5 hidden max-w-md md:block leading-relaxed text-muted">
-            Compare sua operação com o mercado da B3, teste cenários e acompanhe a evolução do
-            patrimônio.
+            Defina seu objetivo patrimonial, compare metas anuais e use o mercado como referência
+            para escolher seu planejamento.
           </p>
           <p className="mt-6 hidden border-t md:block border-border pt-5 text-sm leading-relaxed text-muted">
-            Sua conta mantém os dados financeiros, o histórico e os cenários salvos para o próximo
-            acesso.
+            Sua conta mantém os dados financeiros, o objetivo e o orçamento escolhido salvos para o
+            próximo acesso. Você também pode explorar o sistema sem criar uma conta.
           </p>
         </section>
         <section className="w-full max-w-md md:justify-self-end" aria-labelledby="acesso-titulo">

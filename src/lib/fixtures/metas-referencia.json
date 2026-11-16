@@ -1,0 +1,1319 @@
+{
+  "data": "2026-11-12",
+  "finalidade": "Casos documentais fictícios para conferência do modelo planejado; não executam ou validam a aplicação atual.",
+  "convencao": "Orçamentos em centavos com receita para cima e custo para baixo; distribuição sobre resultado positivo truncada para centavos; nenhuma distribuição em prejuízo.",
+  "casos": [
+    {
+      "id": "M01",
+      "titulo": "Meta de um ano sem distribuição",
+      "pl_inicial": "200000",
+      "pl_alvo": "230000",
+      "receita": "100000",
+      "custos": "80000",
+      "anos": 1,
+      "distribuicao_pct": "0",
+      "pares": [
+        {
+          "empresa": "Fictícia 1",
+          "receita": "100000",
+          "custos": "50000"
+        },
+        {
+          "empresa": "Fictícia 2",
+          "receita": "200000",
+          "custos": "144000"
+        },
+        {
+          "empresa": "Fictícia 3",
+          "receita": "1000000",
+          "custos": "900000"
+        }
+      ],
+      "referencia": {
+        "resultado": "20000",
+        "distribuicao": "0.00",
+        "retido": "20000.00",
+        "pl_final": "220000.00",
+        "serie": [
+          "220000.00"
+        ]
+      },
+      "alternativas": [
+        {
+          "origem": "A",
+          "receita": "110000.00",
+          "custos": "80000",
+          "resultado": "30000.00",
+          "distribuicao": "0.00",
+          "retido": "30000.00",
+          "pl_final": "230000.00",
+          "serie": [
+            "230000.00"
+          ],
+          "delta_receita": "10000.00",
+          "delta_custos": "0",
+          "delta_receita_pct": "10.00",
+          "delta_custos_pct": "0",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "B",
+          "receita": "100000",
+          "custos": "70000.00",
+          "resultado": "30000.00",
+          "distribuicao": "0.00",
+          "retido": "30000.00",
+          "pl_final": "230000.00",
+          "serie": [
+            "230000.00"
+          ],
+          "delta_receita": "0",
+          "delta_custos": "-10000.00",
+          "delta_receita_pct": "0",
+          "delta_custos_pct": "-12.50",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "C",
+          "receita": "107142.86",
+          "custos": "77142.85",
+          "resultado": "30000.01",
+          "distribuicao": "0.00",
+          "retido": "30000.01",
+          "pl_final": "230000.01",
+          "serie": [
+            "230000.01"
+          ],
+          "delta_receita": "7142.86",
+          "delta_custos": "-2857.15",
+          "delta_receita_pct": "7.14286",
+          "delta_custos_pct": "-3.5714375",
+          "coincide_com_referencia": false
+        }
+      ],
+      "indisponiveis": {},
+      "estado": "geracao_condicional",
+      "resultado_necessario_exato": "30000",
+      "pares_validos": 3,
+      "pares_recebidos": 3,
+      "mediana_q": "0.72"
+    },
+    {
+      "id": "M02",
+      "titulo": "Metas constantes por três anos",
+      "pl_inicial": "200000",
+      "pl_alvo": "500000",
+      "receita": "300000",
+      "custos": "240000",
+      "anos": 3,
+      "distribuicao_pct": "0",
+      "pares": [
+        {
+          "empresa": "Fictícia 1",
+          "receita": "100000",
+          "custos": "50000"
+        },
+        {
+          "empresa": "Fictícia 2",
+          "receita": "200000",
+          "custos": "144000"
+        },
+        {
+          "empresa": "Fictícia 3",
+          "receita": "1000000",
+          "custos": "900000"
+        }
+      ],
+      "referencia": {
+        "resultado": "60000",
+        "distribuicao": "0.00",
+        "retido": "60000.00",
+        "pl_final": "380000.00",
+        "serie": [
+          "260000.00",
+          "320000.00",
+          "380000.00"
+        ]
+      },
+      "alternativas": [
+        {
+          "origem": "A",
+          "receita": "340000.00",
+          "custos": "240000",
+          "resultado": "100000.00",
+          "distribuicao": "0.00",
+          "retido": "100000.00",
+          "pl_final": "500000.00",
+          "serie": [
+            "300000.00",
+            "400000.00",
+            "500000.00"
+          ],
+          "delta_receita": "40000.00",
+          "delta_custos": "0",
+          "delta_receita_pct": "13.33333333333333333333333333333333333333",
+          "delta_custos_pct": "0",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "B",
+          "receita": "300000",
+          "custos": "200000.00",
+          "resultado": "100000.00",
+          "distribuicao": "0.00",
+          "retido": "100000.00",
+          "pl_final": "500000.00",
+          "serie": [
+            "300000.00",
+            "400000.00",
+            "500000.00"
+          ],
+          "delta_receita": "0",
+          "delta_custos": "-40000.00",
+          "delta_receita_pct": "0",
+          "delta_custos_pct": "-16.66666666666666666666666666666666666667",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "C",
+          "receita": "357142.86",
+          "custos": "257142.85",
+          "resultado": "100000.01",
+          "distribuicao": "0.00",
+          "retido": "100000.01",
+          "pl_final": "500000.03",
+          "serie": [
+            "300000.01",
+            "400000.02",
+            "500000.03"
+          ],
+          "delta_receita": "57142.86",
+          "delta_custos": "17142.85",
+          "delta_receita_pct": "19.04762",
+          "delta_custos_pct": "7.142854166666666666666666666666666666667",
+          "coincide_com_referencia": false
+        }
+      ],
+      "indisponiveis": {},
+      "estado": "geracao_condicional",
+      "resultado_necessario_exato": "100000",
+      "pares_validos": 3,
+      "pares_recebidos": 3,
+      "mediana_q": "0.72"
+    },
+    {
+      "id": "M03",
+      "titulo": "Distribuição de 20% por três anos",
+      "pl_inicial": "200000",
+      "pl_alvo": "500000",
+      "receita": "300000",
+      "custos": "240000",
+      "anos": 3,
+      "distribuicao_pct": "20",
+      "pares": [
+        {
+          "empresa": "Fictícia 1",
+          "receita": "100000",
+          "custos": "50000"
+        },
+        {
+          "empresa": "Fictícia 2",
+          "receita": "200000",
+          "custos": "144000"
+        },
+        {
+          "empresa": "Fictícia 3",
+          "receita": "1000000",
+          "custos": "900000"
+        }
+      ],
+      "referencia": {
+        "resultado": "60000",
+        "distribuicao": "12000.00",
+        "retido": "48000.00",
+        "pl_final": "344000.00",
+        "serie": [
+          "248000.00",
+          "296000.00",
+          "344000.00"
+        ]
+      },
+      "alternativas": [
+        {
+          "origem": "A",
+          "receita": "365000.00",
+          "custos": "240000",
+          "resultado": "125000.00",
+          "distribuicao": "25000.00",
+          "retido": "100000.00",
+          "pl_final": "500000.00",
+          "serie": [
+            "300000.00",
+            "400000.00",
+            "500000.00"
+          ],
+          "delta_receita": "65000.00",
+          "delta_custos": "0",
+          "delta_receita_pct": "21.66666666666666666666666666666666666667",
+          "delta_custos_pct": "0",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "B",
+          "receita": "300000",
+          "custos": "175000.00",
+          "resultado": "125000.00",
+          "distribuicao": "25000.00",
+          "retido": "100000.00",
+          "pl_final": "500000.00",
+          "serie": [
+            "300000.00",
+            "400000.00",
+            "500000.00"
+          ],
+          "delta_receita": "0",
+          "delta_custos": "-65000.00",
+          "delta_receita_pct": "0",
+          "delta_custos_pct": "-27.08333333333333333333333333333333333333",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "C",
+          "receita": "446428.58",
+          "custos": "321428.57",
+          "resultado": "125000.01",
+          "distribuicao": "25000.00",
+          "retido": "100000.01",
+          "pl_final": "500000.03",
+          "serie": [
+            "300000.01",
+            "400000.02",
+            "500000.03"
+          ],
+          "delta_receita": "146428.58",
+          "delta_custos": "81428.57",
+          "delta_receita_pct": "48.80952666666666666666666666666666666667",
+          "delta_custos_pct": "33.92857083333333333333333333333333333333",
+          "coincide_com_referencia": false
+        }
+      ],
+      "indisponiveis": {},
+      "estado": "geracao_condicional",
+      "resultado_necessario_exato": "1.2500E+5",
+      "pares_validos": 3,
+      "pares_recebidos": 3,
+      "mediana_q": "0.72"
+    },
+    {
+      "id": "M04",
+      "titulo": "Mediana igual a 100% de custos por receita",
+      "pl_inicial": "200000",
+      "pl_alvo": "230000",
+      "receita": "100000",
+      "custos": "80000",
+      "anos": 1,
+      "distribuicao_pct": "0",
+      "pares": [
+        {
+          "receita": "100",
+          "custos": "100"
+        }
+      ],
+      "referencia": {
+        "resultado": "20000",
+        "distribuicao": "0.00",
+        "retido": "20000.00",
+        "pl_final": "220000.00",
+        "serie": [
+          "220000.00"
+        ]
+      },
+      "alternativas": [
+        {
+          "origem": "A",
+          "receita": "110000.00",
+          "custos": "80000",
+          "resultado": "30000.00",
+          "distribuicao": "0.00",
+          "retido": "30000.00",
+          "pl_final": "230000.00",
+          "serie": [
+            "230000.00"
+          ],
+          "delta_receita": "10000.00",
+          "delta_custos": "0",
+          "delta_receita_pct": "10.00",
+          "delta_custos_pct": "0",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "B",
+          "receita": "100000",
+          "custos": "70000.00",
+          "resultado": "30000.00",
+          "distribuicao": "0.00",
+          "retido": "30000.00",
+          "pl_final": "230000.00",
+          "serie": [
+            "230000.00"
+          ],
+          "delta_receita": "0",
+          "delta_custos": "-10000.00",
+          "delta_receita_pct": "0",
+          "delta_custos_pct": "-12.50",
+          "coincide_com_referencia": false
+        }
+      ],
+      "indisponiveis": {
+        "C": "A proporção de referência não permite resultado positivo."
+      },
+      "estado": "geracao_condicional",
+      "resultado_necessario_exato": "30000",
+      "pares_validos": 1,
+      "pares_recebidos": 1,
+      "mediana_q": "1"
+    },
+    {
+      "id": "M05",
+      "titulo": "Alternativa B exigiria custos negativos",
+      "pl_inicial": "200000",
+      "pl_alvo": "350000",
+      "receita": "100000",
+      "custos": "80000",
+      "anos": 1,
+      "distribuicao_pct": "0",
+      "pares": [
+        {
+          "empresa": "Fictícia 1",
+          "receita": "100000",
+          "custos": "50000"
+        },
+        {
+          "empresa": "Fictícia 2",
+          "receita": "200000",
+          "custos": "144000"
+        },
+        {
+          "empresa": "Fictícia 3",
+          "receita": "1000000",
+          "custos": "900000"
+        }
+      ],
+      "referencia": {
+        "resultado": "20000",
+        "distribuicao": "0.00",
+        "retido": "20000.00",
+        "pl_final": "220000.00",
+        "serie": [
+          "220000.00"
+        ]
+      },
+      "alternativas": [
+        {
+          "origem": "A",
+          "receita": "230000.00",
+          "custos": "80000",
+          "resultado": "150000.00",
+          "distribuicao": "0.00",
+          "retido": "150000.00",
+          "pl_final": "350000.00",
+          "serie": [
+            "350000.00"
+          ],
+          "delta_receita": "130000.00",
+          "delta_custos": "0",
+          "delta_receita_pct": "130.00",
+          "delta_custos_pct": "0",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "C",
+          "receita": "535714.29",
+          "custos": "385714.28",
+          "resultado": "150000.01",
+          "distribuicao": "0.00",
+          "retido": "150000.01",
+          "pl_final": "350000.01",
+          "serie": [
+            "350000.01"
+          ],
+          "delta_receita": "435714.29",
+          "delta_custos": "305714.28",
+          "delta_receita_pct": "435.71429",
+          "delta_custos_pct": "382.14285",
+          "coincide_com_referencia": false
+        }
+      ],
+      "indisponiveis": {
+        "B": "O custo requerido seria negativo."
+      },
+      "estado": "geracao_condicional",
+      "resultado_necessario_exato": "150000",
+      "pares_validos": 3,
+      "pares_recebidos": 3,
+      "mediana_q": "0.72"
+    },
+    {
+      "id": "M06",
+      "titulo": "Distribuição integral impede acumulação positiva",
+      "pl_inicial": "200000",
+      "pl_alvo": "230000",
+      "receita": "100000",
+      "custos": "80000",
+      "anos": 1,
+      "distribuicao_pct": "100",
+      "pares": [
+        {
+          "empresa": "Fictícia 1",
+          "receita": "100000",
+          "custos": "50000"
+        },
+        {
+          "empresa": "Fictícia 2",
+          "receita": "200000",
+          "custos": "144000"
+        },
+        {
+          "empresa": "Fictícia 3",
+          "receita": "1000000",
+          "custos": "900000"
+        }
+      ],
+      "referencia": {
+        "resultado": "20000",
+        "distribuicao": "20000.00",
+        "retido": "0.00",
+        "pl_final": "200000.00",
+        "serie": [
+          "200000.00"
+        ]
+      },
+      "alternativas": [],
+      "indisponiveis": {},
+      "estado": "sem_acumulacao_por_distribuicao_integral"
+    },
+    {
+      "id": "M07",
+      "titulo": "Prejuízo não é reduzido pelo percentual de distribuição",
+      "pl_inicial": "200000",
+      "pl_alvo": "230000",
+      "receita": "100000",
+      "custos": "120000",
+      "anos": 1,
+      "distribuicao_pct": "25",
+      "pares": [
+        {
+          "empresa": "Fictícia 1",
+          "receita": "100000",
+          "custos": "50000"
+        },
+        {
+          "empresa": "Fictícia 2",
+          "receita": "200000",
+          "custos": "144000"
+        },
+        {
+          "empresa": "Fictícia 3",
+          "receita": "1000000",
+          "custos": "900000"
+        }
+      ],
+      "referencia": {
+        "resultado": "-20000",
+        "distribuicao": "0.00",
+        "retido": "-20000.00",
+        "pl_final": "180000.00",
+        "serie": [
+          "180000.00"
+        ]
+      },
+      "alternativas": [
+        {
+          "origem": "A",
+          "receita": "160000.00",
+          "custos": "120000",
+          "resultado": "40000.00",
+          "distribuicao": "10000.00",
+          "retido": "30000.00",
+          "pl_final": "230000.00",
+          "serie": [
+            "230000.00"
+          ],
+          "delta_receita": "60000.00",
+          "delta_custos": "0",
+          "delta_receita_pct": "60.00",
+          "delta_custos_pct": "0",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "B",
+          "receita": "100000",
+          "custos": "60000.00",
+          "resultado": "40000.00",
+          "distribuicao": "10000.00",
+          "retido": "30000.00",
+          "pl_final": "230000.00",
+          "serie": [
+            "230000.00"
+          ],
+          "delta_receita": "0",
+          "delta_custos": "-60000.00",
+          "delta_receita_pct": "0",
+          "delta_custos_pct": "-50.00",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "C",
+          "receita": "142857.15",
+          "custos": "102857.14",
+          "resultado": "40000.01",
+          "distribuicao": "10000.00",
+          "retido": "30000.01",
+          "pl_final": "230000.01",
+          "serie": [
+            "230000.01"
+          ],
+          "delta_receita": "42857.15",
+          "delta_custos": "-17142.86",
+          "delta_receita_pct": "42.85715",
+          "delta_custos_pct": "-14.28571666666666666666666666666666666667",
+          "coincide_com_referencia": false
+        }
+      ],
+      "indisponiveis": {},
+      "estado": "geracao_condicional",
+      "resultado_necessario_exato": "4.00E+4",
+      "pares_validos": 3,
+      "pares_recebidos": 3,
+      "mediana_q": "0.72"
+    },
+    {
+      "id": "M08",
+      "titulo": "Receita de partida igual a zero",
+      "pl_inicial": "200000",
+      "pl_alvo": "230000",
+      "receita": "0",
+      "custos": "50000",
+      "anos": 1,
+      "distribuicao_pct": "0",
+      "pares": [
+        {
+          "empresa": "Fictícia 1",
+          "receita": "100000",
+          "custos": "50000"
+        },
+        {
+          "empresa": "Fictícia 2",
+          "receita": "200000",
+          "custos": "144000"
+        },
+        {
+          "empresa": "Fictícia 3",
+          "receita": "1000000",
+          "custos": "900000"
+        }
+      ],
+      "referencia": {
+        "resultado": "-50000",
+        "distribuicao": "0.00",
+        "retido": "-50000.00",
+        "pl_final": "150000.00",
+        "serie": [
+          "150000.00"
+        ]
+      },
+      "alternativas": [
+        {
+          "origem": "A",
+          "receita": "80000.00",
+          "custos": "50000",
+          "resultado": "30000.00",
+          "distribuicao": "0.00",
+          "retido": "30000.00",
+          "pl_final": "230000.00",
+          "serie": [
+            "230000.00"
+          ],
+          "delta_receita": "80000.00",
+          "delta_custos": "0",
+          "delta_receita_pct": null,
+          "delta_custos_pct": "0",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "C",
+          "receita": "107142.86",
+          "custos": "77142.85",
+          "resultado": "30000.01",
+          "distribuicao": "0.00",
+          "retido": "30000.01",
+          "pl_final": "230000.01",
+          "serie": [
+            "230000.01"
+          ],
+          "delta_receita": "107142.86",
+          "delta_custos": "27142.85",
+          "delta_receita_pct": null,
+          "delta_custos_pct": "54.2857",
+          "coincide_com_referencia": false
+        }
+      ],
+      "indisponiveis": {
+        "B": "O custo requerido seria negativo."
+      },
+      "estado": "geracao_condicional",
+      "resultado_necessario_exato": "30000",
+      "pares_validos": 3,
+      "pares_recebidos": 3,
+      "mediana_q": "0.72"
+    },
+    {
+      "id": "M09",
+      "titulo": "Patrimônio inicial negativo",
+      "pl_inicial": "-50000",
+      "pl_alvo": "50000",
+      "receita": "100000",
+      "custos": "80000",
+      "anos": 2,
+      "distribuicao_pct": "0",
+      "pares": [
+        {
+          "empresa": "Fictícia 1",
+          "receita": "100000",
+          "custos": "50000"
+        },
+        {
+          "empresa": "Fictícia 2",
+          "receita": "200000",
+          "custos": "144000"
+        },
+        {
+          "empresa": "Fictícia 3",
+          "receita": "1000000",
+          "custos": "900000"
+        }
+      ],
+      "referencia": {
+        "resultado": "20000",
+        "distribuicao": "0.00",
+        "retido": "20000.00",
+        "pl_final": "-10000.00",
+        "serie": [
+          "-30000.00",
+          "-10000.00"
+        ]
+      },
+      "alternativas": [
+        {
+          "origem": "A",
+          "receita": "130000.00",
+          "custos": "80000",
+          "resultado": "50000.00",
+          "distribuicao": "0.00",
+          "retido": "50000.00",
+          "pl_final": "50000.00",
+          "serie": [
+            "0.00",
+            "50000.00"
+          ],
+          "delta_receita": "30000.00",
+          "delta_custos": "0",
+          "delta_receita_pct": "30.00",
+          "delta_custos_pct": "0",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "B",
+          "receita": "100000",
+          "custos": "50000.00",
+          "resultado": "50000.00",
+          "distribuicao": "0.00",
+          "retido": "50000.00",
+          "pl_final": "50000.00",
+          "serie": [
+            "0.00",
+            "50000.00"
+          ],
+          "delta_receita": "0",
+          "delta_custos": "-30000.00",
+          "delta_receita_pct": "0",
+          "delta_custos_pct": "-37.50",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "C",
+          "receita": "178571.43",
+          "custos": "128571.42",
+          "resultado": "50000.01",
+          "distribuicao": "0.00",
+          "retido": "50000.01",
+          "pl_final": "50000.02",
+          "serie": [
+            "0.01",
+            "50000.02"
+          ],
+          "delta_receita": "78571.43",
+          "delta_custos": "48571.42",
+          "delta_receita_pct": "78.57143",
+          "delta_custos_pct": "60.714275",
+          "coincide_com_referencia": false
+        }
+      ],
+      "indisponiveis": {},
+      "estado": "geracao_condicional",
+      "resultado_necessario_exato": "50000",
+      "pares_validos": 3,
+      "pares_recebidos": 3,
+      "mediana_q": "0.72"
+    },
+    {
+      "id": "M10",
+      "titulo": "Orçamentos coincidentes e referência que já atinge a meta",
+      "pl_inicial": "200000",
+      "pl_alvo": "230000",
+      "receita": "100000",
+      "custos": "70000",
+      "anos": 1,
+      "distribuicao_pct": "0",
+      "pares": [
+        {
+          "receita": "100",
+          "custos": "70"
+        }
+      ],
+      "referencia": {
+        "resultado": "30000",
+        "distribuicao": "0.00",
+        "retido": "30000.00",
+        "pl_final": "230000.00",
+        "serie": [
+          "230000.00"
+        ]
+      },
+      "alternativas": [
+        {
+          "origem": "A",
+          "receita": "100000.00",
+          "custos": "70000",
+          "resultado": "30000.00",
+          "distribuicao": "0.00",
+          "retido": "30000.00",
+          "pl_final": "230000.00",
+          "serie": [
+            "230000.00"
+          ],
+          "delta_receita": "0.00",
+          "delta_custos": "0",
+          "delta_receita_pct": "0.00",
+          "delta_custos_pct": "0",
+          "coincide_com_referencia": true
+        },
+        {
+          "origem": "B",
+          "receita": "100000",
+          "custos": "70000.00",
+          "resultado": "30000.00",
+          "distribuicao": "0.00",
+          "retido": "30000.00",
+          "pl_final": "230000.00",
+          "serie": [
+            "230000.00"
+          ],
+          "delta_receita": "0",
+          "delta_custos": "0.00",
+          "delta_receita_pct": "0",
+          "delta_custos_pct": "0.00",
+          "coincide_com": "A",
+          "coincide_com_referencia": true
+        },
+        {
+          "origem": "C",
+          "receita": "100000.00",
+          "custos": "70000.00",
+          "resultado": "30000.00",
+          "distribuicao": "0.00",
+          "retido": "30000.00",
+          "pl_final": "230000.00",
+          "serie": [
+            "230000.00"
+          ],
+          "delta_receita": "0.00",
+          "delta_custos": "0.00",
+          "delta_receita_pct": "0.00",
+          "delta_custos_pct": "0.00",
+          "coincide_com": "A",
+          "coincide_com_referencia": true
+        }
+      ],
+      "indisponiveis": {},
+      "estado": "geracao_condicional",
+      "resultado_necessario_exato": "30000",
+      "pares_validos": 1,
+      "pares_recebidos": 1,
+      "mediana_q": "0.7"
+    },
+    {
+      "id": "M11",
+      "titulo": "Alvo atendido hoje e perdido no cenário de referência",
+      "pl_inicial": "200000",
+      "pl_alvo": "190000",
+      "receita": "100000",
+      "custos": "120000",
+      "anos": 1,
+      "distribuicao_pct": "0",
+      "pares": [
+        {
+          "empresa": "Fictícia 1",
+          "receita": "100000",
+          "custos": "50000"
+        },
+        {
+          "empresa": "Fictícia 2",
+          "receita": "200000",
+          "custos": "144000"
+        },
+        {
+          "empresa": "Fictícia 3",
+          "receita": "1000000",
+          "custos": "900000"
+        }
+      ],
+      "referencia": {
+        "resultado": "-20000",
+        "distribuicao": "0.00",
+        "retido": "-20000.00",
+        "pl_final": "180000.00",
+        "serie": [
+          "180000.00"
+        ]
+      },
+      "alternativas": [],
+      "indisponiveis": {},
+      "estado": "alvo_ja_atendido_na_base",
+      "atende_no_prazo": false
+    },
+    {
+      "id": "M12",
+      "titulo": "Ausência de pares",
+      "pl_inicial": "200000",
+      "pl_alvo": "230000",
+      "receita": "100000",
+      "custos": "80000",
+      "anos": 1,
+      "distribuicao_pct": "0",
+      "pares": [],
+      "referencia": {
+        "resultado": "20000",
+        "distribuicao": "0.00",
+        "retido": "20000.00",
+        "pl_final": "220000.00",
+        "serie": [
+          "220000.00"
+        ]
+      },
+      "alternativas": [
+        {
+          "origem": "A",
+          "receita": "110000.00",
+          "custos": "80000",
+          "resultado": "30000.00",
+          "distribuicao": "0.00",
+          "retido": "30000.00",
+          "pl_final": "230000.00",
+          "serie": [
+            "230000.00"
+          ],
+          "delta_receita": "10000.00",
+          "delta_custos": "0",
+          "delta_receita_pct": "10.00",
+          "delta_custos_pct": "0",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "B",
+          "receita": "100000",
+          "custos": "70000.00",
+          "resultado": "30000.00",
+          "distribuicao": "0.00",
+          "retido": "30000.00",
+          "pl_final": "230000.00",
+          "serie": [
+            "230000.00"
+          ],
+          "delta_receita": "0",
+          "delta_custos": "-10000.00",
+          "delta_receita_pct": "0",
+          "delta_custos_pct": "-12.50",
+          "coincide_com_referencia": false
+        }
+      ],
+      "indisponiveis": {
+        "C": "Sem pares válidos para a mediana."
+      },
+      "estado": "geracao_condicional",
+      "resultado_necessario_exato": "30000",
+      "pares_validos": 0,
+      "pares_recebidos": 0
+    },
+    {
+      "id": "M13",
+      "titulo": "Exclusão explícita de pares inválidos",
+      "pl_inicial": "200000",
+      "pl_alvo": "230000",
+      "receita": "100000",
+      "custos": "80000",
+      "anos": 1,
+      "distribuicao_pct": "0",
+      "pares": [
+        {
+          "empresa": "Fictícia 1",
+          "receita": "100000",
+          "custos": "50000"
+        },
+        {
+          "empresa": "Fictícia 2",
+          "receita": "200000",
+          "custos": "144000"
+        },
+        {
+          "empresa": "Fictícia 3",
+          "receita": "1000000",
+          "custos": "900000"
+        },
+        {
+          "receita": "0",
+          "custos": "100"
+        },
+        {
+          "receita": "100",
+          "custos": "-1"
+        }
+      ],
+      "referencia": {
+        "resultado": "20000",
+        "distribuicao": "0.00",
+        "retido": "20000.00",
+        "pl_final": "220000.00",
+        "serie": [
+          "220000.00"
+        ]
+      },
+      "alternativas": [
+        {
+          "origem": "A",
+          "receita": "110000.00",
+          "custos": "80000",
+          "resultado": "30000.00",
+          "distribuicao": "0.00",
+          "retido": "30000.00",
+          "pl_final": "230000.00",
+          "serie": [
+            "230000.00"
+          ],
+          "delta_receita": "10000.00",
+          "delta_custos": "0",
+          "delta_receita_pct": "10.00",
+          "delta_custos_pct": "0",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "B",
+          "receita": "100000",
+          "custos": "70000.00",
+          "resultado": "30000.00",
+          "distribuicao": "0.00",
+          "retido": "30000.00",
+          "pl_final": "230000.00",
+          "serie": [
+            "230000.00"
+          ],
+          "delta_receita": "0",
+          "delta_custos": "-10000.00",
+          "delta_receita_pct": "0",
+          "delta_custos_pct": "-12.50",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "C",
+          "receita": "107142.86",
+          "custos": "77142.85",
+          "resultado": "30000.01",
+          "distribuicao": "0.00",
+          "retido": "30000.01",
+          "pl_final": "230000.01",
+          "serie": [
+            "230000.01"
+          ],
+          "delta_receita": "7142.86",
+          "delta_custos": "-2857.15",
+          "delta_receita_pct": "7.14286",
+          "delta_custos_pct": "-3.5714375",
+          "coincide_com_referencia": false
+        }
+      ],
+      "indisponiveis": {},
+      "estado": "geracao_condicional",
+      "resultado_necessario_exato": "30000",
+      "pares_validos": 3,
+      "pares_recebidos": 5,
+      "mediana_q": "0.72"
+    },
+    {
+      "id": "M14",
+      "titulo": "Meta de mercado muito exigente sem limite arbitrário",
+      "pl_inicial": "200000",
+      "pl_alvo": "230000",
+      "receita": "100000",
+      "custos": "80000",
+      "anos": 1,
+      "distribuicao_pct": "0",
+      "pares": [
+        {
+          "receita": "100",
+          "custos": "99"
+        }
+      ],
+      "referencia": {
+        "resultado": "20000",
+        "distribuicao": "0.00",
+        "retido": "20000.00",
+        "pl_final": "220000.00",
+        "serie": [
+          "220000.00"
+        ]
+      },
+      "alternativas": [
+        {
+          "origem": "A",
+          "receita": "110000.00",
+          "custos": "80000",
+          "resultado": "30000.00",
+          "distribuicao": "0.00",
+          "retido": "30000.00",
+          "pl_final": "230000.00",
+          "serie": [
+            "230000.00"
+          ],
+          "delta_receita": "10000.00",
+          "delta_custos": "0",
+          "delta_receita_pct": "10.00",
+          "delta_custos_pct": "0",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "B",
+          "receita": "100000",
+          "custos": "70000.00",
+          "resultado": "30000.00",
+          "distribuicao": "0.00",
+          "retido": "30000.00",
+          "pl_final": "230000.00",
+          "serie": [
+            "230000.00"
+          ],
+          "delta_receita": "0",
+          "delta_custos": "-10000.00",
+          "delta_receita_pct": "0",
+          "delta_custos_pct": "-12.50",
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "C",
+          "receita": "3000000.00",
+          "custos": "2970000.00",
+          "resultado": "30000.00",
+          "distribuicao": "0.00",
+          "retido": "30000.00",
+          "pl_final": "230000.00",
+          "serie": [
+            "230000.00"
+          ],
+          "delta_receita": "2900000.00",
+          "delta_custos": "2890000.00",
+          "delta_receita_pct": "2900.00",
+          "delta_custos_pct": "3612.50",
+          "coincide_com_referencia": false
+        }
+      ],
+      "indisponiveis": {},
+      "estado": "geracao_condicional",
+      "resultado_necessario_exato": "30000",
+      "pares_validos": 1,
+      "pares_recebidos": 1,
+      "mediana_q": "0.99"
+    },
+    {
+      "id": "M15",
+      "titulo": "Precisão monetária e acumulação fracionada",
+      "pl_inicial": "0",
+      "pl_alvo": "1",
+      "receita": "0",
+      "custos": "0",
+      "anos": 3,
+      "distribuicao_pct": "50",
+      "pares": [
+        {
+          "receita": "1",
+          "custos": "0"
+        }
+      ],
+      "referencia": {
+        "resultado": "0",
+        "distribuicao": "0.00",
+        "retido": "0.00",
+        "pl_final": "0.00",
+        "serie": [
+          "0.00",
+          "0.00",
+          "0.00"
+        ]
+      },
+      "alternativas": [
+        {
+          "origem": "A",
+          "receita": "0.67",
+          "custos": "0",
+          "resultado": "0.67",
+          "distribuicao": "0.33",
+          "retido": "0.34",
+          "pl_final": "1.02",
+          "serie": [
+            "0.34",
+            "0.68",
+            "1.02"
+          ],
+          "delta_receita": "0.67",
+          "delta_custos": "0",
+          "delta_receita_pct": null,
+          "delta_custos_pct": null,
+          "coincide_com_referencia": false
+        },
+        {
+          "origem": "C",
+          "receita": "0.67",
+          "custos": "0.00",
+          "resultado": "0.67",
+          "distribuicao": "0.33",
+          "retido": "0.34",
+          "pl_final": "1.02",
+          "serie": [
+            "0.34",
+            "0.68",
+            "1.02"
+          ],
+          "delta_receita": "0.67",
+          "delta_custos": "0.00",
+          "delta_receita_pct": null,
+          "delta_custos_pct": null,
+          "coincide_com": "A",
+          "coincide_com_referencia": false
+        }
+      ],
+      "indisponiveis": {
+        "B": "O custo requerido seria negativo."
+      },
+      "estado": "geracao_condicional",
+      "resultado_necessario_exato": "0.6666666666666666666666666666666666666667",
+      "pares_validos": 1,
+      "pares_recebidos": 1,
+      "mediana_q": "0"
+    },
+    {
+      "id": "M16",
+      "titulo": "Prejuízo integral mesmo com distribuição de 100%",
+      "pl_inicial": "200000",
+      "pl_alvo": "230000",
+      "receita": "100000",
+      "custos": "120000",
+      "anos": 1,
+      "distribuicao_pct": "100",
+      "pares": [
+        {
+          "empresa": "Fictícia 1",
+          "receita": "100000",
+          "custos": "50000"
+        },
+        {
+          "empresa": "Fictícia 2",
+          "receita": "200000",
+          "custos": "144000"
+        },
+        {
+          "empresa": "Fictícia 3",
+          "receita": "1000000",
+          "custos": "900000"
+        }
+      ],
+      "referencia": {
+        "resultado": "-20000",
+        "distribuicao": "0.00",
+        "retido": "-20000.00",
+        "pl_final": "180000.00",
+        "serie": [
+          "180000.00"
+        ]
+      },
+      "alternativas": [],
+      "indisponiveis": {},
+      "estado": "sem_acumulacao_por_distribuicao_integral"
+    }
+  ],
+  "entradas_invalidas": [
+    {
+      "campo": "anos",
+      "valor": "0",
+      "esperado": "Entrada inválida; não gerar metas."
+    },
+    {
+      "campo": "anos",
+      "valor": "-1",
+      "esperado": "Entrada inválida; não gerar metas."
+    },
+    {
+      "campo": "anos",
+      "valor": "1.5",
+      "esperado": "Entrada inválida; não gerar metas."
+    },
+    {
+      "campo": "receita",
+      "valor": "-1",
+      "esperado": "Entrada inválida; não gerar metas."
+    },
+    {
+      "campo": "custos",
+      "valor": "-1",
+      "esperado": "Entrada inválida; não gerar metas."
+    },
+    {
+      "campo": "distribuicao_pct",
+      "valor": "-1",
+      "esperado": "Entrada inválida; não gerar metas."
+    },
+    {
+      "campo": "distribuicao_pct",
+      "valor": "100.01",
+      "esperado": "Entrada inválida; não gerar metas."
+    },
+    {
+      "campo": "receita",
+      "valor": "NaN",
+      "esperado": "Entrada inválida; não gerar metas."
+    },
+    {
+      "campo": "pl_alvo",
+      "valor": "Infinity",
+      "esperado": "Entrada inválida; não gerar metas."
+    },
+    {
+      "campo": "receita",
+      "valor": null,
+      "esperado": "Valor ausente; não imputar zero."
+    }
+  ],
+  "verificacoes_adicionais": [
+    "Investimento não altera as alternativas ou patrimônio calculado.",
+    "Mediana par de 50% e80% é65%.",
+    "Prazo de10 anos é matematicamente válido e atinge a meta no caso conferido.",
+    "Mediana é calculada sobre razões individuais, sem imputação de ausência como zero."
+  ]
+}

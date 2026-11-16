@@ -8,6 +8,7 @@ from pathlib import Path
 import sys
 import zipfile
 from benchmark_ttm import ler_demonstracoes, montar_ttm
+from catalogo_b3 import carregar_catalogo
 
 CNPJ = "00000000000001"
 EMPRESAS = [{"CNPJ": CNPJ, "Razão Social": "Empresa Teste", "Setor": "Teste"}]
@@ -19,6 +20,20 @@ def indice(ref, receita, custo, despesa, fluxo, pl=None, escopo="con"):
     return valores
 
 class BenchmarkTTMTest(unittest.TestCase):
+    def test_catalogo_integral_remove_recorte_e_deduplica_cnpj_normalizado(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            (root / "data").mkdir()
+            (root / "data/empresas-b3.csv").write_text("#,CNPJ,Razão Social,Setor\n7,1,Empresa A,Teste\n8,00000000000001,Empresa A outro ticker,Teste\n9,2,Empresa B,Outro\n", encoding="utf-8")
+            pesquisa, _ = carregar_catalogo(root, {7}, "pesquisa")
+            completa, meta = carregar_catalogo(root, {7}, "b3")
+            self.assertEqual(len(pesquisa), 1)
+            self.assertEqual([e["CNPJ"] for e in completa], ["00000000000001", "00000000000002"])
+            self.assertEqual(meta["linhasSelecionadas"], 3)
+            self.assertEqual(meta["emissores"], 2)
+            self.assertEqual(len(meta["duplicatasDescartadas"]), 1)
+            self.assertIn("não verifica", meta["limitacao"])
+
     def test_cli_nao_sobrescreve_benchmark_quando_coleta_anual_vem_vazia(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)

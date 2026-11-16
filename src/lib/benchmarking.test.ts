@@ -11,7 +11,7 @@ function expect(actual: unknown) {
   };
 }
 import { analisarGaps, benchmarkCluster, dadosRadar, recomendacoes } from "./benchmarking.ts";
-import { aplicarPasso, diagnosticar, posicaoEstrutural, TETOS } from "./sad-model.ts";
+import { aplicarPasso, diagnosticar, TETOS } from "./sad-model.ts";
 
 describe("RF07–RF12 referências simuladas", () => {
   for (const perfil of ["Conservador", "Expansivo", "Estruturado"])
@@ -53,29 +53,18 @@ describe("RF07–RF12 referências simuladas", () => {
     expect(diagnosticar(benchmarkCluster("Conservador")).perfil).toBe("Conservador");
     expect(diagnosticar(benchmarkCluster("Estruturado")).perfil).toBe("Estruturado");
   });
-  test("RN01 recalibra custos com 0,9629", () => {
+  test("ajuste de receita preserva os custos informados", () => {
     const d = {
       receita: 100_000_000,
       custos: 60_000_000,
       patrimonio: 100_000_000,
       investimento: 1_000_000,
     };
-    expect(aplicarPasso(d, "receita", 5_000_000).dados.custos).toBe(62_888_700);
+    expect(aplicarPasso(d, "receita", 5_000_000).dados.custos).toBe(60_000_000);
   });
   test("RN02 bloqueia valor acima do teto", () => {
     const d = benchmarkCluster("Conservador");
     expect(aplicarPasso(d, "receita", TETOS.receita).dados).toEqual(d);
-  });
-  test("RF05 compara PL real com benchmark sem previsão temporal", () => {
-    const p = posicaoEstrutural({
-      receita: 100_000_000,
-      custos: 80_000_000,
-      investimento: 4_000_000,
-      patrimonio: 150_000_000,
-    });
-    expect(p.plTeorico).toBe(163_690_000);
-    expect(p.gap).toBe(-13_690_000);
-    expect(p.suficiente).toBe(false);
   });
 });
 
@@ -91,7 +80,7 @@ describe("recomendações compartilhadas com as metas", () => {
       alavancagem: 1,
       escala: 0.1,
       valores: { receita: 200_000, custos: 160_000, investimento: 40_000, patrimonio: 150_000 },
-      intensidadeLideres: 0.25,
+      distribuicaoCustos: { p25: 0.6, mediana: 0.8 },
     },
   ];
   test("interpreta os gaps financeiros sem duplicar as metas em reais", () => {
@@ -99,12 +88,12 @@ describe("recomendações compartilhadas com as metas", () => {
     const gaps = analisarGaps(dados, diag.perfil, centroides);
     const recs = recomendacoes(dados, diag, centroides);
     assert.notDeepEqual(recs, gaps.acoes);
-    assert.match(recs[0]!, /Prioridade: investigar os custos/);
-    assert.match(recs[1]!, /Depois, avalie os projetos/);
-    assert.match(recs[2]!, /líderes/);
+    assert.match(recs[0]!, /Investigar a diferença de custos/);
+    assert.match(recs[1]!, /Avaliar os projetos/);
+    assert.doesNotMatch(recs.join(" "), /Prioridade:|Depois,|líderes/);
     assert.equal(gaps.excessoCustos, 10_000);
     assert.equal(gaps.deficitInvestimento, 19_000);
-    assert.equal(gaps.deficitLideres, 24_000);
+    assert.equal(gaps.distribuicaoCustos!.p25, 0.6);
     assert.ok(recs.every((r) => !gaps.acoes.includes(r)));
     assert.doesNotMatch(recs.join(" "), /51,3|48,7|R²|captação|sem comprometer o caixa/);
   });
@@ -112,19 +101,19 @@ describe("recomendações compartilhadas com as metas", () => {
     const alinhada = { ...dados, custos: 70_000, investimento: 30_000 };
     const diag = diagnosticar(alinhada, centroides);
     const recs = recomendacoes(alinhada, diag, centroides);
-    assert.match(recs[0]!, /acompanhar os resultados/);
-    assert.match(recs[1]!, /próximos períodos/);
+    assert.match(recs[0]!, /Acompanhar custos/);
+    assert.match(recs[1]!, /Revisar o retorno/);
     const outraBase = [
       { ...centroides[0]!, valores: { ...centroides[0]!.valores, custos: 100_000 } },
     ];
-    assert.match(recomendacoes(alinhada, diag, outraBase)[0]!, /investigar os custos/);
+    assert.match(recomendacoes(alinhada, diag, outraBase)[0]!, /Investigar a diferença de custos/);
   });
-  test("custos alinhados e investimento abaixo do grupo priorizam avaliação de projetos", () => {
+  test("custos e investimento geram alternativas independentes, sem prioridade automática", () => {
     const cenario = { ...dados, custos: 70_000 };
     const recs = recomendacoes(cenario, diagnosticar(cenario, centroides), centroides);
-    assert.match(recs[0]!, /Prioridade: avaliar oportunidades/);
-    assert.doesNotMatch(recs[0]!, /Prioridade: investigar os custos/);
-    assert.match(recs[0]!, /margem não comprova dinheiro disponível/);
+    assert.match(recs[0]!, /Acompanhar custos/);
+    assert.match(recs[1]!, /Avaliar os projetos/);
+    assert.doesNotMatch(recs.join(" "), /Prioridade:|Depois/);
   });
   test("receita zero não recomenda alinhamento ou capacidade financeira", () => {
     const zero = { ...dados, receita: 0 };

@@ -1,133 +1,92 @@
 import { useState } from "react";
-import { formatarNumero, parseNumero, TETOS, type EmpresaDados } from "@/lib/sad-model";
-
+import { type EmpresaDados } from "@/lib/sad-model";
+import { formatarReais as formatarMoeda } from "@/lib/planejamento-metas";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "./ui/dialog";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 const CAMPOS: { chave: keyof EmpresaDados; label: string }[] = [
-  { chave: "receita", label: "Receita Líquida (R$)" },
-  { chave: "custos", label: "Custos e Despesas (R$)" },
-  { chave: "patrimonio", label: "Patrimônio Líquido atual (R$)" },
-  { chave: "investimento", label: "Fluxo de Investimento (R$)" },
+  { chave: "patrimonio", label: "Patrimônio líquido na data-base (R$)" },
+  { chave: "receita", label: "Receita líquida anual (R$)" },
+  { chave: "custos", label: "Custos e despesas anuais (R$)" },
+  { chave: "investimento", label: "Saída líquida de investimento anual (R$)" },
 ];
-
 type Props = {
   inicial: EmpresaDados;
   onCancelar?: (() => void) | undefined;
   onConfirmar: (dados: EmpresaDados) => void;
   tetos?: EmpresaDados;
 };
-
-export function EntradaDadosModal({ inicial, onCancelar, onConfirmar, tetos = TETOS }: Props) {
-  const [valores, setValores] = useState<Record<keyof EmpresaDados, string>>({
-    receita: formatarNumero(inicial.receita),
-    custos: formatarNumero(inicial.custos),
-    patrimonio: formatarNumero(inicial.patrimonio),
-    investimento: formatarNumero(inicial.investimento),
-  });
-  const [erros, setErros] = useState<Partial<Record<keyof EmpresaDados, string>>>({});
-
+export function EntradaDadosModal({ inicial, onCancelar, onConfirmar }: Props) {
+  const [valores, setValores] = useState(() =>
+    Object.fromEntries(CAMPOS.map(({ chave }) => [chave, String(inicial[chave])])),
+  );
+  const [erro, setErro] = useState("");
   function submeter(e: React.FormEvent) {
     e.preventDefault();
-    const novosErros: Partial<Record<keyof EmpresaDados, string>> = {};
     const dados = {} as EmpresaDados;
-
     for (const { chave } of CAMPOS) {
-      const n = parseNumero(valores[chave]);
+      const n = Number(valores[chave]);
       if (
-        !valores[chave].trim() ||
+        !valores[chave]?.trim() ||
         !Number.isFinite(n) ||
-        n < 0 ||
-        ((chave === "receita" || chave === "patrimonio") && n <= 0)
+        !Number.isSafeInteger(Math.round(n * 100)) ||
+        (chave !== "patrimonio" && n < 0)
       ) {
-        novosErros[chave] =
-          "Use valores em reais sem sinal negativo; receita e patrimônio devem ser positivos.";
-      } else if (n > tetos[chave]) {
-        novosErros[chave] = "Cenário fora do limite de simulação da referência selecionada.";
+        setErro("Preencha todos os valores em reais. Apenas o patrimônio pode ser negativo.");
+        return;
       }
       dados[chave] = n;
     }
-
-    setErros(novosErros);
-    if (Object.keys(novosErros).length === 0) onConfirmar(dados);
+    onConfirmar(dados);
   }
-
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center p-6">
-      <div className="absolute inset-0 bg-background/80" onClick={onCancelar} />
-      <div
-        role="dialog"
-        aria-label="Entrada de dados da empresa"
-        className="animate-rise relative w-full max-w-md rounded-lg border border-border bg-surface shadow-2xl"
-      >
-        <div className="flex h-12 items-center justify-between border-b border-border px-5">
-          <div>
-            <div className="font-display font-semibold tracking-tight">Entrada de dados</div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted">
-              RF01 · formulário de diagnóstico
-            </div>
-          </div>
-          {onCancelar && (
-            <button
-              type="button"
-              onClick={onCancelar}
-              aria-label="Fechar"
-              className="text-lg leading-none text-muted transition-colors hover:text-foreground"
-            >
-              ✕
-            </button>
-          )}
-        </div>
-
-        <form className="space-y-4 p-5" onSubmit={submeter}>
+    <Dialog
+      open
+      onOpenChange={(aberto) => {
+        if (!aberto) onCancelar?.();
+      }}
+    >
+      <DialogContent className="max-h-[90dvh] w-[calc(100%-2rem)] overflow-y-auto rounded-lg bg-surface">
+        <DialogTitle>Dados da sua empresa</DialogTitle>
+        <DialogDescription>
+          Use receita, custos e investimento do mesmo período anual. O patrimônio é o saldo na
+          data-base definida em Planejar metas.
+        </DialogDescription>
+        <form onSubmit={submeter} className="space-y-4">
           {CAMPOS.map(({ chave, label }) => (
-            <div key={chave}>
-              <label htmlFor={chave} className="mb-1.5 block text-[12px] text-muted">
-                {label}
-              </label>
-              <div
-                className={`flex items-center rounded-md border bg-background px-3 transition-colors focus-within:border-primary/60 ${
-                  erros[chave] ? "border-negative/50" : "border-border"
-                }`}
-              >
-                <span
-                  className={`mr-2 font-mono text-[13px] ${erros[chave] ? "text-negative" : "text-muted"}`}
-                >
-                  R$
-                </span>
-                <input
-                  id={chave}
-                  inputMode="numeric"
-                  value={valores[chave]}
-                  onChange={(e) =>
-                    setValores((v) => ({
-                      ...v,
-                      [chave]: e.target.value ? formatarNumero(parseNumero(e.target.value)) : "",
-                    }))
-                  }
-                  className="w-full bg-transparent py-2 font-mono text-[14px] tabular-nums outline-none"
-                />
-              </div>
-              {erros[chave] && <p className="mt-1.5 text-[11px] text-negative">{erros[chave]}</p>}
-            </div>
+            <label key={chave} className="block text-sm" htmlFor={`empresa-${chave}`}>
+              {label}
+              <Input
+                id={`empresa-${chave}`}
+                type="number"
+                required
+                step="0.01"
+                min={chave === "patrimonio" ? undefined : 0}
+                value={valores[chave] ?? ""}
+                onChange={(e) => setValores((p) => ({ ...p, [chave]: e.target.value }))}
+                className="mt-1.5 h-auto w-full rounded-md border border-border bg-background px-3 py-2.5 text-base tabular-nums focus-visible:outline-2 focus-visible:outline-primary"
+              />
+              <span className="mt-1 block text-xs text-muted">
+                {valores[chave]?.trim() && Number.isFinite(Number(valores[chave]))
+                  ? formatarMoeda(Number(valores[chave]))
+                  : "Informe um valor"}
+                {chave === "investimento" ? " · somente no benchmark" : ""}
+              </span>
+            </label>
           ))}
-
-          <div className="flex gap-3 pt-1">
-            {onCancelar && (
-              <button
-                type="button"
-                onClick={onCancelar}
-                className="flex-1 rounded-md border border-border px-4 py-2.5 text-[13px] text-muted transition-colors hover:text-foreground"
-              >
-                Cancelar
-              </button>
-            )}
-            <button
-              type="submit"
-              className="flex-1 rounded-md bg-primary px-4 py-2.5 text-[13px] font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-            >
-              Gerar Diagnóstico
-            </button>
+          {erro && (
+            <p role="alert" className="text-negative">
+              {erro}
+            </p>
+          )}
+          <div className="flex flex-wrap justify-end gap-3 pt-2">
+            <Button type="button" variant="ghost" onClick={onCancelar}>
+              Cancelar
+            </Button>
+            <Button type="submit">Usar estes dados</Button>
           </div>
         </form>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

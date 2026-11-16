@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { importarBaseMercado, descricaoReferencia, type BaseMercado } from "@/lib/market-clusters";
+import {
+  importarBaseMercado,
+  descricaoReferencia,
+  selecionarSetor,
+  type BaseMercado,
+} from "@/lib/market-clusters";
 import { ARQUIVO_BENCHMARK_PADRAO, ANO_BENCHMARK_PADRAO } from "@/lib/default-benchmark";
 import { Button } from "@/components/ui/button";
 
@@ -54,17 +59,7 @@ export function BaseMercadoControl({
     if (!completa) return;
     setErro(null);
     try {
-      onChange(
-        setor === ""
-          ? completa
-          : importarBaseMercado(
-              JSON.stringify({
-                ...completa,
-                setor,
-                empresas: completa.empresas.filter((e) => e.setor === setor),
-              }),
-            ),
-      );
+      onChange(selecionarSetor(completa, setor));
     } catch (e) {
       setErro(e instanceof Error ? e.message : "Falha ao filtrar setor.");
     }
@@ -76,8 +71,9 @@ export function BaseMercadoControl({
       aria-busy={carregando}
     >
       <p className="mb-3 text-sm leading-relaxed text-muted">
-        A base CVM 2026 é carregada automaticamente. Use estas opções para escolher um setor ou
-        trocar a fonte de comparação.
+        O benchmark CVM 2026 do catálogo integral de empresas B3 da pesquisa é carregado
+        automaticamente. A cobertura inclui apenas empresas com demonstrações compatíveis no mesmo
+        período. Use estas opções para escolher um setor ou trocar a fonte.
       </p>
       <div className="flex flex-wrap items-center gap-3">
         <h2 className="font-medium">Base de benchmarking</h2>
@@ -87,7 +83,7 @@ export function BaseMercadoControl({
           disabled={carregando}
           onClick={() => void carregarCVM()}
         >
-          Restaurar CVM {ANO_BENCHMARK_PADRAO}
+          Restaurar catálogo B3 {ANO_BENCHMARK_PADRAO}
         </Button>
         <input
           id="base-mercado"
@@ -122,13 +118,13 @@ export function BaseMercadoControl({
             className="max-w-full rounded-md border border-border bg-background px-3 py-2 focus-visible:outline-2 focus-visible:outline-primary"
           >
             <option value="">
-              Amostra completa · {completa.empresas.length} empresas (sem filtro)
+              Base completa · {completa.empresas.length} empresas (sem filtro)
             </option>
             {setores.map((setor) => {
               const n = completa.empresas.filter((e) => e.setor === setor).length;
               return (
-                <option key={setor} value={setor} disabled={n < 3}>
-                  {setor} · {n} empresas{n < 3 ? " (mínimo 3)" : ""}
+                <option key={setor} value={setor}>
+                  {setor} · {n} empresas{n < 3 ? " (sem agrupamento)" : ""}
                 </option>
               );
             })}
@@ -141,18 +137,19 @@ export function BaseMercadoControl({
             {base.empresas.length} de {completa?.empresas.length ?? base.empresas.length} empresas
             selecionadas.
           </strong>{" "}
-          A amostra alimenta a classificação; a comparação usa o grupo de perfil mais próximo.
+          A mediana da seleção inteira é usada na opção C do planejamento. Os gráficos por grupo são
+          comparações descritivas separadas.
         </p>
       )}
       {base && (
         <p className="mt-2 text-xs text-muted">
           {base.empresas.length < 10
             ? "Amostra pequena: os três clusters podem ter poucos pares; diagnóstico exploratório."
-            : "Confira a representatividade setorial antes de usar as metas."}{" "}
+            : "Confira a representatividade setorial antes de usar a referência."}{" "}
           Fluxo de investimento da base CVM representa saída líquida de caixa; não equivale a CAPEX
           bruto.{" "}
           {base.centroides.some((c) => (c.empresas ?? 0) < 3)
-            ? "Há clusters com menos de três empresas; dispersão e metas exigem cautela."
+            ? "Há clusters com menos de três empresas; as comparações exigem cautela."
             : ""}
         </p>
       )}
@@ -169,16 +166,24 @@ export function BaseMercadoControl({
         </p>
       )}
       <p id="base-instrucoes" className="mt-2 max-w-prose text-xs leading-relaxed text-muted">
-        Use a base CVM da pesquisa ou importe um JSON em reais; selecione um setor para comparar
-        pares. Custos e investimento devem ser magnitudes positivas. O K-Means usa margem,
-        investimento/receita, giro do patrimônio e escala de receita. Os nomes dos perfis são
-        rótulos operacionais do SAD. O benchmark CVM 2026 de 12 meses é carregado por padrão ao
-        abrir o app. Bases importadas exigem conferência da origem. Sem conta, importações e filtros
-        ficam nesta sessão; com login, são salvos com os dados da empresa.
+        Use o catálogo integral ou importe um JSON em reais; selecione um setor para comparar pares.
+        Custos e investimento na entrada manual são magnitudes positivas. O K-Means usa patrimônio,
+        receita, custos assinados e fluxo líquido de investimento, com Z-score calculado na amostra
+        selecionada. O campo opcional fluxoInvestimentoOriginal preserva entradas e saídas com
+        sinal; sem ele, investimento é tratado como saída. Os nomes dos perfis descrevem o porte
+        relativo e não uma ordem de qualidade. O catálogo é um snapshot do repositório, não uma
+        consulta à listagem atual da B3. A amostra original de 35 empresas permanece disponível no
+        arquivo histórico. Bases importadas exigem conferência da origem. Sem conta, importações e
+        filtros ficam nesta sessão; com login, são salvos com os dados da empresa.
       </p>
       {erro && (
         <p className="mt-2 text-xs text-negative" role="alert">
           {erro} A referência anterior foi mantida.
+        </p>
+      )}
+      {base?.erroClusters && (
+        <p role="status" className="mt-3 text-xs text-primary">
+          Agrupamento indisponível: {base.erroClusters}
         </p>
       )}
     </section>

@@ -251,13 +251,9 @@ export async function handleAuthApi(request: Request, db: Database | undefined):
         try {
           const market = importarBaseMercado(document.mercadoCompleto);
           if (document.setor && !document.demonstracao) {
-            importarBaseMercado(
-              JSON.stringify({
-                ...market,
-                setor: document.setor,
-                empresas: market.empresas.filter((e) => e.setor === document.setor),
-              }),
-            );
+            // A seleção pode ter poucos pares: estatísticas continuam válidas mesmo sem clusters.
+            if (!market.empresas.some((e) => e.setor === document.setor))
+              throw new Error("O setor selecionado não existe na base salva.");
           }
         } catch {
           throw new ApiError(
